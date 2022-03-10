@@ -5,8 +5,8 @@ import GithubProvider from 'next-auth/providers/github';
 export default NextAuth({
   providers: [
     GithubProvider({
-      clientId: '562033fa6e3d09d4b9a0',
-      clientSecret: 'f0e0b41c755eb4fa545869768a511bf917635639',
+      clientId: process.env.GITHUB_CLIENT_ID,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET,
       /**
        * What kind of data the application will make use.
        * That can be for example: to read repos, access private projects...
