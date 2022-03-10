@@ -24,3 +24,9 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 - Next-auth to social login.
 - Axios as http client library.
 - React-icons to svg icons.
+
+### 💪 How to contributte
+- Create your branch 🍴
+- Clone your branch at your localhost 🐫
+- Push your updates to your branch 🚀
+- Request a merge to the develop branch 👬
