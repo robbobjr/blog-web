@@ -18,7 +18,11 @@
     "next-auth": "^4.2.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "react-icons": "^4.3.1"
+    "react-draggable": "^4.4.4",
+    "react-emojipicker": "^1.1.1",
+    "react-icons": "^4.3.1",
+    "react-textarea-autosize": "^8.3.3",
+    "sass": "^1.49.9"
   },
   "devDependencies": {
     "@types/next-auth": "^3.15.0",
