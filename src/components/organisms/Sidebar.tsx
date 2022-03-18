@@ -1,7 +1,7 @@
 import { Box, Icon, Stack, Text, Link } from "@chakra-ui/react";
 import { RiDashboardLine, RiInputMethodLine } from "react-icons/ri";
 
-export default function Sidebar() {
+export function Sidebar() {
   return (
     <Box as="aside" w="64" mr="8">
       <Stack spacing="12" align="flex-start">

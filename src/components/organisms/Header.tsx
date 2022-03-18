@@ -1,14 +1,16 @@
-import { Flex, Input, Text, Icon, HStack, Box, Avatar, Tooltip, Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
+import { Flex, Input, Text, HStack, Box, Avatar, Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useMemo, useCallback } from "react";
 import { RiSearch2Line, RiNotificationLine, RiUserAddLine } from 'react-icons/ri';
 import { simpleHover } from "../../styles/theme";
-import { GoSignOut } from 'react-icons/go';
+import { GoPlus, GoSignOut } from 'react-icons/go';
 import { FaUserAstronaut } from "react-icons/fa";
-import Logo from "../atoms/Logo";
+import { Logo } from "../atoms/Logo";
+import { CreatePostModal } from "../molecules/modals/create-post-modal";
+import { Icon } from "../atoms/icons";
 
-export default function Header() {
+export function Header() {
   const { data } = useSession();
   const router = useRouter();
 
@@ -29,7 +31,7 @@ export default function Header() {
   }, [data, router]);
 
   return (
-    <Flex w="100%" h="20" as="header" maxW={1480} mx="auto" mt="4" align="center" px="6">
+    <Flex w="100%" h="20" minH="20" as="header" maxW={1480} mx="auto" mt="4" align="center" px="6">
       <Logo />
       <Flex
         as="label"
@@ -65,6 +67,9 @@ export default function Header() {
           color="gray.600"
           borderRightWidth={1}
           borderColor="gray.800">
+          <CreatePostModal>
+            <Icon as={GoPlus} fontSize={20} />
+          </CreatePostModal>
           <Icon as={RiNotificationLine} fontSize={20}/>
           <Icon as={RiUserAddLine} fontSize={20}/>   
         </HStack> 
