@@ -1,10 +1,10 @@
-import { Flex, Icon, Stack, Text } from "@chakra-ui/react";
+import { Flex, Stack, Text } from "@chakra-ui/react";
 import { useCallback, useEffect } from "react";
 import { AiFillGithub, AiFillGoogleCircle, AiFillLinkedin, AiFillTwitterCircle, AiFillTwitterSquare } from "react-icons/ai";
 import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from "next/router";
-import SocialButton from "../components/atoms/SocialButton";
-import Logo from "../components/atoms/Logo";
+import { SocialButton } from "../components/atoms/buttons/social-button";
+import { Logo } from "../components/atoms/Logo";
 
 export default function Home() {
   const router = useRouter();
