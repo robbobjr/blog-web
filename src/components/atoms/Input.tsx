@@ -6,7 +6,7 @@ interface InputProps extends CInputProps {
   label: string;
 }
 
-export default function Input({ name, type, label, ...props }: InputProps) {
+export function Input({ name, type, label, ...props }: InputProps) {
   return (
     <FormControl>
     <FormLabel htmlFor={name}>

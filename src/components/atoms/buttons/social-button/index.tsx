@@ -6,7 +6,7 @@ interface SocialButtonProps extends ButtonProps {
   children: string;
 }
 
-export default function SocialButton({ 
+export function SocialButton({ 
   handler, 
   icon, 
   children,
