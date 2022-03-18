@@ -1,6 +1,6 @@
 import { extendTheme } from '@chakra-ui/react';
 
-const dracula = {
+export const dracula = {
   BackgroundPrimary: '#1d1e26',
   BackgroundSecondary:	'#282a36',	
   CurrentLine: '#44475a',	
@@ -19,6 +19,11 @@ export const simpleHover = {
   filter: 'brightness(0.65)',
   transition: '0.3s',
   cursor: 'pointer'
+}
+
+export const textGradiant = {
+  bgGradient: "linear(to-b, gray.50, transparent)", 
+  bgClip: "text",
 }
 
 export const theme = extendTheme({
@@ -50,6 +55,9 @@ export const theme = extendTheme({
     },
     green: {
       400: dracula.Green,
+    },
+    red: {
+      400: dracula.Red
     }
   }
 });
