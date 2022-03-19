@@ -1,12 +1,11 @@
-import { Flex, Stack, Text } from "@chakra-ui/react";
+import { Flex, Stack } from "@chakra-ui/react";
 import { useCallback, useEffect } from "react";
 import { AiFillGithub, AiFillGoogleCircle, AiFillLinkedin, AiFillTwitterCircle, AiFillTwitterSquare } from "react-icons/ai";
 import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from "next/router";
 import { SocialButton } from "../components/atoms/buttons/social-button";
-import { Logo } from "../components/atoms/Logo";
 
-export default function Home() {
+export default function Login() {
   const router = useRouter();
   const { data } = useSession();
 
@@ -28,9 +27,6 @@ export default function Home() {
       align="center"
       direction="column"
       justify="center">
-      <Flex align="center" justify="center" w="100%" maxW={360} mx="auto" my="8">
-        <Logo fontSize="5xl" textAlign="center" />
-      </Flex>
       <Flex as="form" w="100%" maxW={360} bg="gray.800" p="8" borderRadius={8} flexDir="column">
         <Stack spacing="4">
           <SocialButton handler={handleGithubSign} icon={AiFillGithub} colorScheme="blackAlpha">

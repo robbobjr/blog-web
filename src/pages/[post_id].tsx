@@ -5,20 +5,22 @@ import { TPostComment, TPost } from "../components/organisms/post/post.type";
 import { Sidebar } from "../components/organisms/Sidebar";
 import api from '../../api.json';
 import { PostComment } from "../components/organisms/post/post-comment";
-import { PostHead } from "../components/organisms/heads/post-head";
 import { Post } from "../components/organisms/post";
 import { useCallback, useState } from "react";
+import { PostHead } from "../components/organisms/PostHead";
 
 interface PostDetailProps {
   post: TPost;
 }
 
-export default function PostDetail({ post }: PostDetailProps) {
+export default function FeedPost({ post }: PostDetailProps) {
   const [comments, setComments] = useState(post?.comments || []);
 
   const commentHandler = useCallback((data: TPostComment) => {
     setComments(state => [...state, data]);
   }, []);
+
+  if (!post) return;
 
   return (
     <>
@@ -28,7 +30,7 @@ export default function PostDetail({ post }: PostDetailProps) {
         <Flex my="6" w="100%" maxWidth={1480} mx="auto" px="6">
           <Sidebar />
           <Stack spacing="0" flex="1" minW="320px" alignItems="flex-start" overflow="scroll">
-            {post && <Post data={post} containerProps={{ borderBottomRadius: 0 }} commentHandler={commentHandler} />}
+            <Post data={post} containerProps={{ borderBottomRadius: 0 }} commentHandler={commentHandler} />
             <Box w="100%">
               {comments.map(({comment, user}, i, a) => (
                 <PostComment 

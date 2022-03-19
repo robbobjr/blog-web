@@ -26,7 +26,6 @@ export default function Feed() {
             {posts.map((post, i) => <Post key={i} data={post} isPostPreview/>)}
           </Stack>
           <Flex w="64" justify="flex-end" ml="8">
-            Empty
           </Flex> 
         </Flex> 
       </Flex>
