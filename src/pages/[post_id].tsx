@@ -20,7 +20,7 @@ export default function FeedPost({ post }: PostDetailProps) {
     setComments(state => [...state, data]);
   }, []);
 
-  if (!post) return;
+  if (!post) return <></>;
 
   return (
     <>
@@ -46,7 +46,6 @@ export default function FeedPost({ post }: PostDetailProps) {
             </Box>
           </Stack>
           <Flex w="64" justify="flex-end" ml="8">
-            Empty
           </Flex> 
         </Flex> 
       </Flex>
