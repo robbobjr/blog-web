@@ -1,0 +1,28 @@
+.container {
+  flex-direction: row !important;
+  
+  div {
+    max-height: 12rem;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+  }
+
+  div + div {
+    h3 {
+      margin-bottom: 2px;
+    }
+
+    span {
+      font-size: 0.9rem;
+      opacity: 0.6;
+    }
+
+    div {
+      margin-top: 2px;
+    }
+  }
+}
+
+.noHover {
+  pointer-events: none;
+}

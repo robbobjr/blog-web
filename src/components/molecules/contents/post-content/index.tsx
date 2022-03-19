@@ -1,18 +1,14 @@
 import { Image, Text } from "@chakra-ui/react";
 import Link from "next/link";
 import { PostContentProps } from "./post-content.type";
-import { textGradiant } from "../../../../styles/theme";
-import { useEffect } from "react";
+import { dracula, textGradiant } from "../../../../styles/theme";
+import { LinkPreview } from '@dhaiwat10/react-link-preview';
+import styles from './link-preview.module.scss'; 
 
 export function PostContent({ 
   isPostPreview, 
   data: { title, id, content, link, image }
 }: PostContentProps) {
-  useEffect(() => {
-    if (!link) return;
-    fetch(link, { mode: 'no-cors' }).then(console.log).catch(() => {});
-  }, [link]);
-
   return (
     <>
       <Link passHref={true} href={`/${id}`}>
@@ -31,6 +27,19 @@ export function PostContent({
       </Link>
       {image && (
         <Image src={image} alt="post-picture" width="100%"/>
+      )}
+      {link && (
+        <a href={link} target="_blank" rel="noreferrer">
+          <LinkPreview url={link} width="100%"
+            backgroundColor={dracula.BackgroundPrimary}
+            borderColor={dracula.BackgroundPrimary}
+            primaryTextColor={dracula.Foreground}
+            secondaryTextColor={dracula.Foreground}
+            className={`${styles.noHover} ${link.includes('github') && styles.container}`}
+            borderRadius="15px"
+            showLoader={false}
+          />
+        </a>
       )}
     </>
   );
