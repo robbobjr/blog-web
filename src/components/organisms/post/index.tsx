@@ -7,7 +7,7 @@ import { PostIcon } from "../../atoms/icons/post-icon";
 import { PostContainer } from "../../molecules/containers/post-container";
 import { PostContent } from "../../molecules/contents/post-content";
 import { PostHeader } from "../../molecules/headers/post-header";
-import { SimpleModal } from "../../molecules/modals/simples-modal";
+import { SingleInputModal } from "../../molecules/modals/single-input-modal";
 import { PostProps } from "./post.type";
 
 export function Post({ 
@@ -54,7 +54,7 @@ export function Post({
       <PostContent isPostPreview={isPostPreview} data={postData}/>
       <Flex align="center">
         <Flex align="center">
-          <SimpleModal 
+          <SingleInputModal 
             handler={handlePostJoin} 
             modalName="join-modal" 
             textAreaProps={{
@@ -62,8 +62,8 @@ export function Post({
             }}
           >
             <PostIcon icon={FaSignInAlt} text={"Unir-se"} onClick={() => {}} />
-          </SimpleModal>
-          <SimpleModal
+          </SingleInputModal>
+          <SingleInputModal
             handler={handlePostComment} 
             modalName="comment-modal" 
             textAreaProps={{
@@ -71,7 +71,7 @@ export function Post({
             }}
           >
             <PostIcon icon={RiMessage3Fill} text={commentsText}/>
-          </SimpleModal>
+          </SingleInputModal>
         </Flex>
         <Flex align="center" ml="auto">
           <PostIcon icon={RiTeamFill} text={`Vagas: ${joiners}/${positions}`}/>

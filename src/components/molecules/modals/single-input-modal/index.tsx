@@ -18,7 +18,7 @@ import { useRef, cloneElement, useCallback, useEffect, useState } from "react"
 import ResizeTextarea from "react-textarea-autosize";
 import { useContent } from "../../../../hooks/useContent";
 
-export function SimpleModal({ 
+export function SingleInputModal({ 
   children, 
   handler, 
   modalName,
@@ -35,7 +35,6 @@ export function SimpleModal({
 
   useEffect(() => {
     const content = handleGetDraft(modalName);
-
     setDefaultValue(content);
   }, [isOpen, handleGetDraft, modalName]);
 
@@ -56,7 +55,6 @@ export function SimpleModal({
   const handleSaveDraft = useCallback(() => {
     if (textAreaRef) {
       const content = textAreaRef?.current?.value;
-
       handleAddDraft({ field: modalName, content});
     }
 
@@ -100,7 +98,12 @@ export function SimpleModal({
               </FormControl>
             </ModalBody>
             <ModalFooter>
-              <Button bg="gray.600" mr={3} type="submit" _hover={{ bgColor: "purple.400" }}>
+              <Button 
+                bg="gray.600" 
+                mr={3} 
+                type="submit" 
+                _hover={{ bgColor: "purple.400" }}
+              >
                 Submeter
               </Button>
             </ModalFooter>

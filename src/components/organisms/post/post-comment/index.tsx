@@ -2,7 +2,11 @@ import { Avatar, Box, Flex, Stack, Text } from "@chakra-ui/react";
 import { PostContainer } from "../../../molecules/containers/post-container";
 import { PostCommentProps } from "./post-comment.type";
 
-export function PostComment({ user, comment, containerProps }: PostCommentProps) {
+export function PostComment({ 
+  user, 
+  comment, 
+  containerProps 
+}: PostCommentProps) {
   return (
     <PostContainer size="sm" {...containerProps}>
       <Flex>
