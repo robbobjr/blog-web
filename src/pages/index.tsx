@@ -5,6 +5,7 @@ import { Post } from "../components/organisms/post";
 import { Sidebar } from "../components/organisms/Sidebar";
 import { api } from "../services/api";
 import Head from 'next/head';
+import { adsenseConfigs } from "../configs/adsense";
 
 export default function Feed() {
   const [posts, setPosts] = useState([]);
@@ -17,6 +18,7 @@ export default function Feed() {
     <>
     <Head>
       <title>Feed | Social-dev</title>
+      <script async src={adsenseConfigs.script} crossOrigin="anonymous"></script>
     </Head>
       <Flex direction="column" h="100vh">
         <Header/>
