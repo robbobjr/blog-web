@@ -3,9 +3,8 @@ import { useEffect, useState } from "react";
 import { Header } from "../components/organisms/Header";
 import { Post } from "../components/organisms/post";
 import { api } from "../services/api";
-import Head from 'next/head';
-import { adsense } from "../configs/adsense";
 import { MainContainer } from "../components/molecules/containers/main-container";
+import { FeedHead } from "../components/organisms/head/FeedHead";
 
 export default function Feed() {
   const [posts, setPosts] = useState([]);
@@ -16,10 +15,7 @@ export default function Feed() {
 
   return (
     <>
-    <Head>
-      <title>Feed | Social-dev</title>
-      <script async src={adsense.script} crossOrigin="anonymous"></script>
-    </Head>
+      <FeedHead />
       <Flex direction="column" h="100vh">
         <Header/>
         <MainContainer>
