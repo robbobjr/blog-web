@@ -49,6 +49,7 @@ export function PostContainer({ children, size, ...props }: PostContainerProps) 
       {...props}
     >
       <Stack 
+        display={{ sm: 'none', md: 'inherit' }}
         spacing={counterSize.iconsSpacing}
         borderRightWidth={1} 
         borderRightColor="gray.700" 
