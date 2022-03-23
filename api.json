@@ -81,15 +81,7 @@
       "positions": 10,
       "joiners": 5,
       "link": "https://github.com/hen-tr",
-      "comments": [{ 
-        "user": { 
-          "id": "5854a52b-b2a9-4039-979d-e089eb356374", 
-          "name": "Jhon doe" 
-        },
-        "id": "e",
-        "rate": 10, 
-        "comment": "Massa demais" 
-      }],
+      "comments": [],
       "participation": 2
     },
     {
