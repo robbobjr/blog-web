@@ -61,7 +61,7 @@ export function Post({
               placeHolder: "Sou um programador com 3 anos de..."
             }}
           >
-            <PostIcon icon={FaSignInAlt} text={"Unir-se"} onClick={() => {}} />
+            <PostIcon icon={FaSignInAlt} text={"Unir-se"} />
           </SingleInputModal>
           <SingleInputModal
             handler={handlePostComment} 
