@@ -1,5 +1,9 @@
 .container {
   flex-direction: row !important;
+
+  @media(max-width: 720px) {
+    flex-direction: column !important;
+  }
   
   div {
     max-height: 12rem;
