@@ -39,7 +39,14 @@ export function PostContainer({ children, size, ...props }: PostContainerProps) 
   }, [size]);
 
   return (
-    <Flex p="4" bg="gray.800" borderRadius={8} minH={counterSize.minH} w="100%" {...props}>
+    <Flex
+      p="4"
+      bg="gray.800"
+      borderRadius={8}
+      minH={counterSize.minH}
+      w="100%"
+      {...props}
+    >
       <Stack 
         spacing={counterSize.iconsSpacing}
         borderRightWidth={1} 
@@ -59,7 +66,11 @@ export function PostContainer({ children, size, ...props }: PostContainerProps) 
           _hover={simpleHover}
           onClick={handlePostVote}
         />
-        <Text fontSize={counterSize.textSize} fontWeight="medium" color="pink.400">
+        <Text
+          fontSize={counterSize.textSize}
+          fontWeight="medium"
+          color="pink.400"
+        >
           {postVotes}
         </Text>
         <Icon 

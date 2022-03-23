@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { adsenseConfigs } from "../../configs/adsense";
 
 export function PostHead({ post }) {
   return (
@@ -20,6 +21,9 @@ export function PostHead({ post }) {
       <meta property="twitter:title" content={post.title}/>
       <meta property="twitter:description" content={post.content}/>
       <meta property="twitter:image" content={post?.image}/>
+
+      {/* Adsense */}
+      <script async src={adsenseConfigs.script} crossOrigin="anonymous"></script>
     </Head>
   );
 }
