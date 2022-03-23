@@ -45,6 +45,7 @@ export function PostContainer({ children, size, ...props }: PostContainerProps) 
       borderRadius={8}
       minH={counterSize.minH}
       w="100%"
+      maxW={656}
       {...props}
     >
       <Stack 
