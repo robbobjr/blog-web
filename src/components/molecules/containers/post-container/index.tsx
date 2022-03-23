@@ -52,8 +52,8 @@ export function PostContainer({ children, size, ...props }: PostContainerProps) 
         spacing={counterSize.iconsSpacing}
         borderRightWidth={1} 
         borderRightColor="gray.700" 
-        w="20" 
-        minW="20"
+        minW="14"
+        maxW="14" 
         borderTopLeftRadius={8} 
         borderBottomLeftRadius={8} 
         align="center" 
