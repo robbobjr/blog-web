@@ -6,8 +6,8 @@ import api from '../../api.json';
 import { PostComment } from "../components/organisms/post/post-comment";
 import { Post } from "../components/organisms/post";
 import { useCallback, useState } from "react";
-import { PostHead } from "../components/organisms/PostHead";
 import { MainContainer } from "../components/molecules/containers/main-container";
+import { PostHead } from "../components/organisms/head/PostHead";
 
 interface PostDetailProps {
   post: TPost;
