@@ -45,6 +45,7 @@ export function Header() {
         position="relative"
         bg="gray.800"
         borderRadius="full"
+        display={{ sm: 'none', md: 'flex' }}
       >
         <Input
           color="gray.50"
@@ -60,7 +61,7 @@ export function Header() {
       </Flex>
       <Flex align="center" ml="auto">
         <HStack
-          spacing="8"
+          spacing="4"
           pr="8"
           py="1"
           mx="8"
@@ -68,13 +69,19 @@ export function Header() {
           borderRightWidth={1}
           borderColor="gray.800">
           <CreatePostModal>
-            <Icon as={GoPlus} fontSize={20} />
+            <Flex bg="gray.800" borderRadius="50%" align="center" justify="center" p="2">
+              <Icon as={GoPlus} fontSize={20} />
+            </Flex>
           </CreatePostModal>
-          <Icon as={RiNotificationLine} fontSize={20}/>
-          <Icon as={RiUserAddLine} fontSize={20}/>   
+          <Flex bg="gray.800" borderRadius="50%" align="center" justify="center" p="2">
+            <Icon as={RiNotificationLine} fontSize={20}/>
+          </Flex>
+          <Flex bg="gray.800" borderRadius="50%" align="center" justify="center" p="2">
+            <Icon as={RiUserAddLine} fontSize={20}/>   
+          </Flex>
         </HStack> 
         <Flex align="center">
-          <Box mr="4" textAlign="right" _hover={data ? {} : simpleHover} onClick={data ? () => {} : handleSession}>
+          <Box display={{ sm: 'none', md: 'block' }} mr="4" textAlign="right" _hover={data ? {} : simpleHover} onClick={data ? () => {} : handleSession}>
             <Text>
               {name || "Entrar"}
             </Text>
