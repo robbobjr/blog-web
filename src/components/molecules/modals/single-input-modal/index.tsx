@@ -71,7 +71,7 @@ export function SingleInputModal({
         size="lg"
       >
         <ModalOverlay />
-        <ModalContent bg="gray.800">
+        <ModalContent bg="gray.800" mx="4">
           <form onSubmit={handleSubmit}>
             <ModalHeader color="gray.50">
               <ModalCloseButton  />

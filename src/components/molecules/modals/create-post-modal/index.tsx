@@ -62,7 +62,7 @@ export function CreatePostModal({ children }) {
         size="lg"
       >
         <ModalOverlay />
-        <ModalContent bg="gray.800">
+        <ModalContent bg="gray.800" mx="4">
           <ModalHeader color="gray.50">
             <ModalCloseButton  />
           </ModalHeader>
