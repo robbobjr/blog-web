@@ -3,6 +3,7 @@ import { useSession } from "next-auth/react";
 import { FormEvent, useCallback, useMemo } from "react";
 import { FaSignInAlt } from 'react-icons/fa';
 import { RiMessage3Fill, RiTeamFill } from 'react-icons/ri';
+import { CustomSession } from "../../../pages/api/auth/[...nextauth]";
 import { PostsService } from "../../../services/openapi";
 import { PostIcon } from "../../atoms/icons/post-icon";
 import { PostContainer } from "../../molecules/containers/post-container";
@@ -17,7 +18,7 @@ export function Post({
   commentHandler,
   data: postData,
 }: PostProps) {
-  const { data } = useSession();
+  const { data } = useSession() as CustomSession;
 
   const {
     comments,
@@ -41,9 +42,9 @@ export function Post({
       commentHandler && commentHandler({
         content,
         postId: id,
-        userId: 1 // TODO: Set the right userId
+        userId: data.user.id,
       });
-    }, [id, commentHandler],
+    }, [id, commentHandler, data],
   );
 
   const commentsText = useMemo(() => {

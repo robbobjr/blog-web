@@ -1,6 +1,12 @@
 import NextAuth from 'next-auth';
 import GithubProvider from 'next-auth/providers/github';
-import { OpenAPI, UsersService } from '../../../services/openapi';
+import { OpenAPI, UserDto, UsersService } from '../../../services/openapi';
+
+export type CustomSession = {
+  data?: {
+    user: UserDto;
+  }
+}
 
 OpenAPI.BASE = process.env.NEXT_PUBLIC_APP_URL;
 // With the pattern [...anything] we can intercept any route that start with api/auth
