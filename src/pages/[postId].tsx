@@ -51,9 +51,9 @@ export default function FeedPost({ post }: PostDetailProps) {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  const { post_id } = params;
+  const { postId } = params;
 
-  const post = api.posts.find(({ id }) => id == post_id) || null;
+  const post = api.posts.find(({ id }) => id == postId) || null;
   
   return {
     props: {
