@@ -1,6 +1,6 @@
-import { TPost } from "../../../organisms/post/post.type";
+import { PostDto } from "../../../../services/openapi";
 
 export interface PostContentProps {
   isPostPreview: boolean;
-  data: TPost;
+  data: PostDto;
 }

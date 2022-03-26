@@ -3,6 +3,7 @@ import { useSession } from "next-auth/react";
 import { FormEvent, useCallback, useMemo } from "react";
 import { FaSignInAlt } from 'react-icons/fa';
 import { RiMessage3Fill, RiTeamFill } from 'react-icons/ri';
+import { PostsService } from "../../../services/openapi";
 import { PostIcon } from "../../atoms/icons/post-icon";
 import { PostContainer } from "../../molecules/containers/post-container";
 import { PostContent } from "../../molecules/contents/post-content";
@@ -22,8 +23,8 @@ export function Post({
     comments,
     user, 
     participation,
-    joiners,
-    positions,
+    candidatures,
+    availlablePositions,
     id
   } = useMemo(() => postData, [postData]);
 
@@ -36,10 +37,13 @@ export function Post({
 
   const handlePostComment = useCallback(
     async (event: FormEvent<HTMLElement>) => {
-      const comment = event.target['content'].value;
-      const dto = { user: data?.user,  comment, rate: 0, id: Math.random().toString(10) }
-      commentHandler && commentHandler(dto);
-    }, [data, commentHandler],
+      const content = event.target['content'].value;
+      commentHandler && commentHandler({
+        content,
+        postId: id,
+        userId: 1 // TODO: Set the right userId
+      });
+    }, [id, commentHandler],
   );
 
   const commentsText = useMemo(() => {
@@ -47,6 +51,12 @@ export function Post({
     if (commentsLength > 1) return `${commentsLength} Comentários`
     return commentsLength === 1 ? `${commentsLength} Comentário` : `Comentar`
   }, [comments]);
+
+  const apiHandler = useCallback(async () => {
+    const data = await PostsService.postsControllerFindAll();
+
+    console.log({ data });
+  }, []);
 
   return (
     <PostContainer size="md" {...containerProps}>
@@ -74,7 +84,11 @@ export function Post({
           </SingleInputModal>
         </Flex>
         <Flex align="center" ml="auto">
-          <PostIcon icon={RiTeamFill} text={`Vagas: ${joiners}/${positions}`}/>
+         <PostIcon
+            icon={RiTeamFill}
+            text={`Vagas: ${candidatures.length}/${availlablePositions}`} 
+            onClick={apiHandler}
+          />
         </Flex>
       </Flex>
     </PostContainer>

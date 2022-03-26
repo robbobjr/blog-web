@@ -1,8 +1,8 @@
 import { FlexProps } from "@chakra-ui/react";
-import { TUser } from "../post.type";
+import { UserDto } from "../../../../services/openapi";
 
 export interface PostCommentProps {
-  user: TUser;
+  user: UserDto;
   comment: string;
   containerProps?: FlexProps;
 }
