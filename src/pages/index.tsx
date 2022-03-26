@@ -1,17 +1,15 @@
 import { Flex, Stack } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
 import { Header } from "../components/organisms/Header";
 import { Post } from "../components/organisms/post";
-import { api } from "../services/api";
 import { MainContainer } from "../components/molecules/containers/main-container";
-import { FeedHead } from "../components/organisms/head/FeedHead";
+import { FeedHead } from "../components/molecules/heads/FeedHead";
+import { GetServerSideProps } from "next";
+import { PostsService } from "../services/openapi";
+import { useSession } from "next-auth/react";
+import { useEffect } from "react";
 
-export default function Feed() {
-  const [posts, setPosts] = useState([]);
-
-  useEffect(() => {
-    api.get('/posts').then(({ data }) => setPosts(data));
-  }, []);
+export default function Feed({ posts }) {
+  const { data } = useSession();
 
   return (
     <>
@@ -28,3 +26,12 @@ export default function Feed() {
   );
 }
 
+export const getServerSideProps: GetServerSideProps = async () => {
+  const posts = await PostsService.postsControllerFindAll();
+
+  return {
+    props: {
+      posts,
+    }
+  }
+};
