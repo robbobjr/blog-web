@@ -17,7 +17,7 @@ import {
 import { useSession } from "next-auth/react"
 import { useRef, cloneElement, useCallback, useEffect, useState } from "react"
 import ResizeTextarea from "react-textarea-autosize";
-import { useContent } from "../../../../hooks/useContent";
+import { useContent } from "../../../../hooks/use-content";
 import { PickEmojiIcon } from "../../../atoms/icons/pick-emoji-icon";
 import { PickImageIcon } from "../../../atoms/icons/pick-image-icon";
 
