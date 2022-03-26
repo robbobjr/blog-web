@@ -6,14 +6,14 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "sdk:gen": "openapi -i http://localhost:3333/docs-json -o src/services/openapi"
   },
   "dependencies": {
     "@chakra-ui/react": "^1.8.6",
     "@dhaiwat10/react-link-preview": "^1.13.1",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
-    "axios": "^0.26.0",
     "framer-motion": "^6",
     "next": "12.1.0",
     "next-auth": "^4.2.1",
@@ -31,6 +31,8 @@
     "@types/react": "^17.0.39",
     "eslint": "8.10.0",
     "eslint-config-next": "12.1.0",
+    "openapi-typescript": "^5.2.0",
+    "openapi-typescript-codegen": "^0.20.1",
     "typescript": "^4.6.2"
   }
 }
