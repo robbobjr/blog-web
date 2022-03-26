@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { ContentContext, ContentContextProps } from "../contexts/content.context";
+import { ContentContext, ContentContextProps } from "../contexts/content";
 
 export function useContent(): ContentContextProps {
   const content = useContext(ContentContext);
