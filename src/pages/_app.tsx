@@ -4,6 +4,9 @@ import { theme } from "../styles/theme"
 import { SessionProvider } from 'next-auth/react';
 import '../styles/global.scss';
 import { ContextContextProvider } from "../contexts/content.context";
+import { OpenAPI } from "../services/openapi";
+
+OpenAPI.BASE = process.env.NEXT_PUBLIC_APP_URL;
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
