@@ -15,5 +15,16 @@
 utilizar o chakra-ui como design system da aplicação, evitando assim
 a necessidade de lidar com css como forma de estilização.
 
-- Criar pasta api dentro de pages para poder utilizar as funcionalidades do Next APIs como forma de desenvolver a aplicação enquanto ainda não temos uma API externa.
+- Criar pasta api dentro de pages para poder utilizar as funcionalidades do Next APIs.
+
+- Utilizar atomic designer como pattern dos components.
+
+- Utilizar saas para personalizações de components.
+
+- Criar script para gerar sdk via backend doc.
+  - Instalar: openapi-typescript e openapi-typescript-codegen.
+  - Adicionar script "sdk:gen: openapi -i http://localhost:3333/docs-json -o src/services/openapi"
+  - Trocar localhost pela url da api.
+  - rodar o script "yarn sdk:gen"
+
 
