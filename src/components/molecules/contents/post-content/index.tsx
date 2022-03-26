@@ -7,11 +7,11 @@ import styles from './link-preview.module.scss';
 
 export function PostContent({ 
   isPostPreview, 
-  data: { title, id, content, link, image }
+  data: { title, slug, content, link, image }
 }: PostContentProps) {
   return (
     <>
-      <Link passHref={true} href={`/${id}`}>
+      <Link passHref={true} href={`/${slug}`}>
         <a>
           <Text fontSize="lg" mb="4" isTruncated={isPostPreview}> 
             {title}

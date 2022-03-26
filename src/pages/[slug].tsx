@@ -1,13 +1,12 @@
 import { GetServerSideProps } from "next"
 import { Flex, Stack } from "@chakra-ui/react";
 import { Header } from "../components/organisms/Header";
-import api from '../../api.json';
 import { PostComment } from "../components/organisms/post/post-comment";
 import { Post } from "../components/organisms/post";
 import { useCallback, useState } from "react";
 import { MainContainer } from "../components/molecules/containers/main-container";
 import { PostHead } from "../components/molecules/heads/PostHead";
-import { CommentDto, PostDto } from "../services/openapi";
+import { CommentDto, PostDto, PostsService } from "../services/openapi";
 
 interface PostDetailProps {
   post: PostDto;
@@ -51,9 +50,9 @@ export default function FeedPost({ post }: PostDetailProps) {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  const { postId } = params;
+  const { slug } = params as Record<string, string>;
 
-  const post = api.posts.find(({ id }) => id == postId) || null;
+  const post = await PostsService.postsControllerFindOne(slug);
   
   return {
     props: {
