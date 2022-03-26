@@ -4,9 +4,9 @@ import { Post } from "../components/organisms/post";
 import { MainContainer } from "../components/molecules/containers/main-container";
 import { FeedHead } from "../components/molecules/heads/FeedHead";
 import { GetServerSideProps } from "next";
-import { PostsService } from "../services/openapi";
+import { PostDto, PostsService } from "../services/openapi";
 
-export default function Feed({ posts }) {
+export default function Feed({ posts }: { posts: PostDto[]}) {
   return (
     <>
       <FeedHead />
