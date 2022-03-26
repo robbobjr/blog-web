@@ -15,8 +15,8 @@ export default function Login() {
     router.push('/')
   }, [router, data]);
 
-  const handleGithubSign = useCallback(async () => {
-    await signIn('github');
+  const handleGithubSign = useCallback(() => {
+    signIn('github')
   }, []);
 
   return (
@@ -27,7 +27,7 @@ export default function Login() {
       align="center"
       direction="column"
       justify="center">
-      <Flex as="form" w="100%" maxW={360} bg="gray.800" p="8" borderRadius={8} flexDir="column">
+      <Flex as="form" w="100%" maxW={360} bg="gray.800" p="8" borderRadius={8} flexDir="column" m="4">
         <Stack spacing="4">
           <SocialButton handler={handleGithubSign} icon={AiFillGithub} colorScheme="blackAlpha">
             Github
