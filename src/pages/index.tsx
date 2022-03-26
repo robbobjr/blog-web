@@ -5,12 +5,8 @@ import { MainContainer } from "../components/molecules/containers/main-container
 import { FeedHead } from "../components/molecules/heads/FeedHead";
 import { GetServerSideProps } from "next";
 import { PostsService } from "../services/openapi";
-import { useSession } from "next-auth/react";
-import { useEffect } from "react";
 
 export default function Feed({ posts }) {
-  const { data } = useSession();
-
   return (
     <>
       <FeedHead />
