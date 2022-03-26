@@ -1,22 +1,22 @@
 import { GetServerSideProps } from "next"
 import { Flex, Stack } from "@chakra-ui/react";
 import { Header } from "../components/organisms/Header";
-import { TPostComment, TPost } from "../components/organisms/post/post.type";
 import api from '../../api.json';
 import { PostComment } from "../components/organisms/post/post-comment";
 import { Post } from "../components/organisms/post";
 import { useCallback, useState } from "react";
 import { MainContainer } from "../components/molecules/containers/main-container";
-import { PostHead } from "../components/organisms/head/PostHead";
+import { PostHead } from "../components/molecules/heads/PostHead";
+import { CommentDto, PostDto } from "../services/openapi";
 
 interface PostDetailProps {
-  post: TPost;
+  post: PostDto;
 }
 
 export default function FeedPost({ post }: PostDetailProps) {
   const [comments, setComments] = useState(post?.comments || []);
 
-  const commentHandler = useCallback((data: TPostComment) => {
+  const commentHandler = useCallback((data: CommentDto) => {
     setComments(state => [...state, data]);
   }, []);
 
@@ -31,9 +31,9 @@ export default function FeedPost({ post }: PostDetailProps) {
           <Stack spacing="0" flex="1" minW="320px" alignItems="center" mb="6">
             <Post data={post} containerProps={{ borderBottomRadius: 0 }} commentHandler={commentHandler} />
             <Flex direction="column" align="center" w="100%">
-              {comments.map(({comment, user}, i, a) => (
+              {comments.map(({ content, user }, i, a) => (
                 <PostComment 
-                  comment={comment} 
+                  comment={content} 
                   user={user} 
                   key={i} 
                   containerProps={{ 
