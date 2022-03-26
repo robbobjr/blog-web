@@ -1,6 +1,8 @@
 import NextAuth from 'next-auth';
 import GithubProvider from 'next-auth/providers/github';
+import { OpenAPI, UsersService } from '../../../services/openapi';
 
+OpenAPI.BASE = process.env.NEXT_PUBLIC_APP_URL;
 // With the pattern [...anything] we can intercept any route that start with api/auth
 export default NextAuth({
   providers: [
@@ -20,8 +22,29 @@ export default NextAuth({
     }),
   ],
   callbacks: {
+    session: async (data) => {
+      const { session: { user } } = data;
+
+      const userByEmail = await UsersService.usersControllerFindOne(
+        user.email,
+      );
+
+      return { user: userByEmail, expires: data.session.expires };
+    },
     signIn: async (data) => {
-      return true;
+      try {
+        let user = await UsersService.usersControllerFindOne(data.user.email);
+
+        if (!user) {
+          const { email, name, image } = data.user;
+          user = await UsersService.usersControllerCreate({ email, image, name });
+        }
+
+        return true;
+      } catch (error) {
+        console.error(error);
+        return false;
+      }
     }
   }
 });
