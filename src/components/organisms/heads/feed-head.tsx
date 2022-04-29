@@ -1,5 +1,4 @@
 import Head from "next/head";
-import { adsense } from "../../../configs/adsense";
 import { meta } from "../../../configs/meta";
 
 export function FeedHead() {
@@ -22,9 +21,6 @@ export function FeedHead() {
       <meta property="twitter:title" content={meta.feed.title}/>
       <meta property="twitter:description" content={meta.feed.content}/>
       <meta property="twitter:image" content={meta.feed.image}/>
-
-      {/* Adsense */}
-      <script async src={adsense.script} crossOrigin="anonymous"></script>
     </Head>
   );
 }

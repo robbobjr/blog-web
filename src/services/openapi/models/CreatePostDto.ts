@@ -3,11 +3,13 @@
 /* eslint-disable */
 
 export type CreatePostDto = {
-    image: string;
-    link: string;
-    participation: number;
+    image?: string;
+    link?: string;
+    participation?: number;
     title: string;
     content: string;
-    availlablePositions: number;
+    description?: string;
+    availlablePositions?: number;
     userId: number;
+    tags: Array<string>;
 };

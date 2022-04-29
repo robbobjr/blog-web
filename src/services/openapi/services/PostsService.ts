@@ -11,10 +11,9 @@ import type { CreatePostRateDto } from '../models/CreatePostRateDto';
 import type { PostCandidatureDto } from '../models/PostCandidatureDto';
 import type { PostDto } from '../models/PostDto';
 import type { PostRateDto } from '../models/PostRateDto';
+import type { PostTagDto } from '../models/PostTagDto';
 import type { UpdateCommentDto } from '../models/UpdateCommentDto';
-import type { UpdateCommentRateDto } from '../models/UpdateCommentRateDto';
 import type { UpdatePostDto } from '../models/UpdatePostDto';
-import type { UpdatePostRateDto } from '../models/UpdatePostRateDto';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -39,38 +38,23 @@ requestBody: CreatePostDto,
     }
 
     /**
-     * @param slug 
-     * @param image 
-     * @param link 
-     * @param participation 
+     * @param tag 
      * @param title 
-     * @param content 
-     * @param availlablePositions 
      * @param userId 
      * @returns PostDto 
      * @throws ApiError
      */
     public static postsControllerFindAll(
-slug?: string,
-image?: string,
-link?: string,
-participation?: number,
+tag?: string,
 title?: string,
-content?: string,
-availlablePositions?: number,
 userId?: number,
 ): CancelablePromise<Array<PostDto>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/posts',
             query: {
-                'slug': slug,
-                'image': image,
-                'link': link,
-                'participation': participation,
+                'tag': tag,
                 'title': title,
-                'content': content,
-                'availlablePositions': availlablePositions,
                 'userId': userId,
             },
         });
@@ -86,7 +70,7 @@ slug: string,
 ): CancelablePromise<PostDto> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/posts/{slug}',
+            url: '/posts/bySlug/{slug}',
             path: {
                 'slug': slug,
             },
@@ -115,6 +99,23 @@ requestBody: UpdatePostDto,
     }
 
     /**
+     * @param id 
+     * @returns PostDto 
+     * @throws ApiError
+     */
+    public static postsControllerDelete(
+id: string,
+): CancelablePromise<PostDto> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/posts/{id}',
+            path: {
+                'id': id,
+            },
+        });
+    }
+
+    /**
      * @param requestBody 
      * @returns PostRateDto 
      * @throws ApiError
@@ -125,27 +126,6 @@ requestBody: CreatePostRateDto,
         return __request(OpenAPI, {
             method: 'POST',
             url: '/posts/rate',
-            body: requestBody,
-            mediaType: 'application/json',
-        });
-    }
-
-    /**
-     * @param postRateId 
-     * @param requestBody 
-     * @returns PostRateDto 
-     * @throws ApiError
-     */
-    public static postsControllerUpdatePostRate(
-postRateId: number,
-requestBody: UpdatePostRateDto,
-): CancelablePromise<PostRateDto> {
-        return __request(OpenAPI, {
-            method: 'PATCH',
-            url: '/posts/rate/{postRateId}',
-            path: {
-                'postRateId': postRateId,
-            },
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -169,12 +149,29 @@ requestBody: CreateCommentDto,
 
     /**
      * @param commentId 
+     * @returns CommentDto 
+     * @throws ApiError
+     */
+    public static postsControllerDeleteComment(
+commentId: string,
+): CancelablePromise<CommentDto> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/posts/comment/{commentId}',
+            path: {
+                'commentId': commentId,
+            },
+        });
+    }
+
+    /**
+     * @param commentId 
      * @param requestBody 
      * @returns CommentDto 
      * @throws ApiError
      */
     public static postsControllerUpdateComment(
-commentId: number,
+commentId: string,
 requestBody: UpdateCommentDto,
 ): CancelablePromise<CommentDto> {
         return __request(OpenAPI, {
@@ -205,27 +202,6 @@ requestBody: CreateCommentRateDto,
     }
 
     /**
-     * @param commentRateId 
-     * @param requestBody 
-     * @returns CommentRateDto 
-     * @throws ApiError
-     */
-    public static postsControllerUpdateCommentRate(
-commentRateId: number,
-requestBody: UpdateCommentRateDto,
-): CancelablePromise<CommentRateDto> {
-        return __request(OpenAPI, {
-            method: 'PATCH',
-            url: '/posts/comment/rate/{commentRateId}',
-            path: {
-                'commentRateId': commentRateId,
-            },
-            body: requestBody,
-            mediaType: 'application/json',
-        });
-    }
-
-    /**
      * @param requestBody 
      * @returns PostCandidatureDto 
      * @throws ApiError
@@ -248,7 +224,7 @@ requestBody: CreatePostCandidatureDto,
      * @throws ApiError
      */
     public static postsControllerUpdatePostCandidature(
-postCandidatureId: number,
+postCandidatureId: string,
 requestBody: CreatePostCandidatureDto,
 ): CancelablePromise<PostCandidatureDto> {
         return __request(OpenAPI, {
@@ -259,6 +235,17 @@ requestBody: CreatePostCandidatureDto,
             },
             body: requestBody,
             mediaType: 'application/json',
+        });
+    }
+
+    /**
+     * @returns PostTagDto 
+     * @throws ApiError
+     */
+    public static postsControllerFindAllPostTags(): CancelablePromise<Array<PostTagDto>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/posts/tags',
         });
     }
 

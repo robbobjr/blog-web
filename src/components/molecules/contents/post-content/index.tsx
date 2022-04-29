@@ -1,46 +1,31 @@
-import { Image, Text } from "@chakra-ui/react";
-import Link from "next/link";
 import { PostContentProps } from "./post-content.type";
-import { dracula, textGradiant } from "../../../../styles/theme";
-import { LinkPreview } from '@dhaiwat10/react-link-preview';
-import styles from './link-preview.module.scss'; 
+import styles from './post-content.module.scss'; 
+import { useMemo } from "react";
+import { markdown } from "../../../../services/markdown";
 
 export function PostContent({ 
-  isPostPreview, 
-  data: { title, slug, content, link, image }
+  data: { title, content, createdAt }
 }: PostContentProps) {
+  const formatted = useMemo(() => markdown.render(content),[]);
+
+  const date = useMemo(() => {
+    return new Date(createdAt).toLocaleDateString('pt-BR', {
+      day: '2-digit',
+      month: 'long',
+      year: 'numeric',
+    })
+  }, [createdAt]);
+
   return (
     <>
-      <Link passHref={true} href={`/${slug}`}>
-        <a>
-          <Text fontSize="lg" mb="4" isTruncated={isPostPreview}> 
-            {title}
-          </Text>
-          <Text 
-            fontSize="sm" 
-            opacity={0.7} 
-            {...(isPostPreview && textGradiant)}
-          >
-            {content}
-          </Text>
-        </a>
-      </Link>
-      {image && (
-        <Image src={image} alt="post-picture" width="100%"/>
-      )}
-      {link && (
-        <a href={link} target="_blank" rel="noreferrer">
-          <LinkPreview url={link} width="100%"
-            backgroundColor={dracula.BackgroundPrimary}
-            borderColor={dracula.BackgroundPrimary}
-            primaryTextColor={dracula.Foreground}
-            secondaryTextColor={dracula.Foreground}
-            className={`${styles.noHover} ${link.includes('github') && styles.container}`}
-            borderRadius="15px"
-            showLoader={false}
-          />
-        </a>
-      )}
+      <article className={styles.post}>
+        <time>{date}</time>
+        <h1>{title}</h1>
+        <div 
+          className={styles.post_content}
+          dangerouslySetInnerHTML={{ __html: formatted }} 
+        />
+      </article>
     </>
   );
 }

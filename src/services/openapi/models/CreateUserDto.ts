@@ -4,6 +4,7 @@
 
 export type CreateUserDto = {
     name: string;
-    image: string;
+    image?: string;
     email: string;
+    github?: string;
 };

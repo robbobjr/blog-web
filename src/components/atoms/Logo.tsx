@@ -1,13 +1,14 @@
-import { Text, TextProps } from "@chakra-ui/react";
+import { Flex, Text, TextProps } from "@chakra-ui/react";
+import Link from "next/link";
 
-interface LogoProps extends TextProps {
-  
-}
-
-export function Logo({ ...props }: LogoProps) {
+export function Logo() {
   return (
-    <Text fontSize="3xl" fontWeight="bold" letterSpacing="tight" w="64" {...props}>
-      {"<startgo/>"}
-    </Text>
+    <Flex as={Link} passHref={true} href={'/'} cursor="pointer">
+      <a>
+        <Text fontSize="3xl" fontWeight="bold" letterSpacing="tight" w="64">
+        {"<startgo/>"}
+        </Text>
+      </a>
+    </Flex>
   );
 }

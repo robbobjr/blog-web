@@ -15,6 +15,13 @@ export const dracula = {
   Yellow:	'#f1fa8c',	
 };
 
+export const randomDraculaBackground = () => {
+  const { Cyan, Green, Orange, Pink, Purple, Red, Yellow } = dracula;
+  const colors = [Cyan, Green, Orange, Pink, Purple, Red, Yellow];
+  const index = Math.floor(Math.random() * colors.length + 1);
+  return colors[index];
+}
+
 export const simpleHover = {
   filter: 'brightness(0.65)',
   transition: '0.3s',

@@ -2,12 +2,6 @@ import NextAuth from 'next-auth';
 import GithubProvider from 'next-auth/providers/github';
 import { OpenAPI, UserDto, UsersService } from '../../../services/openapi';
 
-export type CustomSession = {
-  data?: {
-    user: UserDto;
-  }
-}
-
 OpenAPI.BASE = process.env.NEXT_PUBLIC_APP_URL;
 // With the pattern [...anything] we can intercept any route that start with api/auth
 export default NextAuth({
@@ -48,7 +42,7 @@ export default NextAuth({
 
         return true;
       } catch (error) {
-        console.error(error);
+        console.error('[NextAuth]', error);
         return false;
       }
     }

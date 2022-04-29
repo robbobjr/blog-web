@@ -1,6 +1,6 @@
 import { Flex, Stack } from "@chakra-ui/react";
 import { useCallback, useEffect } from "react";
-import { AiFillGithub, AiFillGoogleCircle, AiFillLinkedin, AiFillTwitterCircle, AiFillTwitterSquare } from "react-icons/ai";
+import { AiFillGithub, AiFillGoogleCircle, AiFillLinkedin, AiFillTwitterCircle } from "react-icons/ai";
 import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from "next/router";
 import { SocialButton } from "../components/atoms/buttons/social-button";

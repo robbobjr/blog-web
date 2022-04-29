@@ -1,6 +1,5 @@
 import { PostDto } from "../../../../services/openapi";
 
 export interface PostContentProps {
-  isPostPreview: boolean;
-  data: PostDto;
+  data: Pick<PostDto, 'title' | 'content' | 'createdAt'>;
 }

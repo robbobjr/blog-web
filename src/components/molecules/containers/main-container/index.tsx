@@ -2,7 +2,7 @@ import { Flex, FlexProps } from "@chakra-ui/react";
 import { ReactElement } from "react";
 
 interface MainContainerProps extends FlexProps {
-  children: ReactElement;
+  children: ReactElement | ReactElement[];
 }
 
 export function MainContainer({ children, ...props }: MainContainerProps) {

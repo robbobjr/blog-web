@@ -1,12 +1,12 @@
 import { GetServerSideProps } from "next"
 import { Flex, Stack } from "@chakra-ui/react";
-import { Header } from "../components/organisms/Header";
+import { Header } from "../components/organisms/header";
 import { PostComment } from "../components/organisms/post/post-comment";
 import { Post } from "../components/organisms/post";
 import { useCallback, useState } from "react";
 import { MainContainer } from "../components/molecules/containers/main-container";
-import { PostHead } from "../components/molecules/heads/PostHead";
-import { CommentDto, PostDto, PostsService } from "../services/openapi";
+import { PostHead } from "../components/organisms/heads/post-head";
+import { CreateCommentDto, PostDto, PostsService } from "../services/openapi";
 
 interface PostDetailProps {
   post: PostDto;
@@ -15,29 +15,43 @@ interface PostDetailProps {
 export default function FeedPost({ post }: PostDetailProps) {
   const [comments, setComments] = useState(post?.comments || []);
 
-  const commentHandler = useCallback((data: CommentDto) => {
-    setComments(state => [...state, data]);
+  const commentHandler = useCallback(async (data: CreateCommentDto) => {
+    try {
+      const comment = await PostsService.postsControllerCreateComment(data);
+      setComments(state => [...state, comment]);
+    } catch (error) {
+      console.log("/[slug]",{ error });
+      alert('Error!');
+    }
   }, []);
 
   if (!post) return <></>;
 
   return (
     <>
-      <PostHead post={post}/>
+      <PostHead data={post}/>
       <Flex direction="column" h="100vh">
         <Header/>
         <MainContainer>
           <Stack spacing="0" flex="1" minW="320px" alignItems="center" mb="6">
-            <Post data={post} containerProps={{ borderBottomRadius: 0 }} commentHandler={commentHandler} />
+            <Post 
+              data={post} 
+              containerProps={{ 
+                borderBottomRadius: comments.length ? 0 : "lg", 
+                maxWidth: "772px",
+                paddingTop: "2rem" 
+              }} 
+              commentHandler={commentHandler}
+            />
             <Flex direction="column" align="center" w="100%">
-              {comments.map(({ content, user }, i, a) => (
+              {comments.map((comment, i, a) => (
                 <PostComment 
-                  comment={content} 
-                  user={user} 
                   key={i} 
+                  data={comment} 
                   containerProps={{ 
                     borderBottomRadius: i === a.length - 1 ? 8 : 0, 
                     borderTopRadius: 0,
+                    maxWidth: "772px",
                   }} 
                 />
               ))}
@@ -51,8 +65,8 @@ export default function FeedPost({ post }: PostDetailProps) {
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const { slug } = params as Record<string, string>;
-
-  const post = await PostsService.postsControllerFindOne(slug);
+  const fail = () => null;
+  const post = await PostsService.postsControllerFindOne(slug).catch(fail);
   
   return {
     props: {

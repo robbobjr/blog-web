@@ -4,6 +4,6 @@ import { CreateCommentDto, PostDto } from "../../../services/openapi";
 export interface PostProps {
   isPostPreview?: boolean;
   containerProps?: FlexProps;
-  commentHandler?: (data: CreateCommentDto) => void;
+  commentHandler?: (data: CreateCommentDto) => Promise<any>;
   data: PostDto;
 }
