@@ -3,7 +3,6 @@ import { SearchInput } from "../atoms/inputs/search-input";
 import { ProfileMenu } from "../molecules/menus/profile-menu";
 import { HeaderControls } from "../molecules/controls/header-controls";
 import { Logo } from "../atoms/logo";
-import { useSession } from "next-auth/react";
 import { userAuth } from "../../states/hooks/use-auth";
 
 export function Header() {
