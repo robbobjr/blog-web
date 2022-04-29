@@ -8,7 +8,7 @@ import { dracula } from "../styles/theme";
 import { Topics } from "../components/organisms/topics";
 import { useCallback } from "react";
 import { useRouter } from "next/router";
-import { Header } from "../components/organisms/header";
+import { AdminHeader } from "../components/organisms/admin-header";
 
 const containerProps = {
   border: "2px solid transparent",
@@ -39,7 +39,7 @@ export default function Feed({
     <>
       <FeedHead />
       <Flex direction="column" h="100vh"> 
-        <Header/>
+        <AdminHeader/>
         <MainContainer>
           <Topics tags={tags} position="absolute" maxW="200px" display={{ sm: "none", lg: "block"}}/>
           <Stack spacing="4" flex="1" minW="320px" alignItems="center" mb="6">

@@ -3,9 +3,9 @@ import { SearchInput } from "../atoms/inputs/search-input";
 import { ProfileMenu } from "../molecules/menus/profile-menu";
 import { HeaderControls } from "../molecules/controls/header-controls";
 import { userAuth } from "../../states/hooks/use-auth";
-import { Logo } from "../atoms/blog-logo";
+import { BlogLogo } from "../atoms/blog-logo";
 
-export function Header() {
+export function AdminHeader() {
   const { data } = userAuth();
 
   return (
@@ -21,7 +21,7 @@ export function Header() {
       align="center" 
       px="6"
     >
-      <Logo />
+      <BlogLogo />
       <SearchInput/>
       <Flex align="center" ml="auto">
         <HeaderControls/>

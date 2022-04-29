@@ -1,7 +1,7 @@
 import { Flex, Text } from "@chakra-ui/react";
 import Link from "next/link";
 
-export function Logo() {
+export function BlogLogo() {
   return (
     <Flex as={Link} passHref={true} href={'/'} cursor="pointer">
       <a>
