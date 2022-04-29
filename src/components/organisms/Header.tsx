@@ -2,8 +2,8 @@ import { Flex } from "@chakra-ui/react";
 import { SearchInput } from "../atoms/inputs/search-input";
 import { ProfileMenu } from "../molecules/menus/profile-menu";
 import { HeaderControls } from "../molecules/controls/header-controls";
-import { Logo } from "../atoms/logo";
 import { userAuth } from "../../states/hooks/use-auth";
+import { Logo } from "../atoms/logo";
 
 export function Header() {
   const { data } = userAuth();
