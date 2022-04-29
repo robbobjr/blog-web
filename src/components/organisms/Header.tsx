@@ -1,9 +1,9 @@
-import { Flex } from "@chakra-ui/react";
+import { Flex, Text } from "@chakra-ui/react";
 import { SearchInput } from "../atoms/inputs/search-input";
 import { ProfileMenu } from "../molecules/menus/profile-menu";
 import { HeaderControls } from "../molecules/controls/header-controls";
 import { userAuth } from "../../states/hooks/use-auth";
-import { Logo } from "../atoms/logo";
+import Link from "next/link";
 
 export function Header() {
   const { data } = userAuth();
@@ -21,7 +21,13 @@ export function Header() {
       align="center" 
       px="6"
     >
-      <Logo />
+      <Flex as={Link} passHref={true} href={'/'} cursor="pointer">
+        <a>
+          <Text fontSize="3xl" fontWeight="bold" letterSpacing="tight" w="64">
+          {"<startgo/>"}
+          </Text>
+        </a>
+      </Flex>
       <SearchInput/>
       <Flex align="center" ml="auto">
         <HeaderControls/>
