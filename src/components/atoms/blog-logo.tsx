@@ -6,7 +6,7 @@ export function Logo() {
     <Flex as={Link} passHref={true} href={'/'} cursor="pointer">
       <a>
         <Text fontSize="3xl" fontWeight="bold" letterSpacing="tight" w="64">
-        {"<startgo/>"}
+        {"<robblog/>"}
         </Text>
       </a>
     </Flex>

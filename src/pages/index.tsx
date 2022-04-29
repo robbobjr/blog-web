@@ -4,11 +4,11 @@ import { MainContainer } from "../components/molecules/containers/main-container
 import { FeedHead } from "../components/organisms/heads/feed-head";
 import { GetServerSideProps } from "next";
 import { CreateCommentDto, PostDto, PostsService, PostTagDto } from "../services/openapi";
-import { Header } from "../components/organisms/header";
 import { dracula } from "../styles/theme";
 import { Topics } from "../components/organisms/topics";
 import { useCallback } from "react";
 import { useRouter } from "next/router";
+import { Header } from "../components/organisms/header";
 
 const containerProps = {
   border: "2px solid transparent",
