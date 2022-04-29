@@ -1,12 +1,12 @@
 import { GetServerSideProps } from "next"
 import { Flex, Stack } from "@chakra-ui/react";
-import { Header } from "../components/organisms/header";
 import { PostComment } from "../components/organisms/post/post-comment";
 import { Post } from "../components/organisms/post";
 import { useCallback, useState } from "react";
 import { MainContainer } from "../components/molecules/containers/main-container";
 import { PostHead } from "../components/organisms/heads/post-head";
 import { CreateCommentDto, PostDto, PostsService } from "../services/openapi";
+import { AdminHeader } from "../components/organisms/admin-header";
 
 interface PostDetailProps {
   post: PostDto;
@@ -31,7 +31,7 @@ export default function FeedPost({ post }: PostDetailProps) {
     <>
       <PostHead data={post}/>
       <Flex direction="column" h="100vh">
-        <Header/>
+        <AdminHeader/>
         <MainContainer>
           <Stack spacing="0" flex="1" minW="320px" alignItems="center" mb="6">
             <Post 
