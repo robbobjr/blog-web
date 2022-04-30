@@ -5,11 +5,15 @@ type LoggerData<T> = {
   payload?: T;
 }
 
+const date = new Date();
+const time = date.toLocaleTimeString();
+const fDate = date.toLocaleDateString();
+
 export const logger = {
   info: <T>(data: LoggerData<T>) => console.info(
-    `[INFO] [${data.context}]`, data.msg, data.payload,
+    `[${fDate} ${time}] [INFO] [${data.context || "GLOBAL"}]`, data.msg, data.payload,
   ),
   error: <T>(data: LoggerData<T>) => console.info(
-    `[ERROR]  [${data.context}]`, data.error,
+    `[${fDate} ${time}] [ERROR]  [${data.context || "GLOBAL"}]`, data.error,
   ),
 };
