@@ -36,8 +36,9 @@ export default NextAuth({
         logger.info({ msg: 'Logging user with Github', payload: data, context: "NextAuth" });
 
         if (!user) {
-          const { email, name, image } = data.user;
-          const github = data.profile.html_url;
+          let { email, name, image } = data.user;
+          email = email || data.profile.email || data.profile.url as string;
+          const github = data.profile.url;
           const { data: newUser } = await axiosAPI.post('/users', { email, image, name, github });
           user = newUser;
         }
