@@ -31,14 +31,15 @@ export default NextAuth({
     },
     signIn: async (data) => {
       try {
-        let user = await axiosAPI.get('/users/' + data.user.email);
+        let { data: user } = await axiosAPI.get('/users/' + data.user.email);
 
         logger.info({ msg: 'Logging user with Github', payload: data, context: "NextAuth" });
 
         if (!user) {
           const { email, name, image } = data.user;
           const github = data.profile.html_url;
-          user = await axiosAPI.post('/users', { email, image, name, github });
+          const { data: newUser } = await axiosAPI.post('/users', { email, image, name, github });
+          user = newUser;
         }
 
         return true;
