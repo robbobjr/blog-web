@@ -7,6 +7,7 @@ import type { ApiResult } from './ApiResult';
 import { CancelablePromise } from './CancelablePromise';
 import type { OnCancel } from './CancelablePromise';
 import type { OpenAPIConfig } from './OpenAPI';
+import fetch from 'fetch';
 
 const isDefined = <T>(value: T | null | undefined): value is Exclude<T, null | undefined> => {
     return value !== undefined && value !== null;
@@ -198,20 +199,20 @@ export const sendRequest = async (
     headers: Headers,
     onCancel: OnCancel
 ): Promise<Response> => {
-    const controller = new AbortController();
+    const controller: AbortController | undefined = AbortController && new AbortController();
 
     const request: RequestInit = {
         headers,
         body: body ?? formData,
         method: options.method,
-        signal: controller.signal,
+        signal: controller?.signal,
     };
 
     if (config.WITH_CREDENTIALS) {
         request.credentials = config.CREDENTIALS;
     }
 
-    onCancel(() => controller.abort());
+    onCancel(() => controller?.abort());
 
     return await fetch(url, request);
 };

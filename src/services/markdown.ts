@@ -1,9 +1,3 @@
-const hljs = require('highlight.js/lib/core')
+import MK from 'markdown-it';
 
-hljs.registerLanguage(
-  'javascript',
-  require('highlight.js/lib/languages/javascript')
-)
-
-export const markdown = require('markdown-it')()
-  .use(require('markdown-it-highlightjs'), { inline: true })
+export const markdown = new MK(); 
