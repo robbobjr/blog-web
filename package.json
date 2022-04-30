@@ -14,6 +14,7 @@
     "@dhaiwat10/react-link-preview": "^1.13.1",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
+    "axios": "^0.27.2",
     "framer-motion": "^6",
     "markdown-it": "^13.0.0",
     "next": "12.1.0",
