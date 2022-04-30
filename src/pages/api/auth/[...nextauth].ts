@@ -22,25 +22,30 @@ export default NextAuth({
     }),
   ],
   callbacks: {
+    async jwt({ account, token }) {
+      
+      // TODO: this is a workaround to users with no email registered in github. 
+      // TODO: add externalRef column on Database.
+      if (account && !token.email) {
+        token.email = account.providerAccountId;
+      }
+
+      return token
+    },
     session: async (data) => {
       const { session: { user } } = data;
-
       const { data: userByEmail } = await axiosAPI.get('/users/' + user.email);
-
       return { user: userByEmail, expires: data.session.expires };
     },
     signIn: async (data) => {
       try {
-        let { data: user } = await axiosAPI.get('/users/' + data.user.email);
-
-        logger.info({ msg: 'Logging user with Github', payload: data, context: "NextAuth" });
+        const { data: user } = await axiosAPI.get('/users/' + data.user.email);
 
         if (!user) {
           let { email, name, image } = data.user;
-          email = email || data.profile.email || data.profile.url as string;
+          email = email || data.profile.email || data.account.providerAccountId;
           const github = data.profile.url;
-          const { data: newUser } = await axiosAPI.post('/users', { email, image, name, github });
-          user = newUser;
+          await axiosAPI.post('/users', { email, image, name, github });
         }
 
         return true;
