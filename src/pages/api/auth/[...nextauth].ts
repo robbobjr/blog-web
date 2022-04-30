@@ -1,9 +1,8 @@
 import NextAuth from 'next-auth';
 import GithubProvider from 'next-auth/providers/github';
+import { axiosAPI } from '../../../services/axios-api';
 import { logger } from '../../../services/logger';
-import { OpenAPI, UserDto, UsersService } from '../../../services/openapi';
 
-OpenAPI.BASE = process.env.NEXT_PUBLIC_APP_URL;
 // With the pattern [...anything] we can intercept any route that start with api/auth
 export default NextAuth({
   providers: [
@@ -26,19 +25,20 @@ export default NextAuth({
     session: async (data) => {
       const { session: { user } } = data;
 
-      const userByEmail = await UsersService.usersControllerFindOne(
-        user.email,
-      );
+      const { data: userByEmail } = await axiosAPI.get('/users/' + user.email);
 
       return { user: userByEmail, expires: data.session.expires };
     },
     signIn: async (data) => {
       try {
-        let user = await UsersService.usersControllerFindOne(data.user.email);
+        let user = await axiosAPI.get('/users/' + data.user.email);
+
+        logger.info({ msg: 'Logging user with Github', payload: data, context: "NextAuth" });
 
         if (!user) {
           const { email, name, image } = data.user;
-          user = await UsersService.usersControllerCreate({ email, image, name });
+          const github = data.profile.html_url;
+          user = await axiosAPI.post('/users', { email, image, name, github });
         }
 
         return true;

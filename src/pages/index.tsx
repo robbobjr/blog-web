@@ -10,6 +10,7 @@ import { useCallback } from "react";
 import { useRouter } from "next/router";
 import { AdminHeader } from "../components/organisms/admin-header";
 import { logger } from "../services/logger";
+import { axiosAPI } from "../services/axios-api";
 
 const containerProps = {
   border: "2px solid transparent",
@@ -64,15 +65,21 @@ export default function Feed({
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const fail = (error) => {
     logger.error({ error, context: "SSR:Feed" });
-    return [];
+    return { data: [] };
   }
 
   const { tag } = query as Record<string, string>;
-  const posts = await PostsService.postsControllerFindAll(tag).catch(fail);
-  const tags = await PostsService.postsControllerFindAllPostTags().catch(fail);
+  const [{ data: posts }, { data: tags }] = await Promise.all([
+    axiosAPI.get('/posts', { params: {tag} }).catch(fail),
+    axiosAPI.get('posts/tags').catch(fail),
+  ]);
+  
+  
   tags.push(...["Ola", "Adeus mundo cruel", "Sociedade"].map(
     t => ({ name: t }) as PostTagDto)
   );
+
+  logger.info({ msg: "ola mundo" })
 
   return {
     props: {

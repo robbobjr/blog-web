@@ -8,6 +8,7 @@ import { PostHead } from "../components/organisms/heads/post-head";
 import { CreateCommentDto, PostDto, PostsService } from "../services/openapi";
 import { AdminHeader } from "../components/organisms/admin-header";
 import { logger } from "../services/logger";
+import { axiosAPI } from "../services/axios-api";
 
 interface PostDetailProps {
   post: PostDto;
@@ -69,10 +70,10 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   
   const fail = (error) => {
     logger.error({ error, context: "SSR:FeedPost" });
-    return null;
+    return { data: null };
   };
 
-  const post = await PostsService.postsControllerFindOne(slug).catch(fail);
+  const { data: post } = await axiosAPI.get('/posts/byslug/' + slug).catch(fail);
   
   return {
     props: {
