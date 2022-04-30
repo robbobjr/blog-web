@@ -65,7 +65,12 @@ export default function FeedPost({ post }: PostDetailProps) {
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const { slug } = params as Record<string, string>;
-  const fail = () => null;
+  
+  const fail = (error) => {
+    console.error({ error });
+    return null;
+  };
+
   const post = await PostsService.postsControllerFindOne(slug).catch(fail);
   
   return {

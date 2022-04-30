@@ -61,7 +61,11 @@ export default function Feed({
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const fail = () => [];
+  const fail = (error) => {
+    console.error({ error });
+    return [];
+  }
+  
   const { tag } = query as Record<string, string>;
   const posts = await PostsService.postsControllerFindAll(tag).catch(fail);
   const tags = await PostsService.postsControllerFindAllPostTags().catch(fail);
