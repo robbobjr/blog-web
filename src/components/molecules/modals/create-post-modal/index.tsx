@@ -24,6 +24,7 @@ import { CreatePostModalContent } from "../../contents/create-post-modal-content
 import { defaultFormattedValue, formatMarkdown, revertMKFormatation } from "../../../utils/format-markdown";
 import { Textarea } from "../../../atoms/textarea";
 import { userAuth } from "../../../../states/hooks/use-auth";
+import { logger } from "../../../../services/logger";
 
 interface CreatePostModalProps {
   children: ReactElement;
@@ -70,7 +71,7 @@ export function CreatePostModal({ children, post }: CreatePostModalProps) {
     }
 
     const data = formatMarkdown(defaultValue);
-    console.log(data);
+    logger.info({ payload: data, context: "CreatePostModal", msg: "handleMarkdown" });
     setFormattedValue(data);
     return data;
   }, [defaultValue]);
@@ -100,9 +101,9 @@ export function CreatePostModal({ children, post }: CreatePostModalProps) {
       setFormattedValue(defaultFormattedValue);
       history.push('/')
       onClose();
-    } catch (err) {
+    } catch (error) {
       alert('error!')
-      console.error({err});
+      logger.error({ error, context: "CreatePostModal", msg: "handleCreatePost" });
     }
   }, [data?.user?.id, handleMarkdown, handleRemoveDraft, history, onClose, post]); 
 

@@ -7,6 +7,7 @@ import { MainContainer } from "../components/molecules/containers/main-container
 import { PostHead } from "../components/organisms/heads/post-head";
 import { CreateCommentDto, PostDto, PostsService } from "../services/openapi";
 import { AdminHeader } from "../components/organisms/admin-header";
+import { logger } from "../services/logger";
 
 interface PostDetailProps {
   post: PostDto;
@@ -20,7 +21,7 @@ export default function FeedPost({ post }: PostDetailProps) {
       const comment = await PostsService.postsControllerCreateComment(data);
       setComments(state => [...state, comment]);
     } catch (error) {
-      console.log("/[slug]",{ error });
+      logger.error({ error, context: "FeedPost" });
       alert('Error!');
     }
   }, []);
@@ -67,7 +68,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const { slug } = params as Record<string, string>;
   
   const fail = (error) => {
-    console.error({ error });
+    logger.error({ error, context: "SSR:FeedPost" });
     return null;
   };
 

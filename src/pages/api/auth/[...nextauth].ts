@@ -1,5 +1,6 @@
 import NextAuth from 'next-auth';
 import GithubProvider from 'next-auth/providers/github';
+import { logger } from '../../../services/logger';
 import { OpenAPI, UserDto, UsersService } from '../../../services/openapi';
 
 OpenAPI.BASE = process.env.NEXT_PUBLIC_APP_URL;
@@ -42,7 +43,7 @@ export default NextAuth({
 
         return true;
       } catch (error) {
-        console.error('[NextAuth]', error);
+        logger.error({ error, context: "NextAuth" });
         return false;
       }
     }

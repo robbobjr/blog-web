@@ -2,6 +2,7 @@ import { Icon, Stack, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { AiOutlineCaretDown, AiOutlineCaretUp } from 'react-icons/ai';
+import { logger } from "../../../../services/logger";
 import { userAuth } from "../../../../states/hooks/use-auth";
 import { simpleHover } from "../../../../styles/theme";
 import { RateValue } from "./post-rate-controls.enum";
@@ -46,7 +47,7 @@ export function PostRateControls({
 
       setRateDate(newRate as any);
     } catch (error) {
-      console.error(error);
+      logger.error({ error, context: "PostRateControls" });
     }
   }, [data, router, userVote, handleRate, rateData]);
 

@@ -9,13 +9,18 @@ import {
   useDisclosure 
 } from "@chakra-ui/react"
 import { cloneElement, useCallback, useRef } from "react"
+import { logger } from "../../../services/logger";
 
 export function Alert({ children, title, description, handler }) {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const cancelRef = useRef();
 
   const handleConfirm = useCallback(async () => {
-    await handler().catch(console.error);
+    await handler().catch(error => logger.error({ 
+      error, 
+      context: "Alert", 
+      msg: "handleConfirm" 
+    }));
     onClose()
   }, [onClose, handler]);
 

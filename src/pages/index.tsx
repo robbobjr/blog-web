@@ -9,6 +9,7 @@ import { Topics } from "../components/organisms/topics";
 import { useCallback } from "react";
 import { useRouter } from "next/router";
 import { AdminHeader } from "../components/organisms/admin-header";
+import { logger } from "../services/logger";
 
 const containerProps = {
   border: "2px solid transparent",
@@ -30,7 +31,7 @@ export default function Feed({
       await PostsService.postsControllerCreateComment(data);
       history.push('/')
     } catch (error) {
-      console.error(error);
+      logger.error({ error, context: "Feed" });
       alert('Error!')
     }
   }, [history]);
@@ -62,14 +63,16 @@ export default function Feed({
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const fail = (error) => {
-    console.error({ error });
+    logger.error({ error, context: "SSR:Feed" });
     return [];
   }
-  
+
   const { tag } = query as Record<string, string>;
   const posts = await PostsService.postsControllerFindAll(tag).catch(fail);
   const tags = await PostsService.postsControllerFindAllPostTags().catch(fail);
-  tags.push(...["Ola", "Adeus mundo cruel", "Sociedade"].map(t => ({ name: t }) as PostTagDto))
+  tags.push(...["Ola", "Adeus mundo cruel", "Sociedade"].map(
+    t => ({ name: t }) as PostTagDto)
+  );
 
   return {
     props: {
