@@ -6,7 +6,7 @@ import '../styles/global.scss';
 import { OpenAPI } from "../services/openapi";
 import { api } from "../configs/api";
 
-OpenAPI.BASE = api.baseURL;
+OpenAPI.BASE = api.baseURL || 'http://52.25.140.131';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
