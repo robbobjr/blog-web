@@ -73,13 +73,6 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     axiosAPI.get('/posts', { params: {tag} }).catch(fail),
     axiosAPI.get('posts/tags').catch(fail),
   ]);
-  
-  
-  tags.push(...["Ola", "Adeus mundo cruel", "Sociedade"].map(
-    t => ({ name: t }) as PostTagDto)
-  );
-
-  logger.info({ msg: "ola mundo" })
 
   return {
     props: {
