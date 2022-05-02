@@ -34,7 +34,7 @@ export default NextAuth({
     },
     session: async (data) => {
       const axiosAPI = new AxiosAPI("NextAtuh:session");
-      const userByEmail = await axiosAPI.getUserByEmail(data.user.email);
+      const userByEmail = await axiosAPI.getUserByEmail(data.token.email);
       return { user: userByEmail, expires: data.session.expires };
     },
     signIn: async (data) => {
