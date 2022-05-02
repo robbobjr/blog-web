@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "sdk:gen": "openapi -i http://localhost:3333/docs-json -o src/services/openapi"
+    "sdk:gen": "openapi -i http://localhost:3333/docs-json -o src/services/api/openapi"
   },
   "dependencies": {
     "@chakra-ui/react": "^1.8.6",
