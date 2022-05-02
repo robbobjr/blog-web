@@ -46,7 +46,7 @@ export function HeaderControls() {
           iconColor={history.query.rateValue && "pink.400"}
         />
       )}
-      {data.user.permission === UserDto.permission.ADMIN && (
+      {data?.user?.permission === UserDto.permission.ADMIN && (
         <CreatePostModal>
           <CircularIcon icon={GoPlus} />
         </CreatePostModal>
