@@ -39,13 +39,14 @@ export default NextAuth({
     },
     signIn: async (data) => {
       const axiosAPI = new AxiosAPI("NextAuth:signIn");
+      let { email, name, image } = data.user;
+      const searchParam = email || data.profile.email || data.account.providerAccountId;
 
       try {
-        const user = await axiosAPI.getUserByEmail(data.user.email);
+        const user = await axiosAPI.getUserByEmail(searchParam);
 
         if (!user) {
-          let { email, name, image } = data.user;
-          email = email || data.profile.email || data.account.providerAccountId;
+          email = searchParam;
           const github = data.profile.url;
           await axiosAPI.createUser({ email, image, name, github });
         }
