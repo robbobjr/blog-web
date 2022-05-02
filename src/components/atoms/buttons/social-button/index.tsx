@@ -1,7 +1,7 @@
 import { Icon, Button, ButtonProps, As } from "@chakra-ui/react";
 
 interface SocialButtonProps extends ButtonProps {
-  handler: () => void;
+  handler?: () => void;
   icon: As<any>;
   children: string;
 }

@@ -1,10 +1,11 @@
-import { Icon, Stack, Text } from "@chakra-ui/react";
+import { Icon, Stack, Text, useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { AiOutlineCaretDown, AiOutlineCaretUp } from 'react-icons/ai';
 import { logger } from "../../../../services/logger";
-import { userAuth } from "../../../../states/hooks/use-auth";
+import { useAuth } from "../../../../states/hooks/use-auth";
 import { simpleHover } from "../../../../styles/theme";
+import { createPostRateErrorToast } from "../../../../utils/toast";
 import { RateValue } from "./post-rate-controls.enum";
 import { PostRateControlsProps } from "./post-rate-controls.type";
 
@@ -15,19 +16,20 @@ export function PostRateControls({
   isBorderLeft,
   size, 
 }: PostRateControlsProps) {
-  const { data } = userAuth();
+  const { data } = useAuth();
   const router = useRouter();
+  const toast = useToast();
 
-  const [rateData, setRateDate] = useState(rates);
+  const [rateData, setRateDate] = useState(rates || []);
   const [rateSum, setRateSum] = useState(0);
-  const [userVote, setUserVote] = useState<undefined | RateValue>();
+  const [userVote, setUserVote] = useState<undefined | RateValue>();  
 
   useEffect(() => {
     const sum = [...rateData].reduce((a, b) => a + b.value, 0);
-    const rateI = [...rateData].findIndex(rate => rate.userId === data?.user.id);
+    const rateI = [...rateData].findIndex(rate => rate.userId === data?.user?.id);
     if (rateI >= 0) setUserVote(rateData[rateI].value);
     setRateSum(sum);
-  },[data?.user.id, rateData]);
+  },[rateData, data]);
   
   const handlePostRate = useCallback(async (value: number) => {
     if (!data) return router.push('/login');
@@ -47,9 +49,10 @@ export function PostRateControls({
 
       setRateDate(newRate as any);
     } catch (error) {
+      toast(createPostRateErrorToast);
       logger.error({ error, context: "PostRateControls" });
     }
-  }, [data, router, userVote, handleRate, rateData]);
+  }, [data, router, userVote, handleRate, rateData, toast]);
 
   const counterSize = useMemo(() => {
     const sizeValues = {

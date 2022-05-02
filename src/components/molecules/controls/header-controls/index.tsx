@@ -1,7 +1,10 @@
-import { Flex, HStack } from "@chakra-ui/react";
+import { HStack } from "@chakra-ui/react";
+import { useRouter } from "next/router";
+import { useCallback } from "react";
+import { AiOutlineCaretUp } from "react-icons/ai";
 import { GoPlus } from "react-icons/go";
-import { RiNotificationLine, RiUserAddLine } from "react-icons/ri";
-import { Icon } from "../../../atoms/icons";
+import { useAuth } from "../../../../states/hooks/use-auth";
+import { CircularIcon } from "../../../atoms/icons/circular-icon";
 import { CreatePostModal } from "../../modals/create-post-modal";
 
 /**
@@ -9,6 +12,22 @@ import { CreatePostModal } from "../../modals/create-post-modal";
  * Buttons inside the header to control pub creation and notifications 
  */
 export function HeaderControls() {
+  const history = useRouter();
+  const { data } = useAuth(); 
+
+  const handleUserLikedPosts = useCallback(() => {
+    if (!data?.user) return;
+    history.push({
+      pathname: "/",
+      ...(!history.query.rateValue && {
+        query: {
+          userId: data?.user?.id,
+          rateValue: 1,
+        }
+      })
+    })
+  }, [data, history]);
+
   return (
     <HStack
       spacing="4"
@@ -19,10 +38,15 @@ export function HeaderControls() {
       borderRightWidth={1}
       borderColor="gray.800"
     >
+      {data?.user && (
+        <CircularIcon 
+          icon={AiOutlineCaretUp} 
+          onClick={handleUserLikedPosts}
+          iconColor={history.query.rateValue && "pink.400"}
+        />
+      )}
       <CreatePostModal>
-        <Flex bg="gray.800" borderRadius="50%" align="center" justify="center" p="2">
-          <Icon as={GoPlus} fontSize={20} />
-        </Flex>
+        <CircularIcon icon={GoPlus} />
       </CreatePostModal>
     </HStack> 
   );

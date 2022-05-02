@@ -14,6 +14,7 @@ import {
   HStack,
   Icon,
   Flex,
+  useToast,
 } from "@chakra-ui/react"
 import { useRouter } from "next/router";
 import { useRef, cloneElement, useCallback, useEffect, useState, ReactElement } from "react"
@@ -23,8 +24,9 @@ import { PostDto, PostsService } from "../../../../services/openapi";
 import { CreatePostModalContent } from "../../contents/create-post-modal-content";
 import { defaultFormattedValue, formatMarkdown, revertMKFormatation } from "../../../utils/format-markdown";
 import { Textarea } from "../../../atoms/textarea";
-import { userAuth } from "../../../../states/hooks/use-auth";
+import { useAuth } from "../../../../states/hooks/use-auth";
 import { logger } from "../../../../services/logger";
+import { createPostErrorToast } from "../../../../utils/toast";
 
 interface CreatePostModalProps {
   children: ReactElement;
@@ -40,10 +42,11 @@ export function CreatePostModal({ children, post }: CreatePostModalProps) {
   const [defaultValue, setDefaultValue] = useState<string | null>();
   const [formattedValue, setFormattedValue] = useState(defaultFormattedValue)
 
+  const toast = useToast();
   const initialRef = useRef();
   const history = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { data } = userAuth();
+  const { data } = useAuth();
   const { handleAddDraft, handleGetDraft, handleRemoveDraft } = useContent();
 
   useEffect(() => {
@@ -91,29 +94,32 @@ export function CreatePostModal({ children, post }: CreatePostModalProps) {
     try {
       if (post) {
         await PostsService.postsControllerUpdate(String(post.id), {
-          userId: data.user.id,
+          userId: data?.user?.id,
           ...dto,
         });
       } else {
-        await PostsService.postsControllerCreate({ userId: data.user.id, ...dto });
+        await PostsService.postsControllerCreate({ userId: data?.user?.id, ...dto });
       }
       handleRemoveDraft('create-post-modal');
       setFormattedValue(defaultFormattedValue);
       history.push('/')
       onClose();
     } catch (error) {
-      alert('error!')
+      toast(createPostErrorToast);
       logger.error({ error, context: "CreatePostModal", msg: "handleCreatePost" });
     }
-  }, [data?.user?.id, handleMarkdown, handleRemoveDraft, history, onClose, post]); 
+  }, [toast, data?.user?.id, handleMarkdown, handleRemoveDraft, history, onClose, post]); 
 
   return (
     <>
       { cloneElement(children, { onClick: onOpen }) }
       <Modal
+        isCentered
         initialFocusRef={initialRef}
+        blockScrollOnMount
         isOpen={isOpen}
         onClose={handleSaveDraft}
+        scrollBehavior="inside"
         size="2xl"
       >
         <ModalOverlay />

@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useCallback, useMemo } from "react";
 import { FaHandshake, FaHome, FaPen, FaTrashAlt } from "react-icons/fa";
 import { PostDto, PostsService } from "../../../../services/openapi";
-import { userAuth } from "../../../../states/hooks/use-auth";
+import { useAuth } from "../../../../states/hooks/use-auth";
 import { PostIcon } from "../../../atoms/icons/post-icon";
 import { Link } from "../../../atoms/link";
 import { Alert } from "../../../organisms/alert";
@@ -18,7 +18,7 @@ export function PostHeader({
   data: postData,
   isPostPreview, 
 }: PostHeaderProps) {
-  const { data } = userAuth();
+  const { data } = useAuth();
   const history = useRouter();
   const { participation, user, id } = useMemo(() => postData, [postData]);
   
@@ -33,9 +33,9 @@ export function PostHeader({
 
   return (
     <Flex align="center">
-      <Avatar size="xs" name={user.name} src={user.image}/>
+      <Avatar size="xs" name={user?.name} src={user?.image}/>
       <Text fontSize="smaller" color="gray.600" ml="2">
-        Escrito por {user.name}
+        Escrito por {user?.name}
       </Text>
       <Flex ml="auto">
         {participation && (

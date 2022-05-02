@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from "react";
 import { PostsService } from "../../../services/openapi";
-import { userAuth } from "../../../states/hooks/use-auth";
+import { useAuth } from "../../../states/hooks/use-auth";
 import { PostContainer } from "../../molecules/containers/post-container";
 import { PostContent } from "../../molecules/contents/post-content";
 import { PostPreviewContent } from "../../molecules/contents/post-preview-content";
@@ -16,7 +16,7 @@ export function Post({
   commentHandler,
   data: postData,
 }: PostProps) {
-  const session = userAuth();
+  const session = useAuth();
 
   const {
     id,
@@ -27,7 +27,7 @@ export function Post({
   const handlePostRate = useCallback(async (value: number) => {
     return PostsService.postsControllerCreatePostRate({
       postId: id,
-      userId: session.data.user.id,
+      userId: session.data?.user?.id,
       value,
     });
   }, [id, session]);

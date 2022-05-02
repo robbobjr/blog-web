@@ -1,14 +1,10 @@
-import { Flex, Text } from "@chakra-ui/react";
-import Link from "next/link";
+import Image from "next/image";
+import { Link } from "./link";
 
 export function BlogLogo() {
   return (
-    <Flex as={Link} passHref={true} href={'/'} cursor="pointer">
-      <a>
-        <Text fontSize="3xl" fontWeight="bold" letterSpacing="tight" w="64">
-        {"<robblog/>"}
-        </Text>
-      </a>
-    </Flex>
+    <Link href="/">
+      <Image src="/static/logo.svg" width={60} height="100%" alt="blog.rbjr" />
+    </Link>
   );
 }

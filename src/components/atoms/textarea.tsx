@@ -12,6 +12,7 @@ export function Textarea(props: TextareaProps) {
       bg="gray.800"
       minH="50vh"
       focusBorderColor="gray.800"
+      color="gray.600"
       resize="none"
       _hover={{ bg: "gray.800" }}
       {...props}

@@ -3,24 +3,29 @@ import { PostIcon } from "../../../atoms/icons/post-icon";
 import { SingleInputModal } from "../../modals/single-input-modal";
 import { FaSignInAlt } from 'react-icons/fa';
 import { RiMessage3Fill, RiTeamFill } from 'react-icons/ri';
-import { FormEvent, useCallback } from "react";
+import { FormEvent, useCallback, useMemo } from "react";
 import { PostFooterProps } from "./post-footer.types";
 import { formatCommentText } from "../../../utils/format-text";
+import { useAuth } from "../../../../states/hooks/use-auth";
+import { logger } from "../../../../services/logger";
 
 export function PostFooter({
   commentHandler,
   data: {
     id,
-    user, 
     comments,
     candidatures,
     availlablePositions,
   }
 }: PostFooterProps) {
+  const { data } = useAuth();
+  const user = useMemo(() => data?.user, [data]);
+
   const handlePostJoin = useCallback(
     async (event: FormEvent<HTMLElement>) => {
       const content = event.target['content'].value;
       const dto = { user, postId: id, content }
+      logger.info({ payload: dto, context: "handlePostJoin" });
     }, [user, id],
   );
 
@@ -31,7 +36,7 @@ export function PostFooter({
       return commentHandler({
         content,
         postId: id,
-        userId: user.id,
+        userId: user?.id,
       });
     }, [commentHandler, user, id],
   );

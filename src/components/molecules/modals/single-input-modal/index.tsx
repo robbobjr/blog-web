@@ -48,8 +48,8 @@ export function SingleInputModal({
 
   const handleSubmit = useCallback(async (event) => {
     event.preventDefault();
-    handler(event);
     onClose();
+    return handler(event);
   }, [onClose, handler]);
 
   const handleSaveDraft = useCallback(() => {
@@ -65,9 +65,12 @@ export function SingleInputModal({
     <>
       { cloneElement(children, { onClick: handleOpenModal }) }
       <Modal
+        isCentered={true}
+        blockScrollOnMount
         initialFocusRef={initialRef}
         isOpen={isOpen}
         onClose={handleSaveDraft}
+        scrollBehavior="inside"
         size="lg"
       >
         <ModalOverlay />
@@ -81,9 +84,9 @@ export function SingleInputModal({
                 <Avatar name={data?.user?.name} src={data?.user?.image} />
                 <Textarea 
                   as={ResizeTextarea}
-                  overflow="hidden"
                   minRows={1}
                   maxRows={40}
+                  maxH="50vh"
                   variant="filled" 
                   bg="gray.800"
                   focusBorderColor="gray.800"

@@ -9,7 +9,7 @@ interface TopicsProps extends BoxProps {
 
 export function Topics({ tags, ...props }: TopicsProps) {
   return (
-    <Box display="block" float="none" {...props} textAlign="center">
+    <Box display="block" float="none" textAlign="center" {...props}>
        {tags?.map(tag => 
         <Link key={tag.name} href={`?tag=${tag.name}`}>
           <Badge 
