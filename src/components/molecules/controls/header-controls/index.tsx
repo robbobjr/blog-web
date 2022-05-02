@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useCallback } from "react";
 import { AiOutlineCaretUp } from "react-icons/ai";
 import { GoPlus } from "react-icons/go";
+import { UserDto } from "../../../../services/api/openapi";
 import { useAuth } from "../../../../states/hooks/use-auth";
 import { CircularIcon } from "../../../atoms/icons/circular-icon";
 import { CreatePostModal } from "../../modals/create-post-modal";
@@ -45,9 +46,11 @@ export function HeaderControls() {
           iconColor={history.query.rateValue && "pink.400"}
         />
       )}
-      <CreatePostModal>
-        <CircularIcon icon={GoPlus} />
-      </CreatePostModal>
+      {data.user.permission === UserDto.permission.ADMIN && (
+        <CreatePostModal>
+          <CircularIcon icon={GoPlus} />
+        </CreatePostModal>
+      )}
     </HStack> 
   );
 }
