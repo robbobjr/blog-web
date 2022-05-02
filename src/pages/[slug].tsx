@@ -1,14 +1,17 @@
 import { GetServerSideProps } from "next"
-import { Flex, Stack } from "@chakra-ui/react";
+import { Flex, Stack, useToast } from "@chakra-ui/react";
 import { PostComment } from "../components/organisms/post/post-comment";
 import { Post } from "../components/organisms/post";
 import { useCallback, useState } from "react";
 import { MainContainer } from "../components/molecules/containers/main-container";
-import { PostHead } from "../components/organisms/heads/post-head";
-import { CreateCommentDto, PostDto, PostsService } from "../services/openapi";
-import { AdminHeader } from "../components/organisms/admin-header";
+import { CreateCommentDto, PostDto, PostsService } from "../services/api/openapi";
 import { logger } from "../services/logger";
-import { axiosAPI } from "../services/axios-api";
+import { createCommentErrorToast } from "../utils/toast";
+import { Header } from "../components/organisms/header";
+import { useContent } from "../states/hooks/use-content";
+import { Footer } from "../components/organisms/footer";
+import { PostHead } from "../components/organisms/head/post-head";
+import { AxiosAPI } from "../services/api/axios";
 
 interface PostDetailProps {
   post: PostDto;
@@ -16,6 +19,8 @@ interface PostDetailProps {
 
 export default function FeedPost({ post }: PostDetailProps) {
   const [comments, setComments] = useState(post?.comments || []);
+  const { tags } = useContent();
+  const toast = useToast();
 
   const commentHandler = useCallback(async (data: CreateCommentDto) => {
     try {
@@ -23,9 +28,9 @@ export default function FeedPost({ post }: PostDetailProps) {
       setComments(state => [...state, comment]);
     } catch (error) {
       logger.error({ error, context: "FeedPost" });
-      alert('Error!');
+      toast(createCommentErrorToast);
     }
-  }, []);
+  }, [toast]);
 
   if (!post) return <></>;
 
@@ -33,17 +38,17 @@ export default function FeedPost({ post }: PostDetailProps) {
     <>
       <PostHead data={post}/>
       <Flex direction="column" h="100vh">
-        <AdminHeader/>
+        <Header/>
         <MainContainer>
           <Stack spacing="0" flex="1" minW="320px" alignItems="center" mb="6">
             <Post 
               data={post} 
+              commentHandler={commentHandler}
               containerProps={{ 
                 borderBottomRadius: comments.length ? 0 : "lg", 
                 maxWidth: "772px",
                 paddingTop: "2rem" 
               }} 
-              commentHandler={commentHandler}
             />
             <Flex direction="column" align="center" w="100%">
               {comments.map((comment, i, a) => (
@@ -60,20 +65,16 @@ export default function FeedPost({ post }: PostDetailProps) {
             </Flex>
           </Stack>
         </MainContainer> 
+        <Footer data={{ tags }}/>
       </Flex>
     </>
   )
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+  const axiosAPI = new AxiosAPI("FeedPost:getServerSideProps");
   const { slug } = params as Record<string, string>;
-  
-  const fail = (error) => {
-    logger.error({ error, context: "SSR:FeedPost" });
-    return { data: null };
-  };
-
-  const { data: post } = await axiosAPI.get('/posts/byslug/' + slug).catch(fail);
+  const post = await axiosAPI.getPostsBySlug(slug); 
   
   return {
     props: {

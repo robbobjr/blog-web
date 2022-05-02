@@ -32,14 +32,14 @@ export default function Login() {
           <SocialButton handler={handleGithubSign} icon={AiFillGithub} colorScheme="blackAlpha">
             Github
           </SocialButton>
-          <SocialButton handler={handleGithubSign} icon={AiFillTwitterCircle} colorScheme="twitter">
-            Twitter
+          <SocialButton disabled icon={AiFillTwitterCircle} colorScheme="twitter">
+            Twitter (Em breve)
           </SocialButton>
-          <SocialButton handler={handleGithubSign} icon={AiFillLinkedin} colorScheme="linkedin">
-            Linkedin
+          <SocialButton disabled icon={AiFillLinkedin} colorScheme="linkedin">
+            Linkedin (Em breve)
           </SocialButton>
-          <SocialButton handler={handleGithubSign} icon={AiFillGoogleCircle} colorScheme="red">
-            Google
+          <SocialButton disabled icon={AiFillGoogleCircle} colorScheme="red">
+            Google (Em breve)
           </SocialButton>
         </Stack>
       </Flex>

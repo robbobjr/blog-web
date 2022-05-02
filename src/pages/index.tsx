@@ -1,16 +1,19 @@
-import { Flex, Stack } from "@chakra-ui/react";
+import { Box, Flex, Stack, useToast } from "@chakra-ui/react";
 import { Post } from "../components/organisms/post";
 import { MainContainer } from "../components/molecules/containers/main-container";
-import { FeedHead } from "../components/organisms/heads/feed-head";
 import { GetServerSideProps } from "next";
-import { CreateCommentDto, PostDto, PostsService, PostTagDto } from "../services/openapi";
 import { dracula } from "../styles/theme";
 import { Topics } from "../components/organisms/topics";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { useRouter } from "next/router";
-import { AdminHeader } from "../components/organisms/admin-header";
 import { logger } from "../services/logger";
-import { axiosAPI } from "../services/axios-api";
+import { createCommentErrorToast } from "../utils/toast";
+import { Header } from "../components/organisms/header";
+import { Footer } from "../components/organisms/footer";
+import { useContent } from "../states/hooks/use-content";
+import { FeedHead } from "../components/organisms/head/feed-head";
+import { CreateCommentDto, PostDto, PostsService, PostTagDto } from "../services/api/openapi";
+import { AxiosAPI } from "../services/api/axios";
 
 const containerProps = {
   border: "2px solid transparent",
@@ -26,24 +29,32 @@ export default function Feed({
   tags 
 }: { posts: PostDto[], tags: PostTagDto[]}) {
   const history = useRouter();
+  const toast = useToast();
+  const { setTags } = useContent();
   
+  useEffect(() => {
+    setTags(tags);
+  }, [setTags, tags]);
+
   const commentHandler = useCallback(async (data: CreateCommentDto) => {
     try {
       await PostsService.postsControllerCreateComment(data);
       history.push('/')
     } catch (error) {
       logger.error({ error, context: "Feed" });
-      alert('Error!')
+      toast(createCommentErrorToast);
     }
-  }, [history]);
+  }, [history, toast]);
 
   return (
     <>
       <FeedHead />
       <Flex direction="column" h="100vh"> 
-        <AdminHeader/>
+        <Header/>
         <MainContainer>
-          <Topics tags={tags} position="absolute" maxW="200px" display={{ sm: "none", lg: "block"}}/>
+          <Box position="absolute">
+            <Topics textAlign="left" tags={tags} maxW="200px" display={{ sm: "none", lg: "block"}}/>
+          </Box>
           <Stack spacing="4" flex="1" minW="320px" alignItems="center" mb="6">
             {posts.map((post, i) => (
               <Post 
@@ -56,23 +67,16 @@ export default function Feed({
             ))}
           </Stack>
         </MainContainer> 
-        <Topics tags={tags} mx="auto" pb="4" maxW="400px"/>
+        <Footer data={{ tags }} />
       </Flex>
     </>
   );
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
-  const fail = (error) => {
-    logger.error({ error, context: "SSR:Feed" });
-    return { data: [] };
-  }
-
-  const { tag } = query as Record<string, string>;
-  const [{ data: posts }, { data: tags }] = await Promise.all([
-    axiosAPI.get('/posts', { params: {tag} }).catch(fail),
-    axiosAPI.get('posts/tags').catch(fail),
-  ]);
+  const axiosAPI = new AxiosAPI("Feed:getServerSideProps");
+  const params = query as Record<string, string>;
+  const { posts, tags } = await axiosAPI.getPostsAndTags(params);
 
   return {
     props: {

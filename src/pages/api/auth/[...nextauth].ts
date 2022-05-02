@@ -1,6 +1,6 @@
 import NextAuth from 'next-auth';
 import GithubProvider from 'next-auth/providers/github';
-import { axiosAPI } from '../../../services/axios-api';
+import { AxiosAPI } from '../../../services/api/axios';
 import { logger } from '../../../services/logger';
 
 // With the pattern [...anything] we can intercept any route that start with api/auth
@@ -33,19 +33,21 @@ export default NextAuth({
       return token
     },
     session: async (data) => {
-      const { session: { user } } = data;
-      const { data: userByEmail } = await axiosAPI.get('/users/' + user.email);
+      const axiosAPI = new AxiosAPI("NextAtuh:session");
+      const userByEmail = await axiosAPI.getUserByEmail(data.user.email);
       return { user: userByEmail, expires: data.session.expires };
     },
     signIn: async (data) => {
+      const axiosAPI = new AxiosAPI("NextAuth:signIn");
+
       try {
-        const { data: user } = await axiosAPI.get('/users/' + data.user.email);
+        const user = await axiosAPI.getUserByEmail(data.user.email);
 
         if (!user) {
           let { email, name, image } = data.user;
           email = email || data.profile.email || data.account.providerAccountId;
           const github = data.profile.url;
-          await axiosAPI.post('/users', { email, image, name, github });
+          await axiosAPI.createUser({ email, image, name, github });
         }
 
         return true;
