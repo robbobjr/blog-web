@@ -23,7 +23,7 @@ export const randomDraculaBackground = () => {
 }
 
 export const simpleHover = {
-  filter: 'brightness(0.65)',
+  filter: 'brightness(0.8)',
   transition: '0.3s',
   cursor: 'pointer'
 }
