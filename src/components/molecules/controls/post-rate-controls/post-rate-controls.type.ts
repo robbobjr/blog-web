@@ -1,4 +1,4 @@
-import { CommentRateDto, PostRateDto } from "../../../../services/openapi";
+import { CommentRateDto, PostRateDto } from "../../../../services/api/openapi";
 
 export interface PostRateControlsProps  {
   hideRateControl?: boolean;

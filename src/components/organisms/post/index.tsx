@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from "react";
-import { PostsService } from "../../../services/openapi";
+import { PostsService } from "../../../services/api/openapi";
 import { useAuth } from "../../../states/hooks/use-auth";
 import { PostContainer } from "../../molecules/containers/post-container";
 import { PostContent } from "../../molecules/contents/post-content";

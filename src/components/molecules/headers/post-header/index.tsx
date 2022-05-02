@@ -2,7 +2,7 @@ import { Avatar, Flex, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useCallback, useMemo } from "react";
 import { FaHandshake, FaHome, FaPen, FaTrashAlt } from "react-icons/fa";
-import { PostDto, PostsService } from "../../../../services/openapi";
+import { PostDto, PostsService } from "../../../../services/api/openapi";
 import { useAuth } from "../../../../states/hooks/use-auth";
 import { PostIcon } from "../../../atoms/icons/post-icon";
 import { Link } from "../../../atoms/link";

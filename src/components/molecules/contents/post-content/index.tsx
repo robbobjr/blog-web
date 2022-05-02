@@ -6,7 +6,7 @@ import { markdown } from "../../../../services/markdown";
 export function PostContent({ 
   data: { title, content, createdAt }
 }: PostContentProps) {
-  const formatted = useMemo(() => markdown.render(content),[]);
+  const formatted = useMemo(() => markdown.render(content),[content]);
 
   const date = useMemo(() => {
     return new Date(createdAt).toLocaleDateString('pt-BR', {

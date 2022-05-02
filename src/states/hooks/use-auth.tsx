@@ -1,5 +1,5 @@
 import { useSession } from "next-auth/react";
-import { UserDto } from "../../services/openapi";
+import { UserDto } from "../../services/api/openapi";
 
 export type CustomSessionContext = {
   data?: {

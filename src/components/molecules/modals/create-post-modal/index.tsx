@@ -20,13 +20,13 @@ import { useRouter } from "next/router";
 import { useRef, cloneElement, useCallback, useEffect, useState, ReactElement } from "react"
 import { AiFillEye } from "react-icons/ai";
 import { useContent } from "../../../../states/hooks/use-content";
-import { PostDto, PostsService } from "../../../../services/openapi";
 import { CreatePostModalContent } from "../../contents/create-post-modal-content";
 import { defaultFormattedValue, formatMarkdown, revertMKFormatation } from "../../../utils/format-markdown";
 import { Textarea } from "../../../atoms/textarea";
 import { useAuth } from "../../../../states/hooks/use-auth";
 import { logger } from "../../../../services/logger";
 import { createPostErrorToast } from "../../../../utils/toast";
+import { PostDto, PostsService } from "../../../../services/api/openapi";
 
 interface CreatePostModalProps {
   children: ReactElement;

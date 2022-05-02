@@ -1,7 +1,7 @@
 import { Badge, Box, BoxProps, SimpleGrid, SimpleGridProps } from "@chakra-ui/react"
-import { PostTagDto } from "../../../services/openapi"
-import { randomDraculaBackground } from "../../../styles/theme"
-import { Link } from "../../atoms/link"
+import { PostTagDto } from "../../services/api/openapi"
+import { randomDraculaBackground } from "../../styles/theme"
+import { Link } from "../atoms/link"
 
 interface TopicsProps extends BoxProps {
   tags: PostTagDto[]

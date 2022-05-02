@@ -1,4 +1,4 @@
-import { CreateCommentDto, PostDto, UserDto } from "../../../../services/openapi";
+import { CreateCommentDto, PostDto } from "../../../../services/api/openapi";
 
 export interface PostFooterProps {
   data: Partial<PostDto>;

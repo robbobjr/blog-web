@@ -1,6 +1,6 @@
 import { createContext } from "react";
 import { useCallback, useMemo, useState } from "react";
-import { PostTagDto } from "../../services/openapi";
+import { PostTagDto } from "../../services/api/openapi";
 
 interface AddDraftProps {
   content: string;
