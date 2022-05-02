@@ -1,14 +1,14 @@
 import { useSession } from "next-auth/react";
 import { UserDto } from "../../services/openapi";
 
-export type CustomSession = {
+export type CustomSessionContext = {
   data?: {
     user: UserDto;
   }
 }
 
-export function userAuth(): CustomSession {
-  const data = useSession() as CustomSession;
+export function useAuth(): CustomSessionContext {
+  const data = useSession();
 
-  return data;
+  return data as CustomSessionContext;
 }
