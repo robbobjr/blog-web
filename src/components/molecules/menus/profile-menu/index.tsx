@@ -27,7 +27,7 @@ export function ProfileMenu() {
   }, [data, router]);
 
   return (
-    <Flex align="center">
+    <Flex align="center" ml={!data && "auto"}>
       <Box 
         mr="4" 
         textAlign="right" 
