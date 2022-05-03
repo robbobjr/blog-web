@@ -28,11 +28,16 @@ export function ProfileMenu() {
 
   return (
     <Flex align="center">
-      <Box display={{ sm: 'none', md: 'block' }} mr="4" textAlign="right" _hover={data ? {} : simpleHover} onClick={data ? () => {} : handleSession}>
-        <Text>
+      <Box 
+        mr="4" 
+        textAlign="right" 
+        _hover={data ? {} : simpleHover} 
+        onClick={data ? () => {} : handleSession}
+      >
+        <Text isTruncated>
           {name || "Entrar"}
         </Text>
-        <Text color="gray.600" fontSize="small">
+        <Text color="gray.600" fontSize="small" isTruncated>
           {email || "Não logado"}
         </Text>
       </Box>
@@ -48,8 +53,8 @@ export function ProfileMenu() {
         </MenuButton>
         {data && (
           <MenuList bg="gray.50">
-            <MenuItem icon={<FaUserAstronaut size={15}/>} color="gray.700" onClick={handleSession}>
-              Perfil
+            <MenuItem icon={<FaUserAstronaut size={15}/>} color="gray.700">
+              Perfil (Em breve)
             </MenuItem>
             <MenuItem icon={<GoSignOut size={15}/>} color="gray.700" onClick={handleSession}>
               Sair
