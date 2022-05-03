@@ -12,6 +12,7 @@ import { useContent } from "../states/hooks/use-content";
 import { Footer } from "../components/organisms/footer";
 import { PostHead } from "../components/organisms/head/post-head";
 import { AxiosAPI } from "../services/api/axios";
+import { useAuth } from "../states/hooks/use-auth";
 
 interface PostDetailProps {
   post: PostDto;
@@ -21,16 +22,18 @@ export default function FeedPost({ post }: PostDetailProps) {
   const [comments, setComments] = useState(post?.comments || []);
   const { tags } = useContent();
   const toast = useToast();
+  const session = useAuth();
 
   const commentHandler = useCallback(async (data: CreateCommentDto) => {
     try {
       const comment = await PostsService.postsControllerCreateComment(data);
+      comment.user = session.data.user;
       setComments(state => [...state, comment]);
     } catch (error) {
       logger.error({ error, context: "FeedPost" });
       toast(createCommentErrorToast);
     }
-  }, [toast]);
+  }, [toast, session]);
 
   if (!post) return <></>;
 
