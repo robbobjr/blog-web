@@ -31,8 +31,7 @@ export function ProfileMenu() {
       <Box 
         mr="4" 
         textAlign="right" 
-        _hover={data ? {} : simpleHover} 
-        onClick={data ? () => {} : handleSession}
+        display={{ sm: 'none', md: 'none', lg: 'block' }}
       >
         <Text isTruncated>
           {name || "Entrar"}
@@ -51,16 +50,22 @@ export function ProfileMenu() {
           _hover={data ? simpleHover : {}}
         />
         </MenuButton>
-        {data && (
-          <MenuList bg="gray.50">
-            <MenuItem icon={<FaUserAstronaut size={15}/>} color="gray.700">
-              Perfil (Em breve)
-            </MenuItem>
+        <MenuList bg="gray.50">
+          {data ? (
+            <>
+              <MenuItem disabled icon={<FaUserAstronaut size={15}/>} color="gray.700">
+                Perfil ( Em breve )
+              </MenuItem>
+              <MenuItem icon={<GoSignOut size={15}/>} color="gray.700" onClick={handleSession}>
+                Sair
+              </MenuItem>
+            </>
+          ): (
             <MenuItem icon={<GoSignOut size={15}/>} color="gray.700" onClick={handleSession}>
-              Sair
+              Entrar
             </MenuItem>
-          </MenuList>
-        )}
+          )}
+        </MenuList>
       </Menu>
     </Flex>
   );

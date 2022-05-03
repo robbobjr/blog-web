@@ -38,12 +38,15 @@ export function HeaderControls() {
       color="gray.600"
       borderRightWidth={1}
       borderColor="gray.800"
+      ml={{ sm: 'auto', md: "8" }}
     >
-      <CircularIcon 
-        icon={AiOutlineCaretUp} 
-        onClick={handleUserLikedPosts}
-        iconColor={history.query.rateValue && "pink.400"}
-      />
+      {data && (
+        <CircularIcon 
+          icon={AiOutlineCaretUp} 
+          onClick={handleUserLikedPosts}
+          iconColor={history.query.rateValue && "pink.400"}
+        />
+      )}
       {data?.user?.permission === UserDto.permission.ADMIN && (
         <CreatePostModal>
           <CircularIcon icon={GoPlus} />

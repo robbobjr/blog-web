@@ -23,7 +23,7 @@ export function Header() {
       px="10"
     >
       <BlogLogo/>
-      <SocialControls ml="auto"/>
+      <SocialControls />
       <SearchInput />
       <HeaderControls/>
       <Flex align="center">
