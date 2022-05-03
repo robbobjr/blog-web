@@ -1,6 +1,6 @@
 import { HStack, StackProps } from "@chakra-ui/react";
 import { GoMarkGithub } from "react-icons/go";
-import { personalConfig } from "../../../../configs/personal";
+import { personalConfig } from "../../../../configs/personal-config";
 import { CircularIcon } from "../../../atoms/icons/circular-icon";
 import { SiLinkedin } from 'react-icons/si';
 import { FaTwitter } from "react-icons/fa";

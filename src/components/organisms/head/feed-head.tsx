@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { metaConfig } from "../../../configs/meta";
+import { metaConfig } from "../../../configs/meta-config";
 
 export function FeedHead() {
   return (

@@ -3,7 +3,7 @@ import { AppProps } from "next/dist/shared/lib/router/router"
 import { theme } from "../styles/theme"
 import { SessionProvider } from 'next-auth/react';
 import '../styles/global.scss';
-import { apiConfig } from "../configs/api";
+import { apiConfig } from "../configs/api-config";
 import { ContentContextProvider } from "../states/contexts/contet-context";
 import { OpenAPI } from "../services/api/openapi";
 
