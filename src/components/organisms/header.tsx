@@ -12,7 +12,7 @@ export function Header() {
   return (
     <Flex 
       width="100%"
-      visibility={["hidden", !data ? "hidden" : "initial"]}
+      visibility={["hidden", "initial"]}
       h="20" 
       minH="20" 
       as="header" 
