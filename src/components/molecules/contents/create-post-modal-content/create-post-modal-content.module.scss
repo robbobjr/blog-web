@@ -22,16 +22,26 @@
   font-size: 1rem;
   color: #f8f8f2;
 
-  h1 {
-    font-size: 2rem;
-    font-weight: 900;
+  img {
+    border-radius: 0.5rem;
   }
 
   h2 {
+    font-size: 1.8rem;
+    font-weight: normal;
+    color: #f8f8f2;
+    opacity: 0.6;
+  }
+
+  h3, h4, h5, h6 {
     font-size: 1.5rem;
     font-weight: normal;
     color: #f8f8f2;
     opacity: 0.6;
+  }
+
+  strong {
+    font-weight: 900;
   }
 
   p, ul {

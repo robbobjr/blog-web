@@ -1,3 +1,20 @@
+.post {
+  max-width: 720px;
+  margin: 5rem auto 0;
+
+  h1 {
+    font-size: 2.4rem;
+    font-weight: 900;
+  }
+
+  time {
+    display: block;
+    font-size: 1rem;
+    color: #f8f8f2;
+    margin-top: 1.5rem;
+  }
+}
+
 .post_content {
   margin-top: 1rem;
   line-height: 2rem;
@@ -6,6 +23,24 @@
 
   img {
     border-radius: 0.5rem;
+  }
+  
+  h2 {
+    font-size: 1.5rem;
+    font-weight: normal;
+    color: #f8f8f2;
+    opacity: 0.6;
+  }
+
+  h3, h4, h5, h6 {
+    font-size: 1.5rem;
+    font-weight: normal;
+    color: #f8f8f2;
+    opacity: 0.6;
+  }
+
+  strong {
+    font-weight: 900;
   }
 
   p, ul {
@@ -23,29 +58,5 @@
     li {
       margin: 0.5rem 0;
     }
-  }
-}
-
-.post {
-  max-width: 720px;
-  margin: 5rem auto 0;
-
-  h1 {
-    font-size: 2.4rem;
-    font-weight: 900;
-  }
-
-  h2 {
-    font-size: 1.8rem;
-    font-weight: normal;
-    color: #f8f8f2;
-    opacity: 0.6;
-  }
-
-  time {
-    display: block;
-    font-size: 1rem;
-    color: #f8f8f2;
-    margin-top: 1.5rem;
   }
 }
