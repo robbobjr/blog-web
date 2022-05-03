@@ -1,5 +1,5 @@
 import axios from "axios";
-import { apiConfig } from "../../../configs/api";
+import { apiConfig } from "../../../configs/api-config";
 import { logger } from "../../logger";
 
 export class AxiosAPI {
@@ -7,15 +7,15 @@ export class AxiosAPI {
     baseURL: apiConfig.baseURL,
   });
 
-  constructor(private readonly context: string){}
+  constructor(private readonly context: string = "Global"){}
 
   private failReturningNull(error) {
-    logger.error({ error, context: this.context });
+    logger.error({ error, context: this?.context });
     return { data: null };
   };
 
   private failReturningArray(error) {
-    logger.error({ error, context: this.context });
+    logger.error({ error, context: this?.context });
     return { data: [] };
   }
 
