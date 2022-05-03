@@ -34,10 +34,10 @@ export function ProfileMenu() {
         display={{ sm: 'none', md: 'none', lg: 'block' }}
       >
         <Text isTruncated>
-          {name || "Entrar"}
+          {name || "Não logado"}
         </Text>
         <Text color="gray.600" fontSize="small" isTruncated>
-          {email || "Não logado"}
+          {email || "nao@logado.com"}
         </Text>
       </Box>
       <Menu>

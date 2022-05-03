@@ -51,12 +51,13 @@ export function CreatePostModal({ children, post }: CreatePostModalProps) {
 
   useEffect(() => {
     if (post) {
-      const { content, title, tags } = post;
+      const { content, title, tags, image } = post;
       const stringTags = tags.map(tag => tag.name);
       setDefaultValue(revertMKFormatation(title, content, stringTags));
       setFormattedValue({ 
         createdAt: new Date().toString(), 
         content, 
+        image,
         title, 
         tags, 
       });
@@ -93,6 +94,7 @@ export function CreatePostModal({ children, post }: CreatePostModalProps) {
     const { createdAt, ...dto } = handleMarkdown();
     try {
       if (post) {
+        console.log(dto)
         await PostsService.postsControllerUpdate(String(post.id), {
           userId: data?.user?.id,
           ...dto,

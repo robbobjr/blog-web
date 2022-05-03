@@ -7,13 +7,8 @@ import { PostPreviewContentProps } from "./post-preview-content.type";
 import { Link } from "../../../atoms/link";
 
 export function PostPreviewContent({ 
-  data: { title, slug, description, link, image }
-}: PostPreviewContentProps) {
-  const PostImage = useMemo(() => 
-    <Image src={image} alt="post-picture" width="100%" borderRadius="2xl"/>,
-    [image],
-  );
-  
+  data: { title, slug, description, link }
+}: PostPreviewContentProps) {  
   const PostLinkP = useMemo(() => 
     <a href={link} target="_blank" rel="noreferrer">
       <LinkPreview url={link} width="100%"
@@ -32,7 +27,7 @@ export function PostPreviewContent({
   return (
     <>
       <Link href={`/${slug}`}>
-        <Text fontSize="2xl" mb="4" isTruncated={true}>{title}</Text>
+        <Text fontSize="2xl" mb="4">{title}</Text>
         <Text 
           fontSize="sm" 
           opacity={0.7} 
@@ -40,7 +35,6 @@ export function PostPreviewContent({
           dangerouslySetInnerHTML={{ __html: description }}
         />
       </Link>
-      {image && (PostImage)}
       {link && (PostLinkP)}
     </>
   );

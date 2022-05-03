@@ -1,9 +1,14 @@
 const getFormattedContent = (markdown: string) => {
-  const [title, ...body] = markdown.split('\n');
+  const [title, ...rest] = markdown.split('\n');
+  const body = rest?.join('\n');
+  const content = body.replaceAll(/\s#{1}\w+/gi, '') || '';
+  const imageRegexp = /[!][[]][(].+[)]/gi;
 
   return {
     title: title?.replaceAll(/#/gi, ''), 
-    content: body?.join('\n').replaceAll(/\s#{1}\w+/gi, '') || '',
+    content,
+    image: (body?.match(imageRegexp) || [])[0]?.split("![](")[1]?.replace(")", ""),
+    description: content.replaceAll(imageRegexp, "")?.slice(0, 300)?.split('\n')[0]?.replaceAll("#", ""),
   }
 }
 
@@ -16,20 +21,20 @@ const getTags = (markdown: string) => {
 export const defaultFormattedValue = {
   title: '', 
   content: '', 
+  image: '',
   tags: [],
   createdAt: new Date().toString(),
 };
 
 export const formatMarkdown = (markdown: string) => {
-  const { content, title } = getFormattedContent(markdown);
+  const dto = getFormattedContent(markdown);
   const tags = getTags(markdown);
   const createdAt = new Date().toDateString();
 
   const data = { 
     ...(tags?.length && { tags }), 
     createdAt ,
-    content,
-    title,
+    ...dto,
   };
 
   return data;
