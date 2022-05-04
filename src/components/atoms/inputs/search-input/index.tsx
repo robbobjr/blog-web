@@ -3,7 +3,7 @@ import { Icon } from "../../icons";
 import { RiSearch2Line } from 'react-icons/ri';
 import { ChangeEvent, useCallback } from "react";
 import { useRouter } from "next/router";
-import { timer } from "../../../../utils/times";
+import { debounce } from "../../../../utils/debounce";
 
 export function SearchInput() {
   const history = useRouter();
@@ -11,11 +11,12 @@ export function SearchInput() {
   const handleInputChange = useCallback(async (
     event: ChangeEvent<HTMLInputElement>,
   ) => {
-    await timer(500);
     const input = event.target.value;
-    history.push({ pathname: "/", query: { 
-      ...(input && { input }),
-    }})
+    debounce(500, () =>
+      history.push({ pathname: "/", query: { 
+        ...(input && { input }),
+      }}),
+    );
   }, [history]);
 
   return (
