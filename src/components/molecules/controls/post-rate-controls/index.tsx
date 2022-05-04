@@ -23,6 +23,14 @@ export function PostRateControls({
   const [rateData, setRateDate] = useState(rates || []);
   const [rateSum, setRateSum] = useState(0);
   const [userVote, setUserVote] = useState<undefined | RateValue>();  
+  const [dislikePosition, setDislikePosition] = useState({});
+
+  const changeDislikePosition = useCallback(() => {
+    console.log(`focused`)
+    setDislikePosition(state => !Object.keys(state).length ? {
+      height: '80%',
+    } : {});
+  }, []);
 
   useEffect(() => {
     const sum = [...rateData].reduce((a, b) => a + b.value, 0);
@@ -86,13 +94,16 @@ export function PostRateControls({
       pr={isBorderLeft ? 0 : "4"}
       pl={isBorderLeft ? "4" : 0}
       ml={isBorderLeft ? "auto" : 0}
+      onMouseLeave={() => setDislikePosition({})}
     >
       <Icon 
+        transition="0.2s"
         as={AiOutlineCaretUp} 
         fontSize={counterSize.iconSize} 
         color={userVote === RateValue.UP ? "pink.400" : "gray.600"} 
         _hover={simpleHover}
         onClick={() => handlePostRate(RateValue.UP)}
+        {...dislikePosition}
       />
       <Text
         fontSize={counterSize.textSize}
@@ -102,10 +113,11 @@ export function PostRateControls({
         {rateSum}
       </Text>
       <Icon 
+        transition="0.2s"
         as={AiOutlineCaretDown} 
         fontSize={counterSize.iconSize} 
+        onMouseEnter={changeDislikePosition}
         color={userVote === RateValue.DOWN ? "pink.400" : "gray.600"} 
-        _hover={simpleHover}
         onClick={() => handlePostRate(RateValue.DOWN)}
       />
     </Stack>
