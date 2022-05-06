@@ -28,9 +28,10 @@ export class AxiosAPI {
     return { posts, tags };
   } 
 
-  public async getPosts() {
+  public async getPosts(params?: Record<string, string | string[]>) {
     const { data: posts } = await this.client.get(
-      '/posts'
+      '/posts',
+      { params },
     ).catch(this.failReturningArray);
     return posts;
   } 
