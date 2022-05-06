@@ -29,7 +29,7 @@ export function PostPreviewContent({
       <Link href={`/${slug}`}>
         <Text fontSize="2xl" mb="4">{title}</Text>
         <Text 
-          fontSize="sm" 
+          fontSize="md" 
           opacity={0.7} 
           {...textGradiant}
           dangerouslySetInnerHTML={{ __html: description }}
