@@ -28,6 +28,13 @@ export class AxiosAPI {
     return { posts, tags };
   } 
 
+  public async getPosts() {
+    const { data: posts } = await this.client.get(
+      '/posts'
+    ).catch(this.failReturningArray);
+    return posts;
+  } 
+
   public async getPostsBySlug(slug: string) {
     const { data: post } = await this.client.get(
       '/posts/byslug/' + slug,
