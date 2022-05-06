@@ -31,6 +31,7 @@ export function PostPreviewContent({
         <Text 
           fontSize="md" 
           opacity={0.7} 
+          display={{ base: "none", sm: "inherit" }}
           {...textGradiant}
           dangerouslySetInnerHTML={{ __html: description }}
         />

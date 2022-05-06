@@ -83,7 +83,7 @@ export function PostRateControls({
 
   return (
     <Stack 
-      display={['none', hideRateControl ? 'none': 'inherit' ]}
+      display={{ base: "none", sm: 'none', md: hideRateControl ? 'none': 'inherit' }}
       spacing={counterSize.iconsSpacing}
       borderRightWidth={isBorderLeft ? 0 : 1} 
       borderRightColor="gray.700" 

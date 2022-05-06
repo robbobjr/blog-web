@@ -31,7 +31,7 @@ export function SearchInput() {
       position="relative"
       bg="gray.800"
       borderRadius="full"
-      display={{ sm: 'none', md: 'flex' }}
+      display={{ base: "none", sm: 'none', md: 'flex' }}
     >
       <Input
         color="gray.50"

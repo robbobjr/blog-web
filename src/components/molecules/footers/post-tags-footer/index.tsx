@@ -6,7 +6,7 @@ export function PostTagsFooter({
   tags
 }) {
   return (
-    <Stack direction='row' {...(!tags.length && { display: 'none' })}>
+    <Stack display="block" float="none" direction='row' {...(!tags.length && { display: 'none' })}>
       {tags?.map(tag => 
         <Link key={tag.name} href={`?tag=${tag.name}`}>
            <Badge background={dracula.Pink}>{tag.name}</Badge>

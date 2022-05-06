@@ -34,7 +34,7 @@ export function PostHeader({
   return (
     <Flex align="center">
       <Avatar size="xs" name={user?.name} src={user?.image}/>
-      <Text fontSize="smaller" color="gray.600" ml="2" display={{ sm: 'none', md: 'inherit' }}>
+      <Text fontSize="smaller" color="gray.600" ml="2" display={{ base: 'none' ,sm: 'none', md: 'inherit' }}>
         Escrito por {user?.name}
       </Text>
       <Flex ml="auto">

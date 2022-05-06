@@ -32,13 +32,14 @@ export function HeaderControls() {
   return (
     <HStack
       spacing="4"
-      pr="8"
+      pr={[0, "8", "8"]}
       py="1"
       mx="8"
       color="gray.600"
       borderRightWidth={1}
       borderColor="gray.800"
       ml={{ sm: 'auto', md: "8" }}
+      display={{ base: "none", sm: "inherit" }}
     >
       {data && (
         <CircularIcon 

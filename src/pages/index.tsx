@@ -52,7 +52,7 @@ export default function Feed({
       <Flex direction="column" h="100vh"> 
         <Header/>
         <MainContainer>
-          <Box position="absolute">
+          <Box position="absolute" display={{ base: "none", sm: "none", md: "block" }}>
             <Topics textAlign="left" tags={tags} maxW="200px" display={{ sm: "none", lg: "block"}}/>
           </Box>
           <Stack spacing="4" flex="1" minW="320px" alignItems="center" mb="6">

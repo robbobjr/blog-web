@@ -31,7 +31,7 @@ export function ProfileMenu() {
       <Box 
         mr="4" 
         textAlign="right" 
-        display={{ sm: 'none', md: 'none', lg: 'block' }}
+        display={{ base: "none", sm: 'none', md: 'none', lg: 'block' }}
       >
         <Text isTruncated>
           {name || "Não logado"}

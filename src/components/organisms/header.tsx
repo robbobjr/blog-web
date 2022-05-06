@@ -9,13 +9,14 @@ export function Header() {
   return (
     <Flex 
       width="100%"
-      visibility={["hidden", "initial"]}
+      visibility={"initial"}
       h="20" 
       minH="20" 
       as="header" 
       maxW={1480} 
       mx="auto" 
       mt="4" 
+      justify="flex-end"
       align="center" 
       px="10"
     >

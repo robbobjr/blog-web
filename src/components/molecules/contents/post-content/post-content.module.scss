@@ -5,6 +5,10 @@
   h1 {
     font-size: 2.4rem;
     font-weight: 900;
+
+    @media (max-width: 480px) {
+      font-size: 1.5rem;
+    }
   }
 
   time {
@@ -34,9 +38,8 @@
 
   h3, h4, h5, h6 {
     font-size: 1.5rem;
-    font-weight: normal;
+    font-weight: bold;
     color: #f8f8f2;
-    opacity: 0.6;
   }
 
   strong {
@@ -64,6 +67,20 @@
 
     li {
       margin: 0.5rem 0;
+    }
+  }
+
+  @media (max-width: 480px) {
+    h2 {
+      font-size: 1.2rem;
+    }
+
+    h3, h4, h5, h6 {
+      font-size: 1rem;
+    }
+
+    p, ul {
+      font-size: 0.95rem;
     }
   }
 }
