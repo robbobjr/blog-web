@@ -1,8 +1,10 @@
+export const imageRegexp = /[!][[]][(].+[)]/gi;
+export const hashTagRegexp = /\s#{1}\w+/gi;
+
 const getFormattedContent = (markdown: string) => {
   const [title, ...rest] = markdown.split('\n');
   const body = rest?.join('\n');
-  const content = body.replaceAll(/\s#{1}\w+/gi, '') || '';
-  const imageRegexp = /[!][[]][(].+[)]/gi;
+  const content = body.replaceAll(hashTagRegexp, '') || '';
 
   return {
     title: title?.replaceAll(/#/gi, ''), 
@@ -13,7 +15,7 @@ const getFormattedContent = (markdown: string) => {
 }
 
 const getTags = (markdown: string) => {
-  return markdown.match(/\s#{1}\w+/g)?.map(
+  return markdown.match(hashTagRegexp)?.map(
     tag => tag.replace('#', '').trim()
   ).filter(tag => !!tag);
 }
