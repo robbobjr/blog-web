@@ -65,7 +65,7 @@ export function PostHeader({
           </>   
         )}
         {!isPostPreview && (
-          <Link href="/"><PostIcon icon={FaHome} text={"Home"}/></Link>
+          <Link href="/ptbr"><PostIcon icon={FaHome} text={"Home"}/></Link>
         )}
       </Flex>
     </Flex>

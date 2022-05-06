@@ -12,11 +12,11 @@ import {
   Textarea,
   Avatar,
 } from "@chakra-ui/react"
-import { useSession } from "next-auth/react"
 import { useRouter } from "next/router"
 import { useRef, cloneElement, useCallback, useEffect, useState } from "react"
 import ResizeTextarea from "react-textarea-autosize";
-import { useContent } from "../../../../states/hooks/use-content";
+import { useAuth } from "../../../../states/hooks/use-auth";
+import { useDraft } from "../../../../states/hooks/use-draft";
 
 export function SingleInputModal({ 
   children, 
@@ -26,11 +26,11 @@ export function SingleInputModal({
 }) {
   const [defaultValue, setDefaultValue] = useState<string | null>();
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const { handleAddDraft, handleGetDraft } = useContent();
+  const { handleAddDraft, handleGetDraft } = useDraft();
 
   const initialRef = useRef();
   const textAreaRef = useRef<HTMLTextAreaElement>();
-  const { data } = useSession();
+  const { data } = useAuth();
   const router = useRouter();
 
   useEffect(() => {

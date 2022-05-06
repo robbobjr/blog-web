@@ -1,18 +1,39 @@
-import { Flex, Input } from "@chakra-ui/react";
+import { Flex, Input, useToast } from "@chakra-ui/react";
 import { Icon } from "../../icons";
 import { RiSearch2Line } from 'react-icons/ri';
 import { ChangeEvent, useCallback } from "react";
 import { debounce } from "../../../../utils/debounce";
+import { useContent } from "../../../../states/hooks/use-content";
+import { logger } from "../../../../services/logger";
+import { searchPostErrorToast } from "../../../../utils/toast";
+import { AxiosAPI } from "../../../../services/api/axios";
+import { useRouter } from "next/router";
 
-export function SearchInput({ handleInput }) {
+export function SearchInput() {
+  const { setPosts } = useContent();
+  const toast = useToast();
+  const history = useRouter();
+
+  const handlePostsSearch = useCallback(async (input: string) => {
+    try {
+      const client = new AxiosAPI("SearchInput");
+      const foundPosts = await client.getPosts(input ? { input } : undefined);
+      setPosts(foundPosts);
+      if (history.pathname !== "/[tag]") return history.push("/ptbr");
+    } catch (error) {
+      logger.error({ error, context: "SearchInput" });
+      toast(searchPostErrorToast);
+    }
+  }, [history, setPosts, toast]);
+  
   const handleInputChange = useCallback(async (
     event: ChangeEvent<HTMLInputElement>,
   ) => {
     const input = event.target.value;
     debounce(500, () =>
-      handleInput(input)
+      handlePostsSearch(input)
     );
-  }, [handleInput]);
+  }, [handlePostsSearch]);
 
   return (
     <Flex

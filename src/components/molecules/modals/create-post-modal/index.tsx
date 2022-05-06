@@ -19,7 +19,6 @@ import {
 import { useRouter } from "next/router";
 import { useRef, cloneElement, useCallback, useEffect, useState, ReactElement } from "react"
 import { AiFillEye } from "react-icons/ai";
-import { useContent } from "../../../../states/hooks/use-content";
 import { CreatePostModalContent } from "../../contents/create-post-modal-content";
 import { defaultFormattedValue, formatMarkdown, revertMKFormatation } from "../../../utils/format-markdown";
 import { Textarea } from "../../../atoms/textarea";
@@ -27,6 +26,7 @@ import { useAuth } from "../../../../states/hooks/use-auth";
 import { logger } from "../../../../services/logger";
 import { createPostErrorToast } from "../../../../utils/toast";
 import { PostDto, PostsService } from "../../../../services/api/openapi";
+import { useDraft } from "../../../../states/hooks/use-draft";
 
 interface CreatePostModalProps {
   children: ReactElement;
@@ -47,7 +47,7 @@ export function CreatePostModal({ children, post }: CreatePostModalProps) {
   const history = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { data } = useAuth();
-  const { handleAddDraft, handleGetDraft, handleRemoveDraft } = useContent();
+  const { handleAddDraft, handleGetDraft, handleRemoveDraft } = useDraft();
 
   useEffect(() => {
     if (post) {
