@@ -4,10 +4,10 @@ import { MainContainer } from "../components/molecules/containers/main-container
 import { GetStaticPaths, GetStaticProps } from "next";
 import { dracula } from "../styles/theme";
 import { Topics } from "../components/organisms/topics";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import { useRouter } from "next/router";
 import { logger } from "../services/logger";
-import { createCommentErrorToast, searchPostErrorToast } from "../utils/toast";
+import { createCommentErrorToast } from "../utils/toast";
 import { Header } from "../components/organisms/header";
 import { Footer } from "../components/organisms/footer";
 import { useContent } from "../states/hooks/use-content";
@@ -28,14 +28,15 @@ export default function Feed({
   posts, 
   tags 
 }: { posts: PostDto[], tags: PostTagDto[]}) {
-  const [postsState, setPostsState] = useState(posts);
   const history = useRouter();
   const toast = useToast();
-  const { setTags } = useContent();
+  const { setTags, setPosts, posts: postsState } = useContent();
   
   useEffect(() => {
     setTags(tags);
-  }, [setTags, tags]);
+    if (postsState) return;
+    setPosts(posts);
+  }, [setTags, setPosts, tags, posts, postsState]);
 
   const commentHandler = useCallback(async (data: CreateCommentDto) => {
     try {
@@ -47,26 +48,13 @@ export default function Feed({
     }
   }, [history, toast]);
 
-  const handlePostsSearch = useCallback(async (input: string) => {
-    try {
-      if (!input) {
-        return setPostsState(posts)
-      }
-
-      const client = new AxiosAPI("Feed:HandlePostsSearch");
-      const foundPosts = await client.getPosts({ input });
-      setPostsState(foundPosts);
-    } catch (error) {
-      logger.error({ error, context: "Feed" });
-      toast(searchPostErrorToast);
-    }
-  }, [toast, posts]);
+  if (!postsState) return <></>;
 
   return (
     <>
       <FeedHead />
       <Flex direction="column" h="100vh"> 
-        <Header handleInput={handlePostsSearch}/>
+        <Header />
         <MainContainer>
           <Box position="absolute" display={{ base: "none", sm: "none", md: "block" }}>
             <Topics textAlign="left" tags={tags} maxW="200px" display={{ sm: "none", lg: "block"}}/>
@@ -98,8 +86,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }
 }
 
-
-export const getStaticProps: GetStaticProps = async ({ params: { tag } }) => {
+export const getStaticProps: GetStaticProps = async ({ params: { tag }}) => {
   const axiosAPI = new AxiosAPI("Feed:getServerSideProps");
   const { posts, tags } = await axiosAPI.getPostsAndTags({ tag });
 

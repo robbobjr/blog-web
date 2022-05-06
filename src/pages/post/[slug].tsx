@@ -13,7 +13,6 @@ import { Footer } from "../../components/organisms/footer";
 import { PostHead } from "../../components/organisms/head/post-head";
 import { AxiosAPI } from "../../services/api/axios";
 import { useAuth } from "../../states/hooks/use-auth";
-import { useRouter } from "next/router";
 
 interface PostDetailProps {
   post: PostDto;
@@ -24,7 +23,6 @@ export default function FeedPost({ post }: PostDetailProps) {
   const { tags } = useContent();
   const toast = useToast();
   const session = useAuth();
-  const history = useRouter();
 
   const commentHandler = useCallback(async (data: CreateCommentDto) => {
     try {
@@ -43,7 +41,7 @@ export default function FeedPost({ post }: PostDetailProps) {
     <>
       <PostHead data={post}/>
       <Flex direction="column" h="100vh">
-        <Header handleInput={() => history.push("/ptbr")}/>
+        <Header />
         <MainContainer>
           <Stack spacing="0" flex="1" minW="320px" alignItems="center" mb="6">
             <Post 

@@ -7,11 +7,11 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Home | Ig.news</title>
-        <meta name="description" content="Home page from Explorer" />
+        <title>Roberto Junior Dev</title>
+        <meta name="description" content="Hey there! My name is Roberto Junior and I am a software developer." />
       </Head>
       <main className={styles.contentContainer}>
-      <Image width="25%" src="/static/me.gif" alt="girl coding" />
+        <Image width="25%" src="/static/me.gif" alt="girl coding" />
         <section className={styles.hero}>
           <span>👏 Hey there!</span>
           <h1>
