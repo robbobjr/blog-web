@@ -5,7 +5,7 @@ import { BlogLogo } from "../atoms/blog-logo";
 import { SearchInput } from "../atoms/inputs/search-input";
 import { SocialControls } from "../molecules/controls/social-controls";
 
-export function Header() {
+export function Header({ handleInput }) {
   return (
     <Flex 
       width="100%"
@@ -22,7 +22,7 @@ export function Header() {
     >
       <BlogLogo/>
       <SocialControls />
-      <SearchInput />
+      <SearchInput handleInput={handleInput} />
       <HeaderControls/>
       <ProfileMenu/>
     </Flex>

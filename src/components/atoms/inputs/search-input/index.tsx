@@ -2,22 +2,17 @@ import { Flex, Input } from "@chakra-ui/react";
 import { Icon } from "../../icons";
 import { RiSearch2Line } from 'react-icons/ri';
 import { ChangeEvent, useCallback } from "react";
-import { useRouter } from "next/router";
 import { debounce } from "../../../../utils/debounce";
 
-export function SearchInput() {
-  const history = useRouter();
-
+export function SearchInput({ handleInput }) {
   const handleInputChange = useCallback(async (
     event: ChangeEvent<HTMLInputElement>,
   ) => {
     const input = event.target.value;
     debounce(500, () =>
-      history.push({ pathname: "/", query: { 
-        ...(input && { input }),
-      }}),
+      handleInput(input)
     );
-  }, [history]);
+  }, [handleInput]);
 
   return (
     <Flex

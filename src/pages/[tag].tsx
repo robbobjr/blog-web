@@ -4,10 +4,10 @@ import { MainContainer } from "../components/molecules/containers/main-container
 import { GetStaticPaths, GetStaticProps } from "next";
 import { dracula } from "../styles/theme";
 import { Topics } from "../components/organisms/topics";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { logger } from "../services/logger";
-import { createCommentErrorToast } from "../utils/toast";
+import { createCommentErrorToast, searchPostErrorToast } from "../utils/toast";
 import { Header } from "../components/organisms/header";
 import { Footer } from "../components/organisms/footer";
 import { useContent } from "../states/hooks/use-content";
@@ -28,6 +28,7 @@ export default function Feed({
   posts, 
   tags 
 }: { posts: PostDto[], tags: PostTagDto[]}) {
+  const [postsState, setPostsState] = useState(posts);
   const history = useRouter();
   const toast = useToast();
   const { setTags } = useContent();
@@ -46,17 +47,32 @@ export default function Feed({
     }
   }, [history, toast]);
 
+  const handlePostsSearch = useCallback(async (input: string) => {
+    try {
+      if (!input) {
+        return setPostsState(posts)
+      }
+
+      const client = new AxiosAPI("Feed:HandlePostsSearch");
+      const foundPosts = await client.getPosts({ input });
+      setPostsState(foundPosts);
+    } catch (error) {
+      logger.error({ error, context: "Feed" });
+      toast(searchPostErrorToast);
+    }
+  }, [toast, posts]);
+
   return (
     <>
       <FeedHead />
       <Flex direction="column" h="100vh"> 
-        <Header/>
+        <Header handleInput={handlePostsSearch}/>
         <MainContainer>
           <Box position="absolute" display={{ base: "none", sm: "none", md: "block" }}>
             <Topics textAlign="left" tags={tags} maxW="200px" display={{ sm: "none", lg: "block"}}/>
           </Box>
           <Stack spacing="4" flex="1" minW="320px" alignItems="center" mb="6">
-            {posts.map((post, i) => (
+            {postsState.map((post, i) => (
               <Post 
                 key={i} 
                 data={post} 
