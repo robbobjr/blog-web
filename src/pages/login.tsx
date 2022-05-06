@@ -4,6 +4,7 @@ import { AiFillGithub, AiFillGoogleCircle, AiFillLinkedin, AiFillTwitterCircle }
 import { signIn, useSession } from 'next-auth/react';
 import { useRouter } from "next/router";
 import { SocialButton } from "../components/atoms/buttons/social-button";
+import { CentralizedContainer } from "../components/molecules/containers/centralized-container";
 
 export default function Login() {
   const router = useRouter();
@@ -20,13 +21,7 @@ export default function Login() {
   }, []);
 
   return (
-   <Flex
-      w="100vw"
-      h="100vh"
-      maxW="100vw"
-      align="center"
-      direction="column"
-      justify="center">
+    <CentralizedContainer>
       <Flex as="form" w="100%" maxW={360} bg="gray.800" p="8" borderRadius={8} flexDir="column" m="4">
         <Stack spacing="4">
           <SocialButton handler={handleGithubSign} icon={AiFillGithub} colorScheme="blackAlpha">
@@ -43,6 +38,6 @@ export default function Login() {
           </SocialButton>
         </Stack>
       </Flex>
-    </Flex>
+    </CentralizedContainer>
   );
 }
