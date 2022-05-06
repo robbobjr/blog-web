@@ -26,13 +26,13 @@ export function PostPreviewContent({
 
   return (
     <>
-      <Link href={`/${slug}`}>
-        <Text fontSize="2xl" mb="4">{title}</Text>
+      <Link href={`/post/${slug}`}>
+        <Text fontWeight="600" fontSize="2xl" mb="4">{title}</Text>
         <Text 
-          fontSize="md" 
+          fontSize="md"
+          fontFamily="Roboto Serif" 
           opacity={0.7} 
           display={{ base: "none", sm: "inherit" }}
-          {...textGradiant}
           dangerouslySetInnerHTML={{ __html: description }}
         />
       </Link>

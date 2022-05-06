@@ -1,7 +1,7 @@
 import { Box, Flex, Stack, useToast } from "@chakra-ui/react";
 import { Post } from "../components/organisms/post";
 import { MainContainer } from "../components/molecules/containers/main-container";
-import { GetServerSideProps } from "next";
+import { GetStaticPaths, GetStaticProps } from "next";
 import { dracula } from "../styles/theme";
 import { Topics } from "../components/organisms/topics";
 import { useCallback, useEffect } from "react";
@@ -73,12 +73,22 @@ export default function Feed({
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+export const getStaticPaths: GetStaticPaths = async () => {
+  return {
+    paths: [
+      { params: { tag: 'ptbr' } }
+    ],
+    fallback: 'blocking',
+  }
+}
+
+
+export const getStaticProps: GetStaticProps = async ({ params: { tag } }) => {
   const axiosAPI = new AxiosAPI("Feed:getServerSideProps");
-  const params = query as Record<string, string>;
-  const { posts, tags } = await axiosAPI.getPostsAndTags(params);
+  const { posts, tags } = await axiosAPI.getPostsAndTags({ tag });
 
   return {
+    revalidate: 24 * 60 * 60,
     props: {
       posts,
       tags,

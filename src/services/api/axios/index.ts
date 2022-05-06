@@ -19,7 +19,7 @@ export class AxiosAPI {
     return { data: [] };
   }
 
-  public async getPostsAndTags(params: Record<string, string>) {
+  public async getPostsAndTags(params: Record<string, string | string[]>) {
     const [{ data: posts }, { data: tags }] = await Promise.all([
       this.client.get('/posts', { params }).catch(this.failReturningArray),
       this.client.get('posts/tags').catch(this.failReturningArray),

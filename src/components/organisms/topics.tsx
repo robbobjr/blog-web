@@ -11,7 +11,7 @@ export function Topics({ tags, ...props }: TopicsProps) {
   return (
     <Box display="block" float="none" textAlign="center" {...props}>
        {tags?.map(tag => 
-        <Link key={tag.name} href={`?tag=${tag.name}`}>
+        <Link key={tag.name} href={`/${tag.name}`}>
           <Badge 
             margin="0.5" 
             fontSize="md" 

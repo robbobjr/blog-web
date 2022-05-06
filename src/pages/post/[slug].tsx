@@ -1,18 +1,18 @@
-import { GetServerSideProps } from "next"
+import { GetStaticPaths, GetStaticProps } from "next"
 import { Flex, Stack, useToast } from "@chakra-ui/react";
-import { PostComment } from "../components/organisms/post/post-comment";
-import { Post } from "../components/organisms/post";
+import { PostComment } from "../../components/organisms/post/post-comment";
+import { Post } from "../../components/organisms/post";
 import { useCallback, useState } from "react";
-import { MainContainer } from "../components/molecules/containers/main-container";
-import { CreateCommentDto, PostDto, PostsService } from "../services/api/openapi";
-import { logger } from "../services/logger";
-import { createCommentErrorToast } from "../utils/toast";
-import { Header } from "../components/organisms/header";
-import { useContent } from "../states/hooks/use-content";
-import { Footer } from "../components/organisms/footer";
-import { PostHead } from "../components/organisms/head/post-head";
-import { AxiosAPI } from "../services/api/axios";
-import { useAuth } from "../states/hooks/use-auth";
+import { MainContainer } from "../../components/molecules/containers/main-container";
+import { CreateCommentDto, PostDto, PostsService } from "../../services/api/openapi";
+import { logger } from "../../services/logger";
+import { createCommentErrorToast } from "../../utils/toast";
+import { Header } from "../../components/organisms/header";
+import { useContent } from "../../states/hooks/use-content";
+import { Footer } from "../../components/organisms/footer";
+import { PostHead } from "../../components/organisms/head/post-head";
+import { AxiosAPI } from "../../services/api/axios";
+import { useAuth } from "../../states/hooks/use-auth";
 
 interface PostDetailProps {
   post: PostDto;
@@ -74,12 +74,20 @@ export default function FeedPost({ post }: PostDetailProps) {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+export const getStaticPaths: GetStaticPaths = async () => {
+  return {
+    paths: [],
+    fallback: 'blocking',
+  }
+}
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   const axiosAPI = new AxiosAPI("FeedPost:getServerSideProps");
   const { slug } = params as Record<string, string>;
   const post = await axiosAPI.getPostsBySlug(slug); 
   
   return {
+    revalidate: 24 * 60 * 60,
     props: {
       post,
     }
