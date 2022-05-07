@@ -27,6 +27,7 @@ import { logger } from "../../../../services/logger";
 import { createPostErrorToast } from "../../../../utils/toast";
 import { PostDto, PostsService } from "../../../../services/api/openapi";
 import { useDraft } from "../../../../states/hooks/use-draft";
+import { ModalIcon } from "../../../atoms/icons/modal-icon";
 
 interface CreatePostModalProps {
   children: ReactElement;
@@ -38,47 +39,39 @@ interface CreatePostModalProps {
  * Component to create or edit post 
  */
 export function CreatePostModal({ children, post }: CreatePostModalProps) {
-  const [isVisible, setIsVisible] = useState(false);
-  const [defaultValue, setDefaultValue] = useState<string | null>();
-  const [formattedValue, setFormattedValue] = useState(defaultFormattedValue)
-
-  const toast = useToast();
+  const { handleAddDraft, handleGetDraft, handleRemoveDraft } = useDraft();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = useRef();
   const history = useRouter();
-  const { isOpen, onOpen, onClose } = useDisclosure();
   const { data } = useAuth();
-  const { handleAddDraft, handleGetDraft, handleRemoveDraft } = useDraft();
+  const toast = useToast();
+
+  const [formattedValue, setFormattedValue] = useState(defaultFormattedValue)
+  const [isVisible, setIsVisible] = useState(false);
+  const [inputData, setInputData] = useState(
+    handleGetDraft('create-post-modal')
+  );
 
   useEffect(() => {
     if (post) {
       const { content, title, tags, image } = post;
       const stringTags = tags.map(tag => tag.name);
-      setDefaultValue(revertMKFormatation(title, content, stringTags));
-      setFormattedValue({ 
-        createdAt: new Date().toString(), 
-        content, 
-        image,
-        title, 
-        tags, 
-      });
+      setInputData(revertMKFormatation(title, content, stringTags));
+      const createdAt = new Date().toString();
+      setFormattedValue({ createdAt, content, image,title, tags });
       return;
     }
-
-    const content = handleGetDraft('create-post-modal');
-    setDefaultValue(content);
-  }, [isOpen, handleGetDraft, post]);
+  }, [post]);
 
   const handleMarkdown = useCallback(() => {
-    if (!defaultValue) {
+    if (!inputData) {
       setFormattedValue(defaultFormattedValue);
       return defaultFormattedValue;
     }
-
-    const data = formatMarkdown(defaultValue);
-    logger.info({ payload: data, context: "CreatePostModal", msg: "handleMarkdown" });
-    setFormattedValue(data);
-    return data;
-  }, [defaultValue]);
+    const formatedValue = formatMarkdown(inputData);
+    setFormattedValue(formatedValue);
+    return formatedValue;
+  }, [inputData]);
 
   const handleMKVisibility = useCallback(() => {
     handleMarkdown();
@@ -86,43 +79,44 @@ export function CreatePostModal({ children, post }: CreatePostModalProps) {
   }, [handleMarkdown]);
 
   const handleSaveDraft = useCallback(() => {
-    handleAddDraft({ field: 'create-post-modal', content: defaultValue});
+    if (!post) 
+      handleAddDraft({ field: 'create-post-modal', content: inputData});
     onClose();
-  }, [handleAddDraft, defaultValue, onClose, ]); 
+  }, [handleAddDraft, inputData, onClose, post]); 
 
   const handleCreatePost = useCallback(async () => {
     const { createdAt, ...dto } = handleMarkdown();
+    const basePostDto = { userId: data?.user?.id, ...dto };
+    
     try {
       if (post) {
-        console.log(dto)
-        await PostsService.postsControllerUpdate(String(post.id), {
-          userId: data?.user?.id,
-          ...dto,
-        });
+        await PostsService.postsControllerUpdate(`${post.id}`, basePostDto);
       } else {
-        await PostsService.postsControllerCreate({ userId: data?.user?.id, ...dto });
+        await PostsService.postsControllerCreate(basePostDto);
       }
       handleRemoveDraft('create-post-modal');
       setFormattedValue(defaultFormattedValue);
-      history.push('/')
+      history.push('/ptbr');
       onClose();
     } catch (error) {
       toast(createPostErrorToast);
-      logger.error({ error, context: "CreatePostModal", msg: "handleCreatePost" });
+      logger.error({ error, context: "handleCreatePost" });
     }
-  }, [toast, data?.user?.id, handleMarkdown, handleRemoveDraft, history, onClose, post]); 
+  }, [toast, data, handleMarkdown, handleRemoveDraft, history, onClose, post]); 
+
+  const handleInputData = useCallback(v => setInputData(v.target.value), []);
 
   return (
     <>
       { cloneElement(children, { onClick: onOpen }) }
       <Modal
         isCentered
-        initialFocusRef={initialRef}
-        blockScrollOnMount
-        isOpen={isOpen}
-        onClose={handleSaveDraft}
-        scrollBehavior="inside"
         size="2xl"
+        isOpen={isOpen}
+        blockScrollOnMount
+        scrollBehavior="inside"
+        onClose={handleSaveDraft}
+        initialFocusRef={initialRef}
       >
         <ModalOverlay />
         <ModalContent bg="gray.800" mx="4">
@@ -132,32 +126,20 @@ export function CreatePostModal({ children, post }: CreatePostModalProps) {
           <ModalBody pb={6} mt="2">
             <FormControl display="flex" flexDirection="row">
               {!isVisible && <Avatar name={data?.user?.name} src={data?.user?.image} />}
-              {isVisible ? (
-                <CreatePostModalContent data={formattedValue} />
-              ) : (
-                <Textarea
-                  {...(defaultValue && { defaultValue })}
-                  onChange={v => setDefaultValue(v.target.value)}
-                  size="md"
-                />
-              )}
+              {isVisible 
+                ? <CreatePostModalContent data={formattedValue} />
+                : <Textarea defaultValue={inputData} onChange={handleInputData} size="md"/>
+              }
             </FormControl>
           </ModalBody>
           <Box height="0.5px" bg="gray.700" mx="8"/>
           <ModalFooter mx="3">
             <HStack spacing="4" mr="auto">
-            <Flex 
+            <ModalIcon 
+              isPressed={isVisible} 
               onClick={handleMKVisibility} 
-              cursor="pointer" 
-              align="center" 
-              justify="center" 
-              bg={isVisible ? "gray.900" : "gray.600"} 
-              px="2" 
-              py="1" 
-              borderRadius="md"
-            >
-              <Icon as={AiFillEye} fontSize={22} color="gray.50" />
-            </Flex>
+              icon={AiFillEye}
+            />
             </HStack>
             <Button bg="gray.600" onClick={handleCreatePost}>
               Submeter

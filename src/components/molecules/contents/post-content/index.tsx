@@ -22,7 +22,7 @@ export function PostContent({
         <time>{date}</time>
         <h1>{title}</h1>
         <div 
-          className={styles.post_content}
+          className={styles.postContent}
           dangerouslySetInnerHTML={{ __html: formatted }} 
         />
       </article>

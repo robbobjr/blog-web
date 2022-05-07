@@ -14,7 +14,12 @@ export interface UserDraftProps {
 export function useDraft() {
   const handleAddDraft = useCallback(
     ({ content, field }: AddDraftProps) => {
-      if (!localStorage || !content) return;
+      if (!localStorage) return;
+
+      if (!content) {
+        console.log('fui chamado')
+        localStorage.removeItem(field);
+      }
 
       localStorage.setItem(field, content);
     }, []
