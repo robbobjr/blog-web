@@ -52,7 +52,7 @@ export function SearchInput() {
       <Input
         color="gray.50"
         variant="unstyled"
-        placeholder="Buscar projeto"
+        placeholder="Buscar post"
         onChange={handleInputChange}
         mx="4"
         _placeholder={{
