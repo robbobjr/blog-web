@@ -91,7 +91,7 @@ export const getStaticProps: GetStaticProps = async ({ params: { tag }}) => {
   const { posts, tags } = await axiosAPI.getPostsAndTags({ tag });
 
   return {
-    revalidate: 24 * 60 * 60,
+    revalidate: 60 * 60,
     props: {
       posts,
       tags,
