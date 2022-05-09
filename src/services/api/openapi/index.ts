@@ -27,6 +27,10 @@ export type { UpdateUserDto } from './models/UpdateUserDto';
 export { UserDto } from './models/UserDto';
 
 export { AdsService } from './services/AdsService';
+export { CandidaturesService } from './services/CandidaturesService';
+export { CommentsService } from './services/CommentsService';
 export { DefaultService } from './services/DefaultService';
 export { PostsService } from './services/PostsService';
+export { RatesService } from './services/RatesService';
+export { TagsService } from './services/TagsService';
 export { UsersService } from './services/UsersService';

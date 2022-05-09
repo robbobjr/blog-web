@@ -76,4 +76,21 @@ requestBody: UpdateUserDto,
         });
     }
 
+    /**
+     * @param id 
+     * @returns UserDto 
+     * @throws ApiError
+     */
+    public static usersControllerDelete(
+id: string,
+): CancelablePromise<UserDto> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/users/{id}',
+            path: {
+                'id': id,
+            },
+        });
+    }
+
 }
