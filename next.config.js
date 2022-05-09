@@ -4,8 +4,8 @@ const nextConfig = {
   redirects: () => {
     return [
       {
-        source: '/',
-        destination: '/ptbr',
+        source: '/ptbr',
+        destination: '/',
         permanent: true,
       }
     ]
