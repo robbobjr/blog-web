@@ -2,9 +2,9 @@ import { GetStaticPaths, GetStaticProps } from "next"
 import { Flex, Stack, useToast } from "@chakra-ui/react";
 import { PostComment } from "../../components/organisms/post/post-comment";
 import { Post } from "../../components/organisms/post";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { MainContainer } from "../../components/molecules/containers/main-container";
-import { CreateCommentDto, PostDto, PostsService } from "../../services/api/openapi";
+import { CommentsService, CreateCommentDto, PostDto } from "../../services/api/openapi";
 import { logger } from "../../services/logger";
 import { createCommentErrorToast } from "../../utils/toast";
 import { Header } from "../../components/organisms/header";
@@ -24,13 +24,20 @@ export default function FeedPost({ post }: PostDetailProps) {
   const toast = useToast();
   const session = useAuth();
 
+  useEffect(() => {
+    // Getting comments by csr
+    CommentsService.postsControllerFindAllComment(
+      `${post.id}`
+    ).then(data => setComments(data))
+  }, [post]);
+
   const commentHandler = useCallback(async (data: CreateCommentDto) => {
     try {
-      const comment = await PostsService.postsControllerCreateComment(data);
+      const comment = await CommentsService.postsControllerCreateComment(data);
       comment.user = session.data.user;
       setComments(state => [...state, comment]);
     } catch (error) {
-      logger.error({ error, context: "FeedPost" });
+      logger.error({ error, context: "commentHandler" });
       toast(createCommentErrorToast);
     }
   }, [toast, session]);

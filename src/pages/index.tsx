@@ -1,7 +1,7 @@
 import { Box, Flex, Stack, useToast } from "@chakra-ui/react";
 import { Post } from "../components/organisms/post";
 import { MainContainer } from "../components/molecules/containers/main-container";
-import { GetStaticPaths, GetStaticProps } from "next";
+import { GetStaticProps } from "next";
 import { dracula } from "../styles/theme";
 import { Topics } from "../components/organisms/topics";
 import { useCallback, useEffect } from "react";
@@ -12,7 +12,7 @@ import { Header } from "../components/organisms/header";
 import { Footer } from "../components/organisms/footer";
 import { useContent } from "../states/hooks/use-content";
 import { FeedHead } from "../components/organisms/head/feed-head";
-import { CreateCommentDto, PostDto, PostsService, PostTagDto } from "../services/api/openapi";
+import { CommentsService, CreateCommentDto, PostDto, PostTagDto } from "../services/api/openapi";
 import { AxiosAPI } from "../services/api/axios";
 
 const containerProps = {
@@ -34,13 +34,12 @@ export default function Feed({
   
   useEffect(() => {
     setTags(tags);
-    if (postsState) return;
     setPosts(posts);
-  }, [setTags, setPosts, tags, posts, postsState]);
+  }, [setTags, setPosts, tags, posts]);
 
   const commentHandler = useCallback(async (data: CreateCommentDto) => {
     try {
-      await PostsService.postsControllerCreateComment(data);
+      await CommentsService.postsControllerCreateComment(data);
       history.push('/')
     } catch (error) {
       logger.error({ error, context: "Feed" });
@@ -77,18 +76,9 @@ export default function Feed({
   );
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  return {
-    paths: [
-      { params: { tag: 'ptbr' } }
-    ],
-    fallback: 'blocking',
-  }
-}
-
-export const getStaticProps: GetStaticProps = async ({ params: { tag }}) => {
-  const axiosAPI = new AxiosAPI("Feed:getServerSideProps");
-  const { posts, tags } = await axiosAPI.getPostsAndTags({ tag });
+export const getStaticProps: GetStaticProps = async () => {
+  const axiosAPI = new AxiosAPI("Feed::getServerSideProps");
+  const { posts, tags } = await axiosAPI.getPostsAndTags({});
 
   return {
     revalidate: 60 * 60,
