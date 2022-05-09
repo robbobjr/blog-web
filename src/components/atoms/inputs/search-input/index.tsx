@@ -19,7 +19,7 @@ export function SearchInput() {
       const client = new AxiosAPI("SearchInput");
       const foundPosts = await client.getPosts(input ? { input } : undefined);
       setPosts(foundPosts);
-      if (history.pathname !== "/[tag]") return history.push("/ptbr");
+      if (history.pathname !== "/") return history.push("/");
     } catch (error) {
       logger.error({ error, context: "SearchInput" });
       toast(searchPostErrorToast);

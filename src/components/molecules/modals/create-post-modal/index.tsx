@@ -12,8 +12,6 @@ import {
   Avatar,
   Box,
   HStack,
-  Icon,
-  Flex,
   useToast,
 } from "@chakra-ui/react"
 import { useRouter } from "next/router";

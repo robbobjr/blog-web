@@ -30,7 +30,7 @@ export function HeaderControls() {
       : { userId: `${data?.user?.id}`, rateValue: "1" }
     );
     setPosts(foundPosts);
-    if (history.pathname !== "/[tag]") return history.push("/ptbr");
+    if (history.pathname !== "/") return history.push("/");
   }, [data?.user, history, isPressed, setPosts]);
   
 

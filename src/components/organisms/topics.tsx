@@ -1,25 +1,35 @@
-import { Badge, Box, BoxProps, SimpleGrid, SimpleGridProps } from "@chakra-ui/react"
-import { PostTagDto } from "../../services/api/openapi"
+import { Badge, Box, BoxProps } from "@chakra-ui/react"
+import { useCallback } from "react"
+import { PostsService, PostTagDto } from "../../services/api/openapi"
+import { useContent } from "../../states/hooks/use-content"
 import { randomDraculaBackground } from "../../styles/theme"
-import { Link } from "../atoms/link"
 
 interface TopicsProps extends BoxProps {
   tags: PostTagDto[]
 }
 
 export function Topics({ tags, ...props }: TopicsProps) {
+  const { setPosts } = useContent();
+
+  const handleTopic = useCallback((tag: string) => {
+    PostsService.postsControllerFindAll(
+      tag
+    ).then(data => setPosts(data));
+  }, [setPosts]);
+
   return (
     <Box display="block" float="none" textAlign="center" {...props}>
        {tags?.map(tag => 
-        <Link key={tag.name} href={`/${tag.name}`}>
-          <Badge 
-            margin="0.5" 
-            fontSize="md" 
-            background={randomDraculaBackground()}
-          >
-            {tag.name}
-          </Badge>
-        </Link>
+        <Badge 
+          margin="0.5" 
+          fontSize="md" 
+          key={tag.name}
+          cursor="pointer"
+          onClick={() => {handleTopic(tag.name)}}
+          background={randomDraculaBackground()}
+        >
+          {tag.name}
+        </Badge>
       )}
     </Box>
   )

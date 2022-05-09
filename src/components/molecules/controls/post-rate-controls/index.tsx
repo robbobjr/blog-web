@@ -2,6 +2,7 @@ import { Icon, Stack, Text, useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { AiOutlineCaretDown, AiOutlineCaretUp } from 'react-icons/ai';
+import { RatesService } from "../../../../services/api/openapi";
 import { logger } from "../../../../services/logger";
 import { useAuth } from "../../../../states/hooks/use-auth";
 import { simpleHover } from "../../../../styles/theme";
@@ -11,8 +12,9 @@ import { PostRateControlsProps } from "./post-rate-controls.type";
 
 export function PostRateControls({ 
   handleRate,
-  data: { rates }, 
+  data: { postId, commentId },
   hideRateControl,
+  isDislikeEnabled,
   isBorderLeft,
   size, 
 }: PostRateControlsProps) {
@@ -20,31 +22,38 @@ export function PostRateControls({
   const router = useRouter();
   const toast = useToast();
 
-  const [rateData, setRateDate] = useState(rates || []);
+  const [rateData, setRateData] = useState([]);
   const [rateSum, setRateSum] = useState(0);
   const [userVote, setUserVote] = useState<undefined | RateValue>();  
   const [dislikePosition, setDislikePosition] = useState({});
 
   const changeDislikePosition = useCallback(() => {
-    console.log(`focused`)
+    if (isDislikeEnabled) return;
     setDislikePosition(state => !Object.keys(state).length ? {
       height: '80%',
     } : {});
-  }, []);
+  }, [isDislikeEnabled]);
 
   useEffect(() => {
-    const sum = [...rateData].reduce((a, b) => a + b.value, 0);
-    const rateI = [...rateData].findIndex(rate => rate.userId === data?.user?.id);
-    if (rateI >= 0) setUserVote(rateData[rateI].value);
-    setRateSum(sum);
-  },[rateData, data]);
+    // TODO: Refactor this block
+    (async () => {
+      let rateData: any[];
+      if (postId) rateData = await RatesService.postsControllerFindAllPostRate(`${postId}`);
+      if (commentId) rateData = await RatesService.postsControllerFindAllCommentRate(`${commentId}`);
+      const sum = [...rateData].reduce((a, b) => a + b.value, 0);
+      const rateI = [...rateData].findIndex(rate => rate.userId === data?.user?.id);
+      if (rateI >= 0) setUserVote(rateData[rateI].value);
+      setRateSum(sum);
+      setRateData(rateData);
+    })();
+  },[commentId, data, postId]);
   
   const handlePostRate = useCallback(async (value: number) => {
     if (!data) return router.push('/login');
     if (userVote && userVote === value) return; 
-
+    setUserVote(value);
     try {
-      const rate = await handleRate(value);
+      await handleRate(value);
       const newRate = [...rateData];
       
       if (userVote) {
@@ -52,10 +61,10 @@ export function PostRateControls({
           newRate.findIndex(r => r.userId === data?.user?.id)
         ].value = value;
       } else {
-        newRate.push(rate);
+        newRate.push({ value, userId: data?.user?.id });
       }
 
-      setRateDate(newRate as any);
+      setRateData(newRate as any);
     } catch (error) {
       toast(createPostRateErrorToast);
       logger.error({ error, context: "PostRateControls" });
@@ -116,6 +125,7 @@ export function PostRateControls({
         transition="0.2s"
         as={AiOutlineCaretDown} 
         fontSize={counterSize.iconSize} 
+        _hover={simpleHover}
         onMouseEnter={changeDislikePosition}
         color={userVote === RateValue.DOWN ? "pink.400" : "gray.600"} 
         onClick={() => handlePostRate(RateValue.DOWN)}
