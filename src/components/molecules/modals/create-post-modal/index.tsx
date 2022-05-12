@@ -94,7 +94,7 @@ export function CreatePostModal({ children, post }: CreatePostModalProps) {
       }
       handleRemoveDraft('create-post-modal');
       setFormattedValue(defaultFormattedValue);
-      history.push('/ptbr');
+      history.push('/');
       onClose();
     } catch (error) {
       toast(createPostErrorToast);
