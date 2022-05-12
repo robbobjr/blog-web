@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { AiOutlineCaretDown, AiOutlineCaretUp } from 'react-icons/ai';
 import { RatesService } from "../../../../services/api/openapi";
-import { logger } from "../../../../services/logger";
 import { useAuth } from "../../../../states/hooks/use-auth";
 import { simpleHover } from "../../../../styles/theme";
 import { createPostRateErrorToast } from "../../../../utils/toast";
@@ -35,15 +34,17 @@ export function PostRateControls({
   }, [isDislikeEnabled]);
 
   useEffect(() => {
-    // TODO: Refactor this block
+    const sum = [...rateData].reduce((a, b) => a + b.value, 0);
+    const rateI = [...rateData].findIndex(rate => rate.userId === data?.user?.id);
+    if (rateI >= 0) setUserVote(rateData[rateI].value);
+    setRateSum(sum);
+  }, [data?.user?.id, rateData]);
+
+  useEffect(() => {
     (async () => {
       let rateData: any[];
-      if (postId) rateData = await RatesService.postsControllerFindAllPostRate(`${postId}`);
-      if (commentId) rateData = await RatesService.postsControllerFindAllCommentRate(`${commentId}`);
-      const sum = [...rateData].reduce((a, b) => a + b.value, 0);
-      const rateI = [...rateData].findIndex(rate => rate.userId === data?.user?.id);
-      if (rateI >= 0) setUserVote(rateData[rateI].value);
-      setRateSum(sum);
+      if (postId) rateData = await RatesService.postRatesControllerFindAll(`${postId}`);
+      if (commentId) rateData = await RatesService.postRatesControllerFindAllCommentRate(`${commentId}`);
       setRateData(rateData);
     })();
   },[commentId, data, postId]);
@@ -51,25 +52,25 @@ export function PostRateControls({
   const handlePostRate = useCallback(async (value: number) => {
     if (!data) return router.push('/login');
     if (userVote && userVote === value) return; 
-    setUserVote(value);
-    try {
-      await handleRate(value);
-      const newRate = [...rateData];
-      
-      if (userVote) {
-        newRate[
-          newRate.findIndex(r => r.userId === data?.user?.id)
-        ].value = value;
-      } else {
-        newRate.push({ value, userId: data?.user?.id });
-      }
-
-      setRateData(newRate as any);
-    } catch (error) {
-      toast(createPostRateErrorToast);
-      logger.error({ error, context: "PostRateControls" });
+    const newRate = [...rateData];
+    
+    if (userVote) {
+      const userVoteIndex = newRate.findIndex(r => r.userId === data?.user?.id);
+      newRate[userVoteIndex].value = value;
+    } else {
+      newRate.push({ value, userId: data?.user?.id });
     }
-  }, [data, router, userVote, handleRate, rateData, toast]);
+
+    setRateData(newRate as any);
+    await handleRate(value).catch(() => toast(createPostRateErrorToast));
+  }, [
+    data, 
+    router, 
+    userVote, 
+    handleRate, 
+    rateData, 
+    toast, 
+  ]);
 
   const counterSize = useMemo(() => {
     const sizeValues = {
