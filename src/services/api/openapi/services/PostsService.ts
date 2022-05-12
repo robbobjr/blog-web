@@ -3,6 +3,7 @@
 /* eslint-disable */
 import type { CreatePostDto } from '../models/CreatePostDto';
 import type { PostDto } from '../models/PostDto';
+import type { PostTagDto } from '../models/PostTagDto';
 import type { UpdatePostDto } from '../models/UpdatePostDto';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -108,6 +109,17 @@ id: string,
             path: {
                 'id': id,
             },
+        });
+    }
+
+    /**
+     * @returns PostTagDto 
+     * @throws ApiError
+     */
+    public static postsControllerFindAllPostTags(): CancelablePromise<Array<PostTagDto>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/posts/tags',
         });
     }
 

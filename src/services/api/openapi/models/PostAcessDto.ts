@@ -2,9 +2,10 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type CreatePostCandidatureDto = {
+export type PostAcessDto = {
+    id: number;
     createdAt: string;
     updatedAt: string;
+    postSlug: string;
     userId: number;
-    postId: number;
 };

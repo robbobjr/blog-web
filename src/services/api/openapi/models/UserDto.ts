@@ -9,13 +9,13 @@ export type UserDto = {
     name: string;
     image?: string;
     email: string;
-    permission: UserDto.permission;
+    role: UserDto.role;
     github?: string;
 };
 
 export namespace UserDto {
 
-    export enum permission {
+    export enum role {
         USER = 'USER',
         ADMIN = 'ADMIN',
     }

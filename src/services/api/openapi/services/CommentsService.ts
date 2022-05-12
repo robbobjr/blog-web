@@ -16,12 +16,12 @@ export class CommentsService {
      * @returns any 
      * @throws ApiError
      */
-    public static postsControllerFindAllComment(
+    public static postCommentsControllerFindAll(
 postId: string,
 ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/posts/comments',
+            url: '/posts/comments/comments',
             query: {
                 'postId': postId,
             },
@@ -33,49 +33,49 @@ postId: string,
      * @returns CommentDto 
      * @throws ApiError
      */
-    public static postsControllerCreateComment(
+    public static postCommentsControllerCreate(
 requestBody: CreateCommentDto,
 ): CancelablePromise<CommentDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/posts/comments',
+            url: '/posts/comments/comments',
             body: requestBody,
             mediaType: 'application/json',
         });
     }
 
     /**
-     * @param commentId 
+     * @param id 
      * @returns CommentDto 
      * @throws ApiError
      */
-    public static postsControllerDeleteComment(
-commentId: string,
+    public static postCommentsControllerDelete(
+id: string,
 ): CancelablePromise<CommentDto> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/posts/comments/{commentId}',
+            url: '/posts/comments/comments/{id}',
             path: {
-                'commentId': commentId,
+                'id': id,
             },
         });
     }
 
     /**
-     * @param commentId 
+     * @param id 
      * @param requestBody 
      * @returns CommentDto 
      * @throws ApiError
      */
-    public static postsControllerUpdateComment(
-commentId: string,
+    public static postCommentsControllerUpdate(
+id: string,
 requestBody: UpdateCommentDto,
 ): CancelablePromise<CommentDto> {
         return __request(OpenAPI, {
             method: 'PATCH',
-            url: '/posts/comments/{commentId}',
+            url: '/posts/comments/comments/{id}',
             path: {
-                'commentId': commentId,
+                'id': id,
             },
             body: requestBody,
             mediaType: 'application/json',

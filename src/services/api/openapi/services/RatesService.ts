@@ -17,12 +17,12 @@ export class RatesService {
      * @returns PostRateDto 
      * @throws ApiError
      */
-    public static postsControllerCreatePostRate(
+    public static postRatesControllerCreate(
 requestBody: CreatePostRateDto,
 ): CancelablePromise<PostRateDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/posts/rate',
+            url: '/posts/rates/rate',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -33,12 +33,12 @@ requestBody: CreatePostRateDto,
      * @returns PostRateDto 
      * @throws ApiError
      */
-    public static postsControllerFindAllPostRate(
+    public static postRatesControllerFindAll(
 postId: string,
 ): CancelablePromise<Array<PostRateDto>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/posts/rate',
+            url: '/posts/rates/rate',
             query: {
                 'postId': postId,
             },
@@ -50,12 +50,12 @@ postId: string,
      * @returns CommentRateDto 
      * @throws ApiError
      */
-    public static postsControllerCreateCommentRate(
+    public static postRatesControllerCreateCommentRate(
 requestBody: CreateCommentRateDto,
 ): CancelablePromise<CommentRateDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/posts/comments/rate',
+            url: '/posts/rates/comments/rate',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -66,12 +66,12 @@ requestBody: CreateCommentRateDto,
      * @returns CommentRateDto 
      * @throws ApiError
      */
-    public static postsControllerFindAllCommentRate(
+    public static postRatesControllerFindAllCommentRate(
 commentId: string,
 ): CancelablePromise<Array<CommentRateDto>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/posts/comments/rate',
+            url: '/posts/rates/comments/rate',
             query: {
                 'commentId': commentId,
             },
