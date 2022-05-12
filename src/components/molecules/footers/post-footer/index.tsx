@@ -23,7 +23,7 @@ export function PostFooter({
   const [comments, setComments] = useState([]);
 
   useEffect(() => {
-    CommentsService.postsControllerFindAllComment(
+    CommentsService.postCommentsControllerFindAll(
       `${id}`,
     ).then(data => setComments(data));
   },[id]);  

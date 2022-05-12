@@ -26,14 +26,14 @@ export default function FeedPost({ post }: PostDetailProps) {
 
   useEffect(() => {
     // Getting comments by csr
-    CommentsService.postsControllerFindAllComment(
+    CommentsService.postCommentsControllerFindAll(
       `${post.id}`
     ).then(data => setComments(data))
   }, [post]);
 
   const commentHandler = useCallback(async (data: CreateCommentDto) => {
     try {
-      const comment = await CommentsService.postsControllerCreateComment(data);
+      const comment = await CommentsService.postCommentsControllerCreate(data);
       comment.user = session.data.user;
       setComments(state => [...state, comment]);
     } catch (error) {

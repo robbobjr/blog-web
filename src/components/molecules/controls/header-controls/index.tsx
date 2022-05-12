@@ -53,7 +53,7 @@ export function HeaderControls() {
           onClick={handleUserLikedPosts}
         />
       )}
-      {data?.user?.permission === UserDto.permission.ADMIN && (
+      {data?.user?.role === UserDto.role.ADMIN && (
         <CreatePostModal>
           <CircularIcon icon={GoPlus} />
         </CreatePostModal>

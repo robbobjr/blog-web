@@ -44,7 +44,7 @@ export function PostHeader({
             text={`Participação ofertada:${participation}%`} 
           />
         )}
-        {data?.user?.permission === 'ADMIN' && (
+        {data?.user?.role === 'ADMIN' && (
           <>
             <Alert 
               title="Deletar post" 
@@ -65,7 +65,7 @@ export function PostHeader({
           </>   
         )}
         {!isPostPreview && (
-          <Link href="/ptbr"><PostIcon icon={FaHome} text={"Home"}/></Link>
+          <Link href="/"><PostIcon icon={FaHome} text={"Home"}/></Link>
         )}
       </Flex>
     </Flex>

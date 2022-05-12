@@ -28,9 +28,9 @@ export default function Feed({
   posts, 
   tags 
 }: { posts: PostDto[], tags: PostTagDto[]}) {
+  const { setTags, setPosts, posts: postsState } = useContent();
   const history = useRouter();
   const toast = useToast();
-  const { setTags, setPosts, posts: postsState } = useContent();
   
   useEffect(() => {
     setTags(tags);
@@ -39,7 +39,7 @@ export default function Feed({
 
   const commentHandler = useCallback(async (data: CreateCommentDto) => {
     try {
-      await CommentsService.postsControllerCreateComment(data);
+      await CommentsService.postCommentsControllerCreate(data);
       history.push('/')
     } catch (error) {
       logger.error({ error, context: "Feed" });

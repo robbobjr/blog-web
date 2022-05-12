@@ -17,7 +17,7 @@ export function PostComment({
   const session = useAuth();
 
   const handleCommentRate = useCallback(async (value: number) => {
-    return RatesService.postsControllerCreateCommentRate({
+    return RatesService.postRatesControllerCreateCommentRate({
       commentId: id,
       userId: session.data?.user?.id,
       value,

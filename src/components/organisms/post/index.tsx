@@ -24,7 +24,7 @@ export function Post({
   } = useMemo(() => postData, [postData]);
 
   const handlePostRate = useCallback(async (value: number) => {
-    return RatesService.postsControllerCreatePostRate({
+    return RatesService.postRatesControllerCreate({
       postId: id,
       userId: session.data?.user?.id,
       value,
