@@ -1,14 +1,15 @@
 import { Flex, Stack } from "@chakra-ui/react";
 import { useCallback, useEffect } from "react";
 import { AiFillGithub, AiFillGoogleCircle, AiFillLinkedin, AiFillTwitterCircle } from "react-icons/ai";
-import { signIn, useSession } from 'next-auth/react';
+import { signIn } from 'next-auth/react';
 import { useRouter } from "next/router";
 import { SocialButton } from "../components/atoms/buttons/social-button";
 import { CentralizedContainer } from "../components/molecules/containers/centralized-container";
+import { useAuth } from "../states/hooks/use-auth";
 
 export default function Login() {
   const router = useRouter();
-  const { data } = useSession();
+  const { data } = useAuth();
 
   useEffect(() => {
     if (!data) return;

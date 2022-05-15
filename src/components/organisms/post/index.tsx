@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from "react";
-import { PostsService } from "../../../services/api/openapi";
+import { RatesService } from "../../../services/api/openapi";
 import { useAuth } from "../../../states/hooks/use-auth";
 import { PostContainer } from "../../molecules/containers/post-container";
 import { PostContent } from "../../molecules/contents/post-content";
@@ -21,11 +21,10 @@ export function Post({
   const {
     id,
     tags,
-    rates,
   } = useMemo(() => postData, [postData]);
 
   const handlePostRate = useCallback(async (value: number) => {
-    return PostsService.postsControllerCreatePostRate({
+    return RatesService.postRatesControllerCreate({
       postId: id,
       userId: session.data?.user?.id,
       value,
@@ -34,12 +33,12 @@ export function Post({
 
   const Aside = useMemo(() => 
     <PostRateControls 
-      data={{ rates }} 
+      data={{ postId: id }} 
       handleRate={handlePostRate} 
       hideRateControl={!isPostPreview}
       size="md"
     />
-  ,[rates, handlePostRate, isPostPreview]);
+  ,[id, handlePostRate, isPostPreview]);
 
   const PostContentByContext = useMemo(() => 
     isPostPreview 

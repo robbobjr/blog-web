@@ -3,23 +3,30 @@ import { PostIcon } from "../../../atoms/icons/post-icon";
 import { SingleInputModal } from "../../modals/single-input-modal";
 import { FaSignInAlt } from 'react-icons/fa';
 import { RiMessage3Fill, RiTeamFill } from 'react-icons/ri';
-import { FormEvent, useCallback, useMemo } from "react";
+import { FormEvent, useCallback, useEffect, useMemo, useState } from "react";
 import { PostFooterProps } from "./post-footer.types";
 import { formatCommentText } from "../../../utils/format-text";
 import { useAuth } from "../../../../states/hooks/use-auth";
 import { logger } from "../../../../services/logger";
+import { CommentsService } from "../../../../services/api/openapi";
 
 export function PostFooter({
   commentHandler,
   data: {
     id,
-    comments,
     candidatures,
     availlablePositions,
   }
 }: PostFooterProps) {
   const { data } = useAuth();
   const user = useMemo(() => data?.user, [data]);
+  const [comments, setComments] = useState([]);
+
+  useEffect(() => {
+    CommentsService.postCommentsControllerFindAll(
+      `${id}`,
+    ).then(data => setComments(data));
+  },[id]);  
 
   const handlePostJoin = useCallback(
     async (event: FormEvent<HTMLElement>) => {

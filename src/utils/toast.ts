@@ -35,3 +35,12 @@ export const createPostRateErrorToast = {
   isClosable: true,
   position: ToastPosition.LEFT,
 };
+
+export const searchPostErrorToast = {
+  title: "Falha no processo",
+  description: "Falhei miseravelmente ao procurar pelos posts",
+  status: ToastStatusEnum.ERROR,
+  duration: 9000,
+  isClosable: true,
+  position: ToastPosition.LEFT,
+};

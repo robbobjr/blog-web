@@ -44,7 +44,7 @@ export function PostHeader({
             text={`Participação ofertada:${participation}%`} 
           />
         )}
-        {data?.user?.permission === 'ADMIN' && (
+        {data?.user?.role === 'ADMIN' && (
           <>
             <Alert 
               title="Deletar post" 

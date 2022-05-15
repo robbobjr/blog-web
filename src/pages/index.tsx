@@ -1,7 +1,7 @@
 import { Box, Flex, Stack, useToast } from "@chakra-ui/react";
 import { Post } from "../components/organisms/post";
 import { MainContainer } from "../components/molecules/containers/main-container";
-import { GetStaticPaths, GetStaticProps } from "next";
+import { GetStaticProps } from "next";
 import { dracula } from "../styles/theme";
 import { Topics } from "../components/organisms/topics";
 import { useCallback, useEffect } from "react";
@@ -12,7 +12,7 @@ import { Header } from "../components/organisms/header";
 import { Footer } from "../components/organisms/footer";
 import { useContent } from "../states/hooks/use-content";
 import { FeedHead } from "../components/organisms/head/feed-head";
-import { CreateCommentDto, PostDto, PostsService, PostTagDto } from "../services/api/openapi";
+import { CommentsService, CreateCommentDto, PostDto, PostTagDto } from "../services/api/openapi";
 import { AxiosAPI } from "../services/api/axios";
 
 const containerProps = {
@@ -28,17 +28,18 @@ export default function Feed({
   posts, 
   tags 
 }: { posts: PostDto[], tags: PostTagDto[]}) {
+  const { setTags, setPosts, posts: postsState } = useContent();
   const history = useRouter();
   const toast = useToast();
-  const { setTags } = useContent();
   
   useEffect(() => {
     setTags(tags);
-  }, [setTags, tags]);
+    setPosts(posts);
+  }, [setTags, setPosts, tags, posts]);
 
   const commentHandler = useCallback(async (data: CreateCommentDto) => {
     try {
-      await PostsService.postsControllerCreateComment(data);
+      await CommentsService.postCommentsControllerCreate(data);
       history.push('/')
     } catch (error) {
       logger.error({ error, context: "Feed" });
@@ -46,17 +47,19 @@ export default function Feed({
     }
   }, [history, toast]);
 
+  if (!postsState) return <></>;
+
   return (
     <>
       <FeedHead />
       <Flex direction="column" h="100vh"> 
-        <Header/>
+        <Header />
         <MainContainer>
           <Box position="absolute" display={{ base: "none", sm: "none", md: "block" }}>
             <Topics textAlign="left" tags={tags} maxW="200px" display={{ sm: "none", lg: "block"}}/>
           </Box>
           <Stack spacing="4" flex="1" minW="320px" alignItems="center" mb="6">
-            {posts.map((post, i) => (
+            {postsState.map((post, i) => (
               <Post 
                 key={i} 
                 data={post} 
@@ -73,22 +76,12 @@ export default function Feed({
   );
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  return {
-    paths: [
-      { params: { tag: 'ptbr' } }
-    ],
-    fallback: 'blocking',
-  }
-}
-
-
-export const getStaticProps: GetStaticProps = async ({ params: { tag } }) => {
-  const axiosAPI = new AxiosAPI("Feed:getServerSideProps");
-  const { posts, tags } = await axiosAPI.getPostsAndTags({ tag });
+export const getStaticProps: GetStaticProps = async () => {
+  const axiosAPI = new AxiosAPI("Feed::getServerSideProps");
+  const { posts, tags } = await axiosAPI.getPostsAndTags({});
 
   return {
-    revalidate: 24 * 60 * 60,
+    revalidate: 60 * 60,
     props: {
       posts,
       tags,

@@ -4,10 +4,10 @@ import { simpleHover } from "../../../styles/theme";
 
 interface CircularIconProps extends FlexProps {
   icon: IconType;
-  iconColor?: string;
+  isPressed?: boolean;
 }
 
-export function CircularIcon({ icon, iconColor, ...props }: CircularIconProps) {
+export function CircularIcon({ icon, isPressed, ...props }: CircularIconProps) {
   return (
     <Flex
       cursor="pointer"
@@ -15,11 +15,11 @@ export function CircularIcon({ icon, iconColor, ...props }: CircularIconProps) {
       borderRadius="50%"
       align="center"
       justify="center"
-      p="2"
       _hover={simpleHover}
+      p="2"
       {...props}
     >
-      <Icon as={icon} fontSize={20} color={iconColor}/>
+      <Icon as={icon} fontSize={20}  color={isPressed && "pink.400"}/>
     </Flex>
   );
 }

@@ -1,13 +1,14 @@
-import { Flex, Input, Text, HStack, Box, Avatar, Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
-import { signOut, useSession } from "next-auth/react";
+import { Flex, Text, Box, Avatar, Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
+import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useMemo, useCallback } from "react";
 import { GoSignOut } from 'react-icons/go';
 import { FaUserAstronaut } from "react-icons/fa";
 import { simpleHover } from "../../../../styles/theme";
+import { useAuth } from "../../../../states/hooks/use-auth";
 
 export function ProfileMenu() {
-  const { data } = useSession();
+  const { data } = useAuth();
   const router = useRouter();
 
   const { email, image, name } = useMemo(() => {

@@ -3,7 +3,7 @@ import { GoMarkGithub } from "react-icons/go";
 import { personalConfig } from "../../../../configs/personal-config";
 import { CircularIcon } from "../../../atoms/icons/circular-icon";
 import { SiLinkedin } from 'react-icons/si';
-import { FaTwitter } from "react-icons/fa";
+import { FaMedium, FaTwitter } from "react-icons/fa";
 
 export function SocialControls(props: StackProps) {
   return (
@@ -23,6 +23,9 @@ export function SocialControls(props: StackProps) {
       </a>
       <a target="_blank" rel="noopener noreferrer" href={personalConfig.twitter}>
         <CircularIcon icon={FaTwitter} />
+      </a>
+      <a target="_blank" rel="noopener noreferrer" href={personalConfig.medium}>
+        <CircularIcon icon={FaMedium} />
       </a>
     </HStack> 
   );

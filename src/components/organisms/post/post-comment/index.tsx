@@ -1,6 +1,6 @@
 import { Avatar, Box, Flex, Text } from "@chakra-ui/react";
 import { useCallback, useMemo } from "react";
-import { PostsService } from "../../../../services/api/openapi";
+import { RatesService } from "../../../../services/api/openapi";
 import { useAuth } from "../../../../states/hooks/use-auth";
 import { PostContainer } from "../../../molecules/containers/post-container";
 import { PostRateControls } from "../../../molecules/controls/post-rate-controls";
@@ -11,14 +11,13 @@ export function PostComment({
   data: {
     user,
     content,
-    rates,
     id,
   }
 }: PostCommentProps) {
   const session = useAuth();
 
   const handleCommentRate = useCallback(async (value: number) => {
-    return PostsService.postsControllerCreateCommentRate({
+    return RatesService.postRatesControllerCreateCommentRate({
       commentId: id,
       userId: session.data?.user?.id,
       value,
@@ -27,12 +26,13 @@ export function PostComment({
 
   const Aside = useMemo(() => 
     <PostRateControls 
-      data={{ rates }} 
+      data={{ commentId: id }} 
       handleRate={handleCommentRate} 
+      isDislikeEnabled
       isBorderLeft
       size="sm"
     />
-  ,[rates, handleCommentRate]);
+  ,[id, handleCommentRate]);
 
   return (
     <PostContainer size="sm" {...containerProps} leftSide={Aside}>

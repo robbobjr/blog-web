@@ -7,20 +7,15 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Roberto Junior Dev</title>
+        <title></title>
         <meta name="description" content="Hey there! My name is Roberto Junior and I am a software developer." />
       </Head>
       <main className={styles.contentContainer}>
         <Image width="25%" src="/static/me.gif" alt="girl coding" />
         <section className={styles.hero}>
-          <span>👏 Hey there!</span>
           <h1>
-            Wellcome to my <span>portfolio</span>
+            40<span>4</span>
           </h1>
-          <p>
-            Feel free to get in touch <br />
-            <span>robertojuniordev@gmail.com</span>
-          </p>
         </section>
       </main>
     </>
