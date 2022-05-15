@@ -1,6 +1,7 @@
 import { useCallback, useMemo } from "react";
 import { RatesService } from "../../../services/api/openapi";
 import { useAuth } from "../../../states/hooks/use-auth";
+import { useContent } from "../../../states/hooks/use-content";
 import { PostContainer } from "../../molecules/containers/post-container";
 import { PostContent } from "../../molecules/contents/post-content";
 import { PostPreviewContent } from "../../molecules/contents/post-preview-content";
@@ -13,10 +14,10 @@ import { PostProps } from "./post.type";
 export function Post({ 
   containerProps,
   isPostPreview,
-  commentHandler,
   data: postData,
 }: PostProps) {
   const session = useAuth();
+  const { rateByPost } = useContent();
 
   const {
     id,
@@ -33,12 +34,12 @@ export function Post({
 
   const Aside = useMemo(() => 
     <PostRateControls 
-      data={{ postId: id }} 
+      data={{ rates: rateByPost.get(postData.id) }} 
       handleRate={handlePostRate} 
       hideRateControl={!isPostPreview}
       size="md"
     />
-  ,[id, handlePostRate, isPostPreview]);
+  ,[rateByPost, postData.id, handlePostRate, isPostPreview]);
 
   const PostContentByContext = useMemo(() => 
     isPostPreview 
@@ -54,7 +55,7 @@ export function Post({
     >
       <PostHeader isPostPreview={isPostPreview} data={postData}/>
       <PostContentByContext data={postData} />
-      <PostFooter data={postData} commentHandler={commentHandler}/>
+      <PostFooter data={{ postId: postData.id }}/>
       <PostTagsFooter tags={tags} />
     </PostContainer>
   );

@@ -2,7 +2,6 @@ import { Icon, Stack, Text, useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { AiOutlineCaretDown, AiOutlineCaretUp } from 'react-icons/ai';
-import { RatesService } from "../../../../services/api/openapi";
 import { useAuth } from "../../../../states/hooks/use-auth";
 import { simpleHover } from "../../../../styles/theme";
 import { createPostRateErrorToast } from "../../../../utils/toast";
@@ -11,7 +10,7 @@ import { PostRateControlsProps } from "./post-rate-controls.type";
 
 export function PostRateControls({ 
   handleRate,
-  data: { postId, commentId },
+  data: { rates },
   hideRateControl,
   isDislikeEnabled,
   isBorderLeft,
@@ -20,11 +19,15 @@ export function PostRateControls({
   const { data } = useAuth();
   const router = useRouter();
   const toast = useToast();
-
+  // State local because it could be postrate or commentrate
   const [rateData, setRateData] = useState([]);
   const [rateSum, setRateSum] = useState(0);
   const [userVote, setUserVote] = useState<undefined | RateValue>();  
   const [dislikePosition, setDislikePosition] = useState({});
+
+  useEffect(() => {
+    if(rates) setRateData(rates);
+  }, [rates]);
 
   const changeDislikePosition = useCallback(() => {
     if (isDislikeEnabled) return;
@@ -39,15 +42,6 @@ export function PostRateControls({
     if (rateI >= 0) setUserVote(rateData[rateI].value);
     setRateSum(sum);
   }, [data?.user?.id, rateData]);
-
-  useEffect(() => {
-    (async () => {
-      let rateData: any[];
-      if (postId) rateData = await RatesService.postRatesControllerFindAll(`${postId}`);
-      if (commentId) rateData = await RatesService.postRatesControllerFindAllCommentRate(`${commentId}`);
-      setRateData(rateData);
-    })();
-  },[commentId, data, postId]);
   
   const handlePostRate = useCallback(async (value: number) => {
     if (!data) return router.push('/login');
@@ -58,7 +52,7 @@ export function PostRateControls({
       const userVoteIndex = newRate.findIndex(r => r.userId === data?.user?.id);
       newRate[userVoteIndex].value = value;
     } else {
-      newRate.push({ value, userId: data?.user?.id });
+      newRate.push({ value, userId: data?.user?.id } as any);
     }
 
     setRateData(newRate as any);

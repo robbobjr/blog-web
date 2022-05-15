@@ -9,7 +9,7 @@ export interface PostRateControlsProps  {
    */
   handleRate: (value: number) => Promise<PostRateDto | CommentRateDto>; 
   size: 'sm' | 'md';
-  data: { postId?: number, commentId?: number };
+  data: { rates: CommentRateDto[] | PostRateDto[] };
   isBorderLeft?: boolean;
   isDislikeEnabled?: boolean;
 }

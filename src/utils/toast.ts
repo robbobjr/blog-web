@@ -44,3 +44,12 @@ export const searchPostErrorToast = {
   isClosable: true,
   position: ToastPosition.LEFT,
 };
+
+export const deletePostErrorToast = {
+  title: "Falha ao deletar",
+  description: "Falhei miseravelmente ao deletar o post",
+  status: ToastStatusEnum.ERROR,
+  duration: 9000,
+  isClosable: true,
+  position: ToastPosition.LEFT,
+};

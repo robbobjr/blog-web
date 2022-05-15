@@ -6,25 +6,22 @@ import { debounce } from "../../../../utils/debounce";
 import { useContent } from "../../../../states/hooks/use-content";
 import { logger } from "../../../../services/logger";
 import { searchPostErrorToast } from "../../../../utils/toast";
-import { AxiosAPI } from "../../../../services/api/axios";
 import { useRouter } from "next/router";
 
 export function SearchInput() {
-  const { setPosts } = useContent();
+  const { handleSearchPosts } = useContent();
   const toast = useToast();
   const history = useRouter();
 
   const handlePostsSearch = useCallback(async (input: string) => {
     try {
-      const client = new AxiosAPI("SearchInput");
-      const foundPosts = await client.getPosts(input ? { input } : undefined);
-      setPosts(foundPosts);
+      await handleSearchPosts(input ? { input } : undefined);
       if (history.pathname !== "/") return history.push("/");
     } catch (error) {
-      logger.error({ error, context: "SearchInput" });
+      logger.error({ error, context: "SearchInput::handlePostsSearch" });
       toast(searchPostErrorToast);
     }
-  }, [history, setPosts, toast]);
+  }, [handleSearchPosts, history, toast]);
   
   const handleInputChange = useCallback(async (
     event: ChangeEvent<HTMLInputElement>,
