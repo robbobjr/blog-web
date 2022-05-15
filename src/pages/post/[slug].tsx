@@ -1,48 +1,32 @@
 import { GetStaticPaths, GetStaticProps } from "next"
 import { Flex, Stack, useToast } from "@chakra-ui/react";
-import { PostComment } from "../../components/organisms/post/post-comment";
 import { Post } from "../../components/organisms/post";
-import { useCallback, useEffect, useState } from "react";
 import { MainContainer } from "../../components/molecules/containers/main-container";
-import { CommentsService, CreateCommentDto, PostDto } from "../../services/api/openapi";
-import { logger } from "../../services/logger";
-import { createCommentErrorToast } from "../../utils/toast";
+import { PostDto } from "../../services/api/openapi";
 import { Header } from "../../components/organisms/header";
 import { useContent } from "../../states/hooks/use-content";
 import { Footer } from "../../components/organisms/footer";
 import { PostHead } from "../../components/organisms/head/post-head";
 import { AxiosAPI } from "../../services/api/axios";
-import { useAuth } from "../../states/hooks/use-auth";
+import { Comments } from "../../components/templates/comments";
+import { useEffect, useMemo } from "react";
 
 interface PostDetailProps {
   post: PostDto;
 }
 
 export default function FeedPost({ post }: PostDetailProps) {
-  const [comments, setComments] = useState(post?.comments || []);
-  const { tags } = useContent();
-  const toast = useToast();
-  const session = useAuth();
+  const { commentByPost, setPosts } = useContent();
 
-  useEffect(() => {
-    // Getting comments by csr
-    CommentsService.postCommentsControllerFindAll(
-      `${post.id}`
-    ).then(data => setComments(data))
-  }, [post]);
+  useEffect(() => setPosts([post]), [post, setPosts]);
 
-  const commentHandler = useCallback(async (data: CreateCommentDto) => {
-    try {
-      const comment = await CommentsService.postCommentsControllerCreate(data);
-      comment.user = session.data.user;
-      setComments(state => [...state, comment]);
-    } catch (error) {
-      logger.error({ error, context: "commentHandler" });
-      toast(createCommentErrorToast);
+  const containerProps = useMemo(() => {
+    return { 
+      borderBottomRadius: commentByPost.get(post.id)?.length ? 0 : "lg", 
+      maxWidth: "772px",
+      paddingTop: "2rem" 
     }
-  }, [toast, session]);
-
-  if (!post) return <></>;
+  }, [commentByPost, post.id]);
 
   return (
     <>
@@ -53,29 +37,12 @@ export default function FeedPost({ post }: PostDetailProps) {
           <Stack spacing="0" flex="1" minW="320px" alignItems="center" mb="6">
             <Post 
               data={post} 
-              commentHandler={commentHandler}
-              containerProps={{ 
-                borderBottomRadius: comments.length ? 0 : "lg", 
-                maxWidth: "772px",
-                paddingTop: "2rem" 
-              }} 
+              containerProps={containerProps} 
             />
-            <Flex direction="column" align="center" w="100%">
-              {comments.map((comment, i, a) => (
-                <PostComment 
-                  key={i} 
-                  data={comment} 
-                  containerProps={{ 
-                    borderBottomRadius: i === a.length - 1 ? 8 : 0, 
-                    borderTopRadius: 0,
-                    maxWidth: "772px",
-                  }} 
-                />
-              ))}
-            </Flex>
+           <Comments data={{ postId: post.id }} />
           </Stack>
         </MainContainer> 
-        <Footer data={{ tags }}/>
+        <Footer/>
       </Flex>
     </>
   )

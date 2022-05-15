@@ -1,25 +1,22 @@
 import { Badge, Box, BoxProps } from "@chakra-ui/react"
 import { useCallback } from "react"
-import { PostsService, PostTagDto } from "../../services/api/openapi"
+import { PostTagDto } from "../../services/api/openapi"
 import { useContent } from "../../states/hooks/use-content"
 import { randomDraculaBackground } from "../../styles/theme"
 
-interface TopicsProps extends BoxProps {
-  tags: PostTagDto[]
-}
+interface TopicsProps extends BoxProps {}
 
-export function Topics({ tags, ...props }: TopicsProps) {
-  const { setPosts } = useContent();
+export function Topics({ ...props }: TopicsProps) {
+  const { handleSearchPosts } = useContent();
+  const { tags } = useContent();
 
-  const handleTopic = useCallback((tag: string) => {
-    PostsService.postsControllerFindAll(
-      tag
-    ).then(data => setPosts(data));
-  }, [setPosts]);
+  const handleTopic = useCallback(async (tag: string) => {
+    await handleSearchPosts({ tag })
+  }, [handleSearchPosts]);
 
   return (
     <Box display="block" float="none" textAlign="center" {...props}>
-       {tags?.map(tag => 
+       {tags.map(tag => 
         <Badge 
           margin="0.5" 
           fontSize="md" 

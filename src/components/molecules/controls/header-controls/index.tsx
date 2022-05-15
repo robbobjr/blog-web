@@ -8,30 +8,26 @@ import { CreatePostModal } from "../../modals/create-post-modal";
 import { useCallback, useState } from "react";
 import { useContent } from "../../../../states/hooks/use-content";
 import { useRouter } from "next/router";
-import { AxiosAPI } from "../../../../services/api/axios";
 /**
  * @summary
  * Buttons inside the header to control pub creation and notifications 
  */
 export function HeaderControls() {
   const [isPressed, setIsPressed] = useState(false);
-
   const { data } = useAuth(); 
-  const { setPosts } = useContent();
+  const { handleSearchPosts } = useContent();
   const history = useRouter();
 
   const handleUserLikedPosts = useCallback(async () => {
     if (!data?.user) return;
     setIsPressed(state => !state);
-    const client = new AxiosAPI("HeaderControls");
-    const foundPosts = await client.getPosts(
+    await handleSearchPosts(
       isPressed 
       ? undefined 
       : { userId: `${data?.user?.id}`, rateValue: "1" }
     );
-    setPosts(foundPosts);
     if (history.pathname !== "/") return history.push("/");
-  }, [data?.user, history, isPressed, setPosts]);
+  }, [data?.user, handleSearchPosts, history, isPressed]);
   
 
   return (
@@ -41,8 +37,6 @@ export function HeaderControls() {
       py="1"
       mx="8"
       color="gray.600"
-      borderRightWidth={1}
-      borderColor="gray.800"
       ml={{ sm: 'auto', md: "8" }}
       display={{ base: "none", sm: "inherit" }}
     >

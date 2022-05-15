@@ -1,11 +1,11 @@
 import { Stack } from "@chakra-ui/react";
 import { CopyrightFooter } from "../molecules/footers/copyright-footer";
-import { Topics } from "./topics";
+import { Topics } from "../molecules/topics";
 
-export function Footer({ data }) {
+export function Footer() {
   return (
     <Stack spacing="2" mx="auto" pb="4">
-      <Topics tags={data.tags} maxW="400px"/>
+      <Topics maxW="400px"/>
       <CopyrightFooter/>
     </Stack>
   );
