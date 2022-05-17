@@ -25,7 +25,7 @@ export default function Login() {
     <CentralizedContainer>
       <Flex as="form" w="100%" maxW={360} bg="gray.800" p="8" borderRadius={8} flexDir="column" m="4">
         <Stack spacing="4">
-          <SocialButton handler={handleGithubSign} icon={AiFillGithub} colorScheme="blackAlpha">
+          <SocialButton handler={handleGithubSign} icon={AiFillGithub} bg="gray.900">
             Github
           </SocialButton>
           <SocialButton disabled icon={AiFillTwitterCircle} colorScheme="twitter">
