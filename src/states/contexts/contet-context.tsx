@@ -1,82 +1,57 @@
 import { createContext, useEffect } from "react";
 import { useCallback, useMemo, useState } from "react";
-import { AxiosAPI } from "../../services/api/axios";
-import { CommentDto, PostDto, PostRateDto, PostTagDto } from "../../services/api/openapi";
+import { Api } from "../../services/api";
+import { CommentDto, PostDto, PostRateDto, PostTagDto, TagsService } from "../../services/api/openapi";
 
 export interface ContentContextProps {
   tags: PostTagDto[];
   setTags: (tags: PostTagDto[]) => void;
   handleSearchPosts(params: Record<string, string | string[]>): Promise<void>;
-  setPosts: (data: PostDto[]) => void;
-  isLoading: boolean;
-  commentByPost: Map<number, CommentDto[]>;
-  rateByPost: Map<number, PostRateDto[]>;
-  handleUpdatePostComments: (data: CommentDto) => void;
-  posts: PostDto[];
+  setPostsToList: (data: PostDto[]) => void;
+  postsToList: PostDto[];
+  handleUpdatePostComments(data: CommentDto): void;
+  postComments: CommentDto[];
+  setPostComments: (data: CommentDto[]) => void;
 }
 
 export const ContentContext = createContext({} as ContentContextProps);
 
 export function ContentContextProvider({ children }) {
-  const [tags, setTags] = useState([] as PostTagDto[]); 
-  const [posts, setPosts] = useState([] as PostDto[]);
-  const [
-    commentByPost, 
-    setCommentByPost
-  ] = useState<Map<number, CommentDto[]>>(new Map()); 
-  const [
-    rateByPost, 
-    setRateByPost
-  ] = useState<Map<number, PostRateDto[]>>(new Map());
-  const [isLoading, setIsLoading] = useState(true);
+  const [tags, setTags] = useState([] as PostTagDto[]);
+  const [postsToList, setPostsToList] = useState([] as PostDto[]);
+  const [postComments, setPostComments] = useState<CommentDto[]>([]);
 
   useEffect(() => {
-    if (!posts.length) return;
-    const commentByPostDto: Array<[number, CommentDto[]]> = [];
-    const rateByPostDto: Array<[number, PostRateDto[]]> = [];
-    posts.forEach(({ id, rates, comments }) => {
-      rateByPostDto.push([id, rates])
-      commentByPostDto.push([id, comments]);
-    });
-
-    setRateByPost(new Map(rateByPostDto));
-    setCommentByPost(new Map(commentByPostDto));
-    setIsLoading(false);
-  }, [posts]);
+    TagsService.postsControllerFindAllPostTags().then(tags => setTags(tags));
+  }, []);
 
   const handleSearchPosts = useCallback(
     async (params: Record<string, string | string[]>) => {
-      const client = new AxiosAPI("ContentContext::handleSearchPosts");
+      const client = new Api("ContentContext::handleSearchPosts");
       const foundPosts = await client.getPosts(params);
-      setPosts(foundPosts);
+      setPostsToList(foundPosts);
   }, []); 
 
   const handleUpdatePostComments = useCallback((data: CommentDto) => {
-    const commentByPostDto = new Map(commentByPost);
-    const postComments = commentByPostDto.get(data.postId);
-    commentByPostDto.set(data.postId, [...postComments, data]);
-    setCommentByPost(commentByPostDto);
-  }, [commentByPost]); 
+    setPostComments(state => [data, ...state]);
+  }, []);
 
-
+  // TODO: get tags over context
   const context = useMemo(() => ({
-    commentByPost,
-    rateByPost,
-    isLoading,
     handleUpdatePostComments,
     handleSearchPosts,
-    setPosts,
+    setPostComments,
+    setPostsToList,
+    postComments,
+    postsToList,
     setTags,
-    posts,
     tags, 
   }), 
   [
-    handleUpdatePostComments,
+    handleUpdatePostComments, 
     handleSearchPosts, 
-    commentByPost, 
-    rateByPost, 
-    isLoading, 
-    posts, 
+    postComments, 
+    postsToList, 
     tags
   ]);
 
