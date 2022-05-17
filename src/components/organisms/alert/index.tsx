@@ -31,6 +31,7 @@ export function Alert({ children, title, description, handler }) {
         isOpen={isOpen}
         leastDestructiveRef={cancelRef}
         onClose={onClose}
+        isCentered
       >
         <AlertDialogOverlay>
           <AlertDialogContent bg="gray.800">
@@ -41,10 +42,10 @@ export function Alert({ children, title, description, handler }) {
               {description}
             </AlertDialogBody>
             <AlertDialogFooter>
-              <Button ref={cancelRef} onClick={onClose} colorScheme="linkedin">
+              <Button ref={cancelRef} onClick={onClose} bg="gray.600">
                 Cancelar
               </Button>
-              <Button colorScheme='red' onClick={handleConfirm} ml={3}>
+              <Button bg="pink.400" onClick={handleConfirm} ml={3}>
                 Confirmar
               </Button>
             </AlertDialogFooter>

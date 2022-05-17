@@ -1,20 +1,28 @@
-import { Box, Icon, Text } from "@chakra-ui/react";
+import { Box, BoxProps, Icon, Text } from "@chakra-ui/react";
+import { ReactElement } from "react";
 
-export function PostIcon({ icon, text, ...props }) {
+interface PostIconProps extends BoxProps {
+  icon: any; 
+  text?: string;
+}
+
+export function PostIcon({ icon, text, ...props }: PostIconProps) {
   return (
     <Box 
-      {...props} 
       display="flex" 
       alignItems="center" 
       mr="4" 
       cursor="pointer" 
       _hover={{ transform: 'scale(1.025)', }}
       transition="0.2s"
+      {...props} 
     >
       <Icon as={icon} fontSize={14} color="purple.400"/>
-      <Text fontSize="sm" ml="2" color="gray.600">
-        {text}
-      </Text>
+      { text && (
+        <Text fontSize="sm" ml="2" color="gray.600">
+          {text}
+        </Text>
+      )}
     </Box>
-  )
+  );
 }

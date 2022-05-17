@@ -17,7 +17,6 @@ export function useDraft() {
       if (!localStorage) return;
 
       if (!content) {
-        console.log('fui chamado')
         localStorage.removeItem(field);
       }
 

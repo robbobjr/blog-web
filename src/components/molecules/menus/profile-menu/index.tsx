@@ -1,15 +1,17 @@
-import { Flex, Text, Box, Avatar, Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
+import { Flex, Text, Box, Avatar, Menu, MenuButton, MenuList, MenuItem, MenuDivider, useToast } from "@chakra-ui/react";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useMemo, useCallback } from "react";
 import { GoSignOut } from 'react-icons/go';
-import { FaUserAstronaut } from "react-icons/fa";
+import { MdCopyAll, MdLogout } from "react-icons/md";
 import { simpleHover } from "../../../../styles/theme";
 import { useAuth } from "../../../../states/hooks/use-auth";
+import { jwtCopiedToast } from "../../../../utils/toast";
 
 export function ProfileMenu() {
   const { data } = useAuth();
   const router = useRouter();
+  const toast = useToast();
 
   const { email, image, name } = useMemo(() => {
     return {
@@ -20,12 +22,14 @@ export function ProfileMenu() {
   }, [data]);
 
   const handleSession = useCallback(async () => {
-    if (!data) {
-      await router.push('/login');
-    }
-
+    if (!data) await router.push('/login');
     await signOut();
   }, [data, router]);
+
+  const handleCopyJWT = useCallback(() => {
+    navigator.clipboard.writeText(data.jwt);
+    toast({...jwtCopiedToast });
+  }, [data, toast]);
 
   return (
     <Flex align="center" ml={!data && "auto"}>
@@ -51,18 +55,19 @@ export function ProfileMenu() {
           _hover={data ? simpleHover : {}}
         />
         </MenuButton>
-        <MenuList bg="gray.50">
+        <MenuList>
           {data ? (
             <>
-              <MenuItem disabled icon={<FaUserAstronaut size={15}/>} color="gray.700">
-                Perfil ( Em breve )
-              </MenuItem>
-              <MenuItem icon={<GoSignOut size={15}/>} color="gray.700" onClick={handleSession}>
+              <MenuItem icon={<MdLogout size={15}/>} onClick={handleSession}>
                 Sair
+              </MenuItem>
+              <MenuDivider />
+              <MenuItem onClick={handleCopyJWT} icon={<MdCopyAll size={15}/>}>
+                api key - {data.jwt.slice(0, 5)}...
               </MenuItem>
             </>
           ): (
-            <MenuItem icon={<GoSignOut size={15}/>} color="gray.700" onClick={handleSession}>
+            <MenuItem icon={<GoSignOut size={15}/>} onClick={handleSession}>
               Entrar
             </MenuItem>
           )}

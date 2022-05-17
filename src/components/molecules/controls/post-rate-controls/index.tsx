@@ -2,7 +2,6 @@ import { Icon, Stack, Text, useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { AiOutlineCaretDown, AiOutlineCaretUp } from 'react-icons/ai';
-import { RatesService } from "../../../../services/api/openapi";
 import { useAuth } from "../../../../states/hooks/use-auth";
 import { simpleHover } from "../../../../styles/theme";
 import { createPostRateErrorToast } from "../../../../utils/toast";
@@ -11,17 +10,17 @@ import { PostRateControlsProps } from "./post-rate-controls.type";
 
 export function PostRateControls({ 
   handleRate,
-  data: { postId, commentId },
+  data: { rates },
   hideRateControl,
   isDislikeEnabled,
-  isBorderLeft,
+  controllSide = "left",
   size, 
 }: PostRateControlsProps) {
   const { data } = useAuth();
   const router = useRouter();
   const toast = useToast();
-
-  const [rateData, setRateData] = useState([]);
+  // State local because it could be post-rate or comment-rate
+  const [rateData, setRateData] = useState(rates);
   const [rateSum, setRateSum] = useState(0);
   const [userVote, setUserVote] = useState<undefined | RateValue>();  
   const [dislikePosition, setDislikePosition] = useState({});
@@ -39,15 +38,6 @@ export function PostRateControls({
     if (rateI >= 0) setUserVote(rateData[rateI].value);
     setRateSum(sum);
   }, [data?.user?.id, rateData]);
-
-  useEffect(() => {
-    (async () => {
-      let rateData: any[];
-      if (postId) rateData = await RatesService.postRatesControllerFindAll(`${postId}`);
-      if (commentId) rateData = await RatesService.postRatesControllerFindAllCommentRate(`${commentId}`);
-      setRateData(rateData);
-    })();
-  },[commentId, data, postId]);
   
   const handlePostRate = useCallback(async (value: number) => {
     if (!data) return router.push('/login');
@@ -58,7 +48,7 @@ export function PostRateControls({
       const userVoteIndex = newRate.findIndex(r => r.userId === data?.user?.id);
       newRate[userVoteIndex].value = value;
     } else {
-      newRate.push({ value, userId: data?.user?.id });
+      newRate.push({ value, userId: data?.user?.id } as any);
     }
 
     setRateData(newRate as any);
@@ -95,15 +85,15 @@ export function PostRateControls({
     <Stack 
       display={{ base: "none", sm: 'none', md: hideRateControl ? 'none': 'inherit' }}
       spacing={counterSize.iconsSpacing}
-      borderRightWidth={isBorderLeft ? 0 : 1} 
+      borderRightWidth={controllSide === "right" ? 0 : 1} 
       borderRightColor="gray.700" 
       minW="14"
       maxW="14" 
       align="center" 
       justify="center"
-      pr={isBorderLeft ? 0 : "4"}
-      pl={isBorderLeft ? "4" : 0}
-      ml={isBorderLeft ? "auto" : 0}
+      pr={controllSide === "right" ? 0 : "4"}
+      pl={controllSide === "right" ? "4" : 0}
+      ml={controllSide === "right" ? "auto" : 0}
       onMouseLeave={() => setDislikePosition({})}
     >
       <Icon 

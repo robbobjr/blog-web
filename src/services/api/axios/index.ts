@@ -1,10 +1,16 @@
 import axios from "axios";
 import { apiConfig } from "../../../configs/api-config";
 import { logger } from "../../logger";
+import { PostDto } from "../openapi";
 
 export class AxiosAPI {
+  static token?: string;
+
   private client = axios.create({
     baseURL: apiConfig.baseURL,
+    headers: {
+      Authorization: 'Bearer ' + AxiosAPI.token,
+    }
   });
 
   constructor(private readonly context: string = "Global"){}
@@ -28,7 +34,9 @@ export class AxiosAPI {
     return { posts, tags };
   } 
 
-  public async getPosts(params?: Record<string, string | string[]>) {
+  public async getPosts(
+    params?: Record<string, string | string[]>
+  ): Promise<PostDto[]> {
     const { data: posts } = await this.client.get(
       '/posts',
       { params },

@@ -9,8 +9,9 @@ import { ContentContextProvider } from "../states/contexts/contet-context";
 import { OpenAPI } from "../services/api/openapi";
 import { CustomSessionProvider } from "../states/contexts/custom-session-context";
 
-OpenAPI.BASE = apiConfig.baseURL;
+OpenAPI.BASE = apiConfig.baseURL; 
 
+console.info("Do you really think you are a developer?")
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <SessionProvider session={pageProps.session}>

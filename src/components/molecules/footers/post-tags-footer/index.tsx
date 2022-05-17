@@ -1,24 +1,25 @@
 import { Badge, Stack } from "@chakra-ui/react";
 import { useCallback } from "react";
-import { PostsService } from "../../../../services/api/openapi";
 import { useContent } from "../../../../states/hooks/use-content";
 import { dracula } from "../../../../styles/theme";
-import { Link } from "../../../atoms/link";
 
 export function PostTagsFooter({
-  tags
+  data
 }) {
-  const { setPosts } = useContent();
+  const { handleSearchPosts } = useContent();
 
   const handleTopic = useCallback((tag: string) => {
-    PostsService.postsControllerFindAll(
-      tag
-    ).then(data => setPosts(data));
-  }, [setPosts]);
+    handleSearchPosts({ tag });
+  }, [handleSearchPosts]);
 
   return (
-    <Stack display="block" float="none" direction='row' {...(!tags.length && { display: 'none' })}>
-      {tags?.map(tag => 
+   <Stack
+      display="block"
+      float="none"
+      direction='row'
+      {...(!data.tags.length && { display: 'none' })}
+    >
+      {data.tags?.map(tag => 
         <Badge
           cursor="pointer"
           onClick={() => handleTopic(tag.name)}

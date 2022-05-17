@@ -13,15 +13,14 @@ import { PostProps } from "./post.type";
 export function Post({ 
   containerProps,
   isPostPreview,
-  commentHandler,
-  data: postData,
+  data: post,
 }: PostProps) {
   const session = useAuth();
 
   const {
     id,
     tags,
-  } = useMemo(() => postData, [postData]);
+  } = useMemo(() => post, [post]);
 
   const handlePostRate = useCallback(async (value: number) => {
     return RatesService.postRatesControllerCreate({
@@ -33,12 +32,12 @@ export function Post({
 
   const Aside = useMemo(() => 
     <PostRateControls 
-      data={{ postId: id }} 
+      data={{ rates: post.rates }} 
       handleRate={handlePostRate} 
       hideRateControl={!isPostPreview}
       size="md"
     />
-  ,[id, handlePostRate, isPostPreview]);
+  ,[post.rates, handlePostRate, isPostPreview]);
 
   const PostContentByContext = useMemo(() => 
     isPostPreview 
@@ -48,14 +47,11 @@ export function Post({
   );
 
   return (
-    <PostContainer  
-      size="md" {...containerProps}
-      rightSide={Aside}
-    >
-      <PostHeader isPostPreview={isPostPreview} data={postData}/>
-      <PostContentByContext data={postData} />
-      <PostFooter data={postData} commentHandler={commentHandler}/>
-      <PostTagsFooter tags={tags} />
+    <PostContainer size="md" {...containerProps} rightSide={Aside}>
+      <PostHeader isPostPreview={isPostPreview} data={post}/>
+      <PostContentByContext data={post} />
+      <PostFooter data={{ id: post.id, commentsLength: post.comments.length }}/>
+      <PostTagsFooter data={{ tags }} />
     </PostContainer>
   );
 }

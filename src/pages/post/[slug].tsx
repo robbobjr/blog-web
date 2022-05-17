@@ -1,102 +1,59 @@
 import { GetStaticPaths, GetStaticProps } from "next"
-import { Flex, Stack, useToast } from "@chakra-ui/react";
-import { PostComment } from "../../components/organisms/post/post-comment";
+import { Flex, Stack } from "@chakra-ui/react";
 import { Post } from "../../components/organisms/post";
-import { useCallback, useEffect, useState } from "react";
 import { MainContainer } from "../../components/molecules/containers/main-container";
-import { CommentsService, CreateCommentDto, PostDto } from "../../services/api/openapi";
-import { logger } from "../../services/logger";
-import { createCommentErrorToast } from "../../utils/toast";
+import { PostDto } from "../../services/api/openapi";
 import { Header } from "../../components/organisms/header";
-import { useContent } from "../../states/hooks/use-content";
 import { Footer } from "../../components/organisms/footer";
-import { PostHead } from "../../components/organisms/head/post-head";
-import { AxiosAPI } from "../../services/api/axios";
-import { useAuth } from "../../states/hooks/use-auth";
+import { PostHead as Head } from "../../components/organisms/head/post-head";
+import { Api } from "../../services/api";
+import { Comments } from "../../components/templates/comments";
+import { useEffect, useMemo } from "react";
+import { useContent } from "../../states/hooks/use-content";
 
 interface PostDetailProps {
   post: PostDto;
 }
 
 export default function FeedPost({ post }: PostDetailProps) {
-  const [comments, setComments] = useState(post?.comments || []);
-  const { tags } = useContent();
-  const toast = useToast();
-  const session = useAuth();
+  const { setPostComments } = useContent();
 
   useEffect(() => {
-    // Getting comments by csr
-    CommentsService.postCommentsControllerFindAll(
-      `${post.id}`
-    ).then(data => setComments(data))
-  }, [post]);
+    setPostComments(post.comments);
+  }, [post, setPostComments]);
 
-  const commentHandler = useCallback(async (data: CreateCommentDto) => {
-    try {
-      const comment = await CommentsService.postCommentsControllerCreate(data);
-      comment.user = session.data.user;
-      setComments(state => [...state, comment]);
-    } catch (error) {
-      logger.error({ error, context: "commentHandler" });
-      toast(createCommentErrorToast);
+  const containerProps = useMemo(() => {
+    return { 
+      borderBottomRadius: post.comments.length ? 0 : "lg", 
+      maxWidth: "772px",
+      paddingTop: "2rem" 
     }
-  }, [toast, session]);
-
-  if (!post) return <></>;
+  }, [post]);
 
   return (
     <>
-      <PostHead data={post}/>
+      <Head data={post}/>
       <Flex direction="column" h="100vh">
         <Header />
         <MainContainer>
           <Stack spacing="0" flex="1" minW="320px" alignItems="center" mb="6">
-            <Post 
-              data={post} 
-              commentHandler={commentHandler}
-              containerProps={{ 
-                borderBottomRadius: comments.length ? 0 : "lg", 
-                maxWidth: "772px",
-                paddingTop: "2rem" 
-              }} 
-            />
-            <Flex direction="column" align="center" w="100%">
-              {comments.map((comment, i, a) => (
-                <PostComment 
-                  key={i} 
-                  data={comment} 
-                  containerProps={{ 
-                    borderBottomRadius: i === a.length - 1 ? 8 : 0, 
-                    borderTopRadius: 0,
-                    maxWidth: "772px",
-                  }} 
-                />
-              ))}
-            </Flex>
+            <Post data={post} containerProps={containerProps}/>
+            <Comments />
           </Stack>
         </MainContainer> 
-        <Footer data={{ tags }}/>
+        <Footer/>
       </Flex>
     </>
   )
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  return {
-    paths: [],
-    fallback: 'blocking',
-  }
+  return { paths: [], fallback: 'blocking' }
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const axiosAPI = new AxiosAPI("FeedPost:getServerSideProps");
+  const apiClient = new Api("FeedPost:getServerSideProps");
   const { slug } = params as Record<string, string>;
-  const post = await axiosAPI.getPostsBySlug(slug); 
-  
-  return {
-    revalidate: 60 * 60,
-    props: {
-      post,
-    }
-  }
+  const post = await apiClient.getPostsBySlug(slug); 
+  return { revalidate: 30 * 60, props: { post } }
 }

@@ -1,87 +1,55 @@
-import { Flex } from "@chakra-ui/react";
+import { Flex, useToast } from "@chakra-ui/react";
 import { PostIcon } from "../../../atoms/icons/post-icon";
 import { SingleInputModal } from "../../modals/single-input-modal";
-import { FaSignInAlt } from 'react-icons/fa';
-import { RiMessage3Fill, RiTeamFill } from 'react-icons/ri';
-import { FormEvent, useCallback, useEffect, useMemo, useState } from "react";
+import { RiMessage3Fill } from 'react-icons/ri';
+import { FormEvent, useCallback, useMemo } from "react";
 import { PostFooterProps } from "./post-footer.types";
 import { formatCommentText } from "../../../utils/format-text";
 import { useAuth } from "../../../../states/hooks/use-auth";
+import { useContent } from "../../../../states/hooks/use-content";
+import { CommentsService, CreateCommentDto } from "../../../../services/api/openapi";
 import { logger } from "../../../../services/logger";
-import { CommentsService } from "../../../../services/api/openapi";
+import { createCommentErrorToast, createCommentToast } from "../../../../utils/toast";
 
 export function PostFooter({
-  commentHandler,
-  data: {
-    id,
-    candidatures,
-    availlablePositions,
-  }
+  data: { id, commentsLength }
 }: PostFooterProps) {
+  const toast = useToast();
   const { data } = useAuth();
   const user = useMemo(() => data?.user, [data]);
-  const [comments, setComments] = useState([]);
+  const { handleUpdatePostComments } = useContent();
 
-  useEffect(() => {
-    CommentsService.postCommentsControllerFindAll(
-      `${id}`,
-    ).then(data => setComments(data));
-  },[id]);  
-
-  const handlePostJoin = useCallback(
-    async (event: FormEvent<HTMLElement>) => {
-      const content = event.target['content'].value;
-      const dto = { user, postId: id, content }
-      logger.info({ payload: dto, context: "handlePostJoin" });
-    }, [user, id],
-  );
+  const commentHandler = useCallback(async (data: CreateCommentDto) => {
+    try {
+      const comment = await CommentsService.postCommentsControllerCreate(data);
+      handleUpdatePostComments({ ...comment, user, rates: [] });
+      toast(createCommentToast)
+    } catch (error) {
+      logger.error({ error, context: "PostFooter::commentHandler" });
+      toast(createCommentErrorToast);
+    }
+  }, [handleUpdatePostComments, toast, user]);
 
   const handlePostComment = useCallback(
     async (event: FormEvent<HTMLElement>) => {
       const content = event.target['content'].value;
-      if (!commentHandler) return; 
-      return commentHandler({
-        content,
-        postId: id,
-        userId: user?.id,
-      });
-    }, [commentHandler, user, id],
+      return commentHandler({ content, postId: id, userId: user?.id });
+    }, [commentHandler, id, user?.id],
   );
 
   return (
     <Flex align="center">
       <Flex align="center">
-        {availlablePositions && (
-          <SingleInputModal 
-            handler={handlePostJoin} 
-            modalName="join-modal" 
-            textAreaProps={{
-              placeHolder: "Sou um programador com 3 anos de..."
-            }}
-          >
-            <PostIcon icon={FaSignInAlt} text={"Unir-se"} />
-          </SingleInputModal>
-        )}
         <SingleInputModal
           handler={handlePostComment} 
           modalName="comment-modal" 
-          textAreaProps={{
-            placeHolder: "Digite seu comentário."
-          }}
+          textAreaProps={{ placeHolder: "Digite seu comentário."}}
         >
           <PostIcon 
             icon={RiMessage3Fill} 
-            text={formatCommentText(comments.length)}
+            text={formatCommentText(commentsLength)}
           />
         </SingleInputModal>
-      </Flex>
-      <Flex align="center" ml="auto">
-      {availlablePositions && (
-        <PostIcon
-          icon={RiTeamFill}
-          text={`Vagas: ${candidatures.length}/${availlablePositions}`} 
-        />
-      )}
       </Flex>
     </Flex>
   );

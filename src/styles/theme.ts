@@ -16,8 +16,8 @@ export const dracula = {
 };
 
 export const randomDraculaBackground = () => {
-  const { Cyan, Green, Orange, Pink, Purple, Red, Yellow } = dracula;
-  const colors = [Cyan, Green, Orange, Pink, Purple, Red, Yellow];
+  const { Cyan, Green, Orange, Pink, Purple, Red } = dracula;
+  const colors = [Cyan, Green, Orange, Pink, Purple, Red];
   const index = Math.floor(Math.random() * colors.length + 1);
   return colors[index];
 }
@@ -34,6 +34,8 @@ export const textGradiant = {
 }
 
 export const theme = extendTheme({
+  initialColorMode: 'dark',
+  useSystemColorMode: false,
   styles: {
     global: {
       body: {
