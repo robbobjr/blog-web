@@ -4,7 +4,7 @@ import { appConfig } from "../../../configs/app-config";
 export function PostHead({ data }) {
   return (
     <Head>
-      <title>{data.title}</title>
+      <title>{data.title} | rbjr blog</title>
       <meta name="title" content={data.title}/>
       <meta name="description" content={data.description} />
 
