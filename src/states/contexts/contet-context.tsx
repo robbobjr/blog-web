@@ -1,7 +1,7 @@
 import { createContext, useEffect } from "react";
 import { useCallback, useMemo, useState } from "react";
 import { Api } from "../../services/api";
-import { CommentDto, PostDto, PostRateDto, PostTagDto, TagsService } from "../../services/api/openapi";
+import { CommentDto, PostDto, PostTagDto, TagsService } from "../../services/api/openapi";
 
 export interface ContentContextProps {
   tags: PostTagDto[];
