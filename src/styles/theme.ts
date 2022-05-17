@@ -34,6 +34,8 @@ export const textGradiant = {
 }
 
 export const theme = extendTheme({
+  initialColorMode: 'dark',
+  useSystemColorMode: false,
   styles: {
     global: {
       body: {
