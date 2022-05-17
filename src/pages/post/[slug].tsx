@@ -1,45 +1,44 @@
 import { GetStaticPaths, GetStaticProps } from "next"
-import { Flex, Stack, useToast } from "@chakra-ui/react";
+import { Flex, Stack } from "@chakra-ui/react";
 import { Post } from "../../components/organisms/post";
 import { MainContainer } from "../../components/molecules/containers/main-container";
 import { PostDto } from "../../services/api/openapi";
 import { Header } from "../../components/organisms/header";
-import { useContent } from "../../states/hooks/use-content";
 import { Footer } from "../../components/organisms/footer";
-import { PostHead } from "../../components/organisms/head/post-head";
-import { AxiosAPI } from "../../services/api/axios";
+import { PostHead as Head } from "../../components/organisms/head/post-head";
+import { Api } from "../../services/api";
 import { Comments } from "../../components/templates/comments";
 import { useEffect, useMemo } from "react";
+import { useContent } from "../../states/hooks/use-content";
 
 interface PostDetailProps {
   post: PostDto;
 }
 
 export default function FeedPost({ post }: PostDetailProps) {
-  const { commentByPost, setPosts } = useContent();
+  const { setPostComments } = useContent();
 
-  useEffect(() => setPosts([post]), [post, setPosts]);
+  useEffect(() => {
+    setPostComments(post.comments);
+  }, [post, setPostComments]);
 
   const containerProps = useMemo(() => {
     return { 
-      borderBottomRadius: commentByPost.get(post.id)?.length ? 0 : "lg", 
+      borderBottomRadius: post.comments.length ? 0 : "lg", 
       maxWidth: "772px",
       paddingTop: "2rem" 
     }
-  }, [commentByPost, post.id]);
+  }, [post]);
 
   return (
     <>
-      <PostHead data={post}/>
+      <Head data={post}/>
       <Flex direction="column" h="100vh">
         <Header />
         <MainContainer>
           <Stack spacing="0" flex="1" minW="320px" alignItems="center" mb="6">
-            <Post 
-              data={post} 
-              containerProps={containerProps} 
-            />
-           <Comments data={{ postId: post.id }} />
+            <Post data={post} containerProps={containerProps}/>
+            <Comments />
           </Stack>
         </MainContainer> 
         <Footer/>
@@ -49,21 +48,12 @@ export default function FeedPost({ post }: PostDetailProps) {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  return {
-    paths: [],
-    fallback: 'blocking',
-  }
+  return { paths: [], fallback: 'blocking' }
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const axiosAPI = new AxiosAPI("FeedPost:getServerSideProps");
+  const apiClient = new Api("FeedPost:getServerSideProps");
   const { slug } = params as Record<string, string>;
-  const post = await axiosAPI.getPostsBySlug(slug); 
-  
-  return {
-    revalidate: 60 * 60,
-    props: {
-      post,
-    }
-  }
+  const post = await apiClient.getPostsBySlug(slug); 
+  return { revalidate: 30 * 60, props: { post } }
 }

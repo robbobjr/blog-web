@@ -6,21 +6,19 @@ import { Header } from "../components/organisms/header";
 import { Footer } from "../components/organisms/footer";
 import { useContent } from "../states/hooks/use-content";
 import { FeedHead as Head } from "../components/organisms/head/feed-head";
-import { PostDto, PostTagDto } from "../services/api/openapi";
-import { AxiosAPI } from "../services/api/axios";
+import { PostDto } from "../services/api/openapi";
+import { Api } from "../services/api";
 import { Aside } from "../components/organisms/aside";
 import { Posts } from "../components/templates/posts";
 
 export default function Feed({ 
   posts, 
-  tags 
-}: { posts: PostDto[], tags: PostTagDto[]}) {
-  const { setTags, setPosts } = useContent();
+}: { posts: PostDto[] }) {
+  const { setPostsToList } = useContent();
   
   useEffect(() => {
-    setTags(tags);
-    setPosts(posts);
-  }, [setTags, setPosts, tags, posts]);
+    setPostsToList(posts);
+  }, [setPostsToList, posts]);
 
   return (
     <>
@@ -38,7 +36,7 @@ export default function Feed({
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const axiosAPI = new AxiosAPI("Feed::getServerSideProps");
-  const { posts, tags } = await axiosAPI.getPostsAndTags({});
-  return { revalidate: 60 * 60, props: { posts, tags } };
+  const apiClient = new Api("Feed::getServerSideProps");
+  const posts = await apiClient.getPosts({});
+  return { revalidate: 30 * 60, props: { posts } };
 };
