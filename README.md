@@ -9,24 +9,3 @@ npm run dev
 # or
 yarn dev
 ```
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-### 🏗️ Tools we are usign to develop the project
-- Chakra-ui as design system.
-- Next-auth to social login.
-- Axios as http client library.
-- React-icons to svg icons.
-
-### 💪 How to contributte
-- Create your branch 🍴
-- Clone your branch at your localhost 🐫
-- Push your updates to your branch 🚀
-- Request a merge to the develop branch 👬
