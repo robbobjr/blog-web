@@ -55,19 +55,19 @@ export function ProfileMenu() {
           _hover={data ? simpleHover : {}}
         />
         </MenuButton>
-        <MenuList bg="gray.50">
+        <MenuList>
           {data ? (
             <>
-              <MenuItem icon={<MdLogout size={15}/>} color="gray.700" onClick={handleSession}>
+              <MenuItem icon={<MdLogout size={15}/>} onClick={handleSession}>
                 Sair
               </MenuItem>
               <MenuDivider />
-              <MenuItem onClick={handleCopyJWT} icon={<MdCopyAll size={15}/>} color="gray.700">
+              <MenuItem onClick={handleCopyJWT} icon={<MdCopyAll size={15}/>}>
                 api key - {data.jwt.slice(0, 5)}...
               </MenuItem>
             </>
           ): (
-            <MenuItem icon={<GoSignOut size={15}/>} color="gray.700" onClick={handleSession}>
+            <MenuItem icon={<GoSignOut size={15}/>} onClick={handleSession}>
               Entrar
             </MenuItem>
           )}

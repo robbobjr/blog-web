@@ -9,7 +9,7 @@ import { useAuth } from "../../../../states/hooks/use-auth";
 import { useContent } from "../../../../states/hooks/use-content";
 import { CommentsService, CreateCommentDto } from "../../../../services/api/openapi";
 import { logger } from "../../../../services/logger";
-import { createCommentErrorToast } from "../../../../utils/toast";
+import { createCommentErrorToast, createCommentToast } from "../../../../utils/toast";
 
 export function PostFooter({
   data: { id, commentsLength }
@@ -23,6 +23,7 @@ export function PostFooter({
     try {
       const comment = await CommentsService.postCommentsControllerCreate(data);
       handleUpdatePostComments({ ...comment, user, rates: [] });
+      toast(createCommentToast)
     } catch (error) {
       logger.error({ error, context: "PostFooter::commentHandler" });
       toast(createCommentErrorToast);

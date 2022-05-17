@@ -12,6 +12,7 @@ export interface ContentContextProps {
   handleUpdatePostComments(data: CommentDto): void;
   postComments: CommentDto[];
   setPostComments: (data: CommentDto[]) => void;
+  handleDeletePostComment: (commentId: number) => void;
 }
 
 export const ContentContext = createContext({} as ContentContextProps);
@@ -36,9 +37,14 @@ export function ContentContextProvider({ children }) {
     setPostComments(state => [data, ...state]);
   }, []);
 
+  const handleDeletePostComment = useCallback((commentId: number) => {
+    setPostComments(state => state.filter(comment => comment.id !== commentId));
+  }, []);
+
   // TODO: get tags over context
   const context = useMemo(() => ({
     handleUpdatePostComments,
+    handleDeletePostComment,
     handleSearchPosts,
     setPostComments,
     setPostsToList,
@@ -49,6 +55,7 @@ export function ContentContextProvider({ children }) {
   }), 
   [
     handleUpdatePostComments, 
+    handleDeletePostComment,
     handleSearchPosts, 
     postComments, 
     postsToList, 
