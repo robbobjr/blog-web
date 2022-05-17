@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Roberto Junior Dev</title>
+        <title>© Roberto Junior</title>
         <meta name="description" content="Hey there! My name is Roberto Junior and I am a software developer." />
       </Head>
       <main className={styles.contentContainer}>
@@ -23,6 +23,7 @@ export default function Home() {
           </p>
         </section>
       </main>
+      
     </>
   );
 }

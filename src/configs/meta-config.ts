@@ -1,7 +1,7 @@
 export const metaConfig = {
   feed: {
-    title: "rbjr blog",
-    content: "Conteúdo sobre programação, blockchain, dicas de carreira e mais.",
+    title: "Roberto Junior's blog",
+    content: "Content about software development, blockchain, career hints, and more.",
     image: "/static/cover.png",
     favicon: "/static/favicon.png",
   }
