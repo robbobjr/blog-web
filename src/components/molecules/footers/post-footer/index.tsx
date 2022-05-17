@@ -12,18 +12,17 @@ import { logger } from "../../../../services/logger";
 import { createCommentErrorToast } from "../../../../utils/toast";
 
 export function PostFooter({
-  data: { postId }
+  data: { id, commentsLength }
 }: PostFooterProps) {
   const toast = useToast();
   const { data } = useAuth();
   const user = useMemo(() => data?.user, [data]);
-  const { commentByPost, handleUpdatePostComments } = useContent();
+  const { handleUpdatePostComments } = useContent();
 
   const commentHandler = useCallback(async (data: CreateCommentDto) => {
     try {
-      console.log(data);
       const comment = await CommentsService.postCommentsControllerCreate(data);
-      handleUpdatePostComments({ ...comment, user });
+      handleUpdatePostComments({ ...comment, user, rates: [] });
     } catch (error) {
       logger.error({ error, context: "PostFooter::commentHandler" });
       toast(createCommentErrorToast);
@@ -33,8 +32,8 @@ export function PostFooter({
   const handlePostComment = useCallback(
     async (event: FormEvent<HTMLElement>) => {
       const content = event.target['content'].value;
-      return commentHandler({ content, postId, userId: user?.id });
-    }, [commentHandler, postId, user?.id],
+      return commentHandler({ content, postId: id, userId: user?.id });
+    }, [commentHandler, id, user?.id],
   );
 
   return (
@@ -47,7 +46,7 @@ export function PostFooter({
         >
           <PostIcon 
             icon={RiMessage3Fill} 
-            text={formatCommentText(commentByPost.get(postId)?.length)}
+            text={formatCommentText(commentsLength)}
           />
         </SingleInputModal>
       </Flex>

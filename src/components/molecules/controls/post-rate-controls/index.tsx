@@ -13,21 +13,17 @@ export function PostRateControls({
   data: { rates },
   hideRateControl,
   isDislikeEnabled,
-  isBorderLeft,
+  controllSide = "left",
   size, 
 }: PostRateControlsProps) {
   const { data } = useAuth();
   const router = useRouter();
   const toast = useToast();
-  // State local because it could be postrate or commentrate
-  const [rateData, setRateData] = useState([]);
+  // State local because it could be post-rate or comment-rate
+  const [rateData, setRateData] = useState(rates);
   const [rateSum, setRateSum] = useState(0);
   const [userVote, setUserVote] = useState<undefined | RateValue>();  
   const [dislikePosition, setDislikePosition] = useState({});
-
-  useEffect(() => {
-    if(rates) setRateData(rates);
-  }, [rates]);
 
   const changeDislikePosition = useCallback(() => {
     if (isDislikeEnabled) return;
@@ -89,15 +85,15 @@ export function PostRateControls({
     <Stack 
       display={{ base: "none", sm: 'none', md: hideRateControl ? 'none': 'inherit' }}
       spacing={counterSize.iconsSpacing}
-      borderRightWidth={isBorderLeft ? 0 : 1} 
+      borderRightWidth={controllSide === "right" ? 0 : 1} 
       borderRightColor="gray.700" 
       minW="14"
       maxW="14" 
       align="center" 
       justify="center"
-      pr={isBorderLeft ? 0 : "4"}
-      pl={isBorderLeft ? "4" : 0}
-      ml={isBorderLeft ? "auto" : 0}
+      pr={controllSide === "right" ? 0 : "4"}
+      pl={controllSide === "right" ? "4" : 0}
+      ml={controllSide === "right" ? "auto" : 0}
       onMouseLeave={() => setDislikePosition({})}
     >
       <Icon 

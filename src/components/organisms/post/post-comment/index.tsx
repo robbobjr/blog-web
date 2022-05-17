@@ -2,18 +2,16 @@ import { Avatar, Box, Flex, Text } from "@chakra-ui/react";
 import { useCallback, useMemo } from "react";
 import { RatesService } from "../../../../services/api/openapi";
 import { useAuth } from "../../../../states/hooks/use-auth";
-import { useContent } from "../../../../states/hooks/use-content";
 import { PostContainer } from "../../../molecules/containers/post-container";
 import { PostRateControls } from "../../../molecules/controls/post-rate-controls";
 import { PostCommentProps } from "./post-comment.type";
 
 export function PostComment({ 
   containerProps,
-  data: { user, content, id, postId }
+  data: { user, content, id, rates }
 }: PostCommentProps) {
   const session = useAuth();
-  const { commentByPost } = useContent();
-  console.log(user)
+  
   const handleCommentRate = useCallback(async (value: number) => {
     return RatesService.postRatesControllerCreateCommentRate({
       commentId: id,
@@ -23,15 +21,14 @@ export function PostComment({
   }, [id, session]);
 
   const Aside = useMemo(() => 
-  //TODO: refactor this mess
     <PostRateControls 
-      data={{ rates: commentByPost.get(postId)?.find(d => d.id === id)?.rates }} 
+      data={{ rates }} 
       handleRate={handleCommentRate} 
       isDislikeEnabled
-      isBorderLeft
+      controllSide="right"
       size="sm"
     />
-  ,[commentByPost, postId, handleCommentRate, id]);
+  ,[rates, handleCommentRate]);
 
   return (
     <PostContainer size="sm" {...containerProps} leftSide={Aside}>

@@ -16,13 +16,14 @@ interface PostHeaderProps {
   isPostPreview?: boolean;
 }
 
+// TODO: Refactor this component into small pieces
 export function PostHeader({ 
-  data: postData,
+  data: post,
   isPostPreview, 
 }: PostHeaderProps) {
   const { data } = useAuth();
   const history = useRouter();
-  const { user, id } = useMemo(() => postData, [postData]);
+  const { user, id } = useMemo(() => post, [post]);
   const toast = useToast();
 
   const handleDeletePost = useCallback(async () => {
@@ -54,7 +55,7 @@ export function PostHeader({
                 text={"Deletar"} 
               />
             </Alert>
-            <CreatePostModal post={postData}>
+            <CreatePostModal post={post}>
               <PostIcon
                 icon={FaPen}
                 text={"Editar"} 

@@ -1,19 +1,13 @@
 import { Flex } from "@chakra-ui/react";
-import { useMemo } from "react";
 import { useContent } from "../../states/hooks/use-content";
 import { PostComment } from "../organisms/post/post-comment";
 
-export function Comments({ data }) {
-  const { commentByPost } = useContent(); 
-
-  const comments = useMemo(
-    () => commentByPost.get(data.postId) || [], 
-    [commentByPost, data.postId]
-  );
+export function Comments() {
+  const { postComments } = useContent();
 
   return (
     <Flex direction="column" align="center" w="100%">
-      {comments.map((comment, i, a) => (
+      {postComments.map((comment, i, a) => (
         <PostComment 
           key={i} 
           data={comment} 

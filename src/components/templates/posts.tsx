@@ -13,11 +13,11 @@ const containerProps = {
 }
 
 export function Posts() {
-  const { posts } = useContent();
+  const { postsToList } = useContent();
 
   return (
     <Stack spacing="4" flex="1" minW="320px" alignItems="center" mb="6">
-      {posts.map((post, i) => (
+      {postsToList.map((post, i) => (
         <Post 
           key={i} 
           data={post} 

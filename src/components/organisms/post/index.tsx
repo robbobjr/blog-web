@@ -1,7 +1,6 @@
 import { useCallback, useMemo } from "react";
 import { RatesService } from "../../../services/api/openapi";
 import { useAuth } from "../../../states/hooks/use-auth";
-import { useContent } from "../../../states/hooks/use-content";
 import { PostContainer } from "../../molecules/containers/post-container";
 import { PostContent } from "../../molecules/contents/post-content";
 import { PostPreviewContent } from "../../molecules/contents/post-preview-content";
@@ -14,15 +13,14 @@ import { PostProps } from "./post.type";
 export function Post({ 
   containerProps,
   isPostPreview,
-  data: postData,
+  data: post,
 }: PostProps) {
   const session = useAuth();
-  const { rateByPost } = useContent();
 
   const {
     id,
     tags,
-  } = useMemo(() => postData, [postData]);
+  } = useMemo(() => post, [post]);
 
   const handlePostRate = useCallback(async (value: number) => {
     return RatesService.postRatesControllerCreate({
@@ -34,12 +32,12 @@ export function Post({
 
   const Aside = useMemo(() => 
     <PostRateControls 
-      data={{ rates: rateByPost.get(postData.id) }} 
+      data={{ rates: post.rates }} 
       handleRate={handlePostRate} 
       hideRateControl={!isPostPreview}
       size="md"
     />
-  ,[rateByPost, postData.id, handlePostRate, isPostPreview]);
+  ,[post.rates, handlePostRate, isPostPreview]);
 
   const PostContentByContext = useMemo(() => 
     isPostPreview 
@@ -49,14 +47,11 @@ export function Post({
   );
 
   return (
-    <PostContainer  
-      size="md" {...containerProps}
-      rightSide={Aside}
-    >
-      <PostHeader isPostPreview={isPostPreview} data={postData}/>
-      <PostContentByContext data={postData} />
-      <PostFooter data={{ postId: postData.id }}/>
-      <PostTagsFooter tags={tags} />
+    <PostContainer size="md" {...containerProps} rightSide={Aside}>
+      <PostHeader isPostPreview={isPostPreview} data={post}/>
+      <PostContentByContext data={post} />
+      <PostFooter data={{ id: post.id, commentsLength: post.comments.length }}/>
+      <PostTagsFooter data={{ tags }} />
     </PostContainer>
   );
 }

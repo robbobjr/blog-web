@@ -1,3 +1,3 @@
 export interface PostFooterProps {
-  data: { postId: number };
+  data: { id: number, commentsLength: number };
 }

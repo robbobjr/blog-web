@@ -1,6 +1,5 @@
 import { Badge, Box, BoxProps } from "@chakra-ui/react"
 import { useCallback } from "react"
-import { PostTagDto } from "../../services/api/openapi"
 import { useContent } from "../../states/hooks/use-content"
 import { randomDraculaBackground } from "../../styles/theme"
 
