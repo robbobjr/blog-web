@@ -41,7 +41,6 @@ export function ContentContextProvider({ children }) {
     setPostComments(state => state.filter(comment => comment.id !== commentId));
   }, []);
 
-  // TODO: get tags over context
   const context = useMemo(() => ({
     handleUpdatePostComments,
     handleDeletePostComment,
