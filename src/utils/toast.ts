@@ -16,6 +16,7 @@ export const createCommentErrorToast = {
   duration: 9000,
   isClosable: true,
   position: ToastPosition.LEFT,
+  variant: "left-accent"
 };
 
 export const createPostErrorToast = {
@@ -25,6 +26,7 @@ export const createPostErrorToast = {
   duration: 9000,
   isClosable: true,
   position: ToastPosition.LEFT,
+  variant: "left-accent"
 };
 
 export const createPostRateErrorToast = {
@@ -34,6 +36,7 @@ export const createPostRateErrorToast = {
   duration: 9000,
   isClosable: true,
   position: ToastPosition.LEFT,
+  variant: "left-accent"
 };
 
 export const searchPostErrorToast = {
@@ -43,6 +46,7 @@ export const searchPostErrorToast = {
   duration: 9000,
   isClosable: true,
   position: ToastPosition.LEFT,
+  variant: "left-accent"
 };
 
 export const deletePostErrorToast = {
@@ -52,4 +56,14 @@ export const deletePostErrorToast = {
   duration: 9000,
   isClosable: true,
   position: ToastPosition.LEFT,
+  variant: "left-accent"
+};
+
+export const jwtCopiedToast = {
+  title: "API Key copied",
+  status: ToastStatusEnum.INFO,
+  duration: 9000,
+  isClosable: true,
+  position: ToastPosition.LEFT,
+  variant: "left-accent"
 };
