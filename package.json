@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && rm -f node_modules/canvas/build/Release/librsvg-2.so.2",
     "start": "next start",
     "lint": "next lint",
     "sdk:gen": "openapi -i http://localhost:3333/docs-json -o src/services/api/openapi"
