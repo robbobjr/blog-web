@@ -8,8 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "sdk:gen": "openapi -i http://localhost:3333/docs-json -o src/services/api/openapi",
-    "canvas:fix": "yum install gcc-c++ cairo-devel pango-devel libjpeg-turbo-devel giflib-devel libuuid-devel libmount-devel && cp /lib64/{libuuid,libmount,libblkid}.so.1 node_modules/canvas/build/Release/",
-    "vercel-build": "npm run canvas:fix && npm run build"
+    "vercel-build": "yum install libuuid-devel libmount-devel && cp /lib64/{libuuid,libmount,libblkid}.so.1 node_modules/canvas/build/Release/"
   },
   "dependencies": {
     "@chakra-ui/react": "^1.8.6",
@@ -18,7 +17,6 @@
     "@emotion/styled": "^11",
     "axios": "^0.27.2",
     "canvas": "2.6.1",
-    "fabric": "^4.0.0",
     "framer-motion": "^6",
     "highlight.js": "^11.5.1",
     "jsonwebtoken": "^8.5.1",
