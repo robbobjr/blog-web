@@ -13,7 +13,7 @@ export default async function handler(
     context.fillStyle="#1d1e26";
     context.fillRect(0, 0, canvas.width, canvas.height);
     
-    context.font = `10rem JetBrainsMono`
+    context.font = `10rem JetBrains Mono`
     context.textAlign ="center";
     context.fillStyle="#ff79c6";
     context.fillText(title as string, canvas.width / 2, canvas.height / 2);
