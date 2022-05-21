@@ -12,7 +12,7 @@ export default function handler(req: VercelRequest, res: VercelResponse) {
     context.fillStyle="#1d1e26";
     context.fillRect(0, 0, canvas.width, canvas.height);
     
-    context.font = `10rem JetBrainsMono`
+    context.font = `10rem JetBrainsMono`;
     context.textAlign ="center";
     context.fillStyle="#ff79c6";
     context.fillText(title as string, canvas.width / 2, canvas.height / 2);
