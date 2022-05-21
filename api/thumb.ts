@@ -1,13 +1,10 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { createCanvas, registerFont } from 'canvas';
 import { join } from 'path';
 
-export default async function handler(
-  req: NextApiRequest, 
-  res: NextApiResponse
-  ) {
+export default function handler(req: VercelRequest, res: VercelResponse) {
   try {
-    registerFont(join(__dirname, '_files/fonts/JetBrainsMono-Regular.ttf'), { family: 'JetBrainsMono' });
+    registerFont(join(__dirname, '_files/JetBrainsMono-Regular.ttf'), { family: 'JetBrainsMono' })
     const { title } = req.query;
     const canvas = createCanvas(1200, 630);
     const context = canvas.getContext('2d');
