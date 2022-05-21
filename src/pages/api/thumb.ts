@@ -1,12 +1,11 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { createCanvas, registerFont } from 'canvas';
+import { createCanvas } from 'canvas';
 
 export default async function handler(
   req: NextApiRequest, 
   res: NextApiResponse
   ) {
   try {
-    registerFont('./public/static/JetBrainsMono-Regular.ttf', { family:  'JetBrainsMono' })
     const { title } = req.query;
     const canvas = createCanvas(1200, 630);
     const context = canvas.getContext('2d');
