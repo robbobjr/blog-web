@@ -1,6 +1,6 @@
 {
   "functions": {
-    "api/thumb.ts": {
+    "src/pages/api/thumb.ts": {
       "includeFiles": "_files/**"
     }
   }
