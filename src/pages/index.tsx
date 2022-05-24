@@ -1,5 +1,5 @@
 import { Flex } from "@chakra-ui/react";
-import { MainContainer } from "../components/molecules/containers/main-container";
+import { MainContainer } from "../components/atoms/containers/main-container";
 import { GetStaticProps } from "next";
 import { useEffect } from "react";
 import { Header } from "../components/organisms/header";

@@ -4,7 +4,7 @@ import { AiFillGithub, AiFillGoogleCircle, AiFillLinkedin, AiFillTwitterCircle }
 import { signIn } from 'next-auth/react';
 import { useRouter } from "next/router";
 import { SocialButton } from "../components/atoms/buttons/social-button";
-import { CentralizedContainer } from "../components/molecules/containers/centralized-container";
+import { CentralizedContainer } from "../components/atoms/containers/centralized-container";
 import { useAuth } from "../states/hooks/use-auth";
 import Head from "next/head";
 
