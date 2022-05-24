@@ -12,4 +12,5 @@ export type UpdatePostDto = {
     availlablePositions?: number;
     userId?: number;
     tags?: Array<string>;
+    slug?: string;
 };

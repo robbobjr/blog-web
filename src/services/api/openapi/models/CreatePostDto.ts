@@ -11,5 +11,6 @@ export type CreatePostDto = {
     description?: string;
     availlablePositions?: number;
     userId: number;
-    tags: Array<string>;
+    tags?: Array<string>;
+    slug?: string;
 };

@@ -8,7 +8,9 @@ export type UpdateAdDto = {
     image?: string;
     link?: string;
     type?: UpdateAdDto.type;
-    isAvailable?: any;
+    postId?: number;
+    campaignTime?: number;
+    frequency?: number;
 };
 
 export namespace UpdateAdDto {

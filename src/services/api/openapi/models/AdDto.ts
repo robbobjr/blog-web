@@ -7,11 +7,12 @@ export type AdDto = {
     createdAt: string;
     updatedAt: string;
     title: string;
-    description: string;
-    image: string;
+    description?: string;
+    image?: string;
     link: string;
-    type: AdDto.type;
+    type?: AdDto.type;
     isAvailable: any;
+    typeAttributesRef?: number;
 };
 
 export namespace AdDto {

@@ -36,6 +36,7 @@ requestBody: CreateAdDto,
      * @param image 
      * @param link 
      * @param type 
+     * @param typeAttributesRef 
      * @returns AdDto 
      * @throws ApiError
      */
@@ -48,6 +49,7 @@ description?: string,
 image?: string,
 link?: string,
 type?: 'POST' | 'COMMENT' | 'ASIDE',
+typeAttributesRef?: number,
 ): CancelablePromise<Array<AdDto>> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -61,6 +63,7 @@ type?: 'POST' | 'COMMENT' | 'ASIDE',
                 'image': image,
                 'link': link,
                 'type': type,
+                'typeAttributesRef': typeAttributesRef,
             },
         });
     }

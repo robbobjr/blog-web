@@ -4,11 +4,13 @@
 
 export type CreateAdDto = {
     title: string;
-    description: string;
-    image: string;
+    description?: string;
+    image?: string;
     link: string;
-    type: CreateAdDto.type;
-    isAvailable: any;
+    type?: CreateAdDto.type;
+    postId?: number;
+    campaignTime?: number;
+    frequency?: number;
 };
 
 export namespace CreateAdDto {
