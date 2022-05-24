@@ -1,4 +1,4 @@
-import { Flex, useToast } from "@chakra-ui/react";
+import { Badge, Flex, Stack, useToast } from "@chakra-ui/react";
 import { PostIcon } from "../../../atoms/icons/post-icon";
 import { SingleInputModal } from "../../modals/single-input-modal";
 import { RiMessage3Fill } from 'react-icons/ri';
@@ -10,14 +10,15 @@ import { useContent } from "../../../../states/hooks/use-content";
 import { CommentsService, CreateCommentDto } from "../../../../services/api/openapi";
 import { logger } from "../../../../services/logger";
 import { createCommentErrorToast, createCommentToast } from "../../../../utils/toast";
+import { dracula } from "../../../../styles/theme";
 
 export function PostFooter({
-  data: { id, commentsLength }
+  data: { id, commentsLength, tags }
 }: PostFooterProps) {
   const toast = useToast();
   const { data } = useAuth();
   const user = useMemo(() => data?.user, [data]);
-  const { handleUpdatePostComments } = useContent();
+  const { handleUpdatePostComments, handleSearchPosts } = useContent();
 
   const commentHandler = useCallback(async (data: CreateCommentDto) => {
     try {
@@ -37,20 +38,41 @@ export function PostFooter({
     }, [commentHandler, id, user?.id],
   );
 
+  const handleTopic = useCallback((tag: string) => {
+    handleSearchPosts({ tag });
+  }, [handleSearchPosts]);
+
   return (
-    <Flex align="center">
+    <>
       <Flex align="center">
-        <SingleInputModal
-          handler={handlePostComment} 
-          modalName="comment-modal" 
-          textAreaProps={{ placeHolder: "Digite seu comentário."}}
-        >
-          <PostIcon 
-            icon={RiMessage3Fill} 
-            text={formatCommentText(commentsLength)}
-          />
-        </SingleInputModal>
+        <Flex align="center">
+          <SingleInputModal
+            handler={handlePostComment} 
+            modalName="comment-modal" 
+            textAreaProps={{ placeHolder: "Digite seu comentário."}}
+          >
+            <PostIcon 
+              icon={RiMessage3Fill} 
+              text={formatCommentText(commentsLength)}
+            />
+          </SingleInputModal>
+        </Flex>
       </Flex>
-    </Flex>
+      <Stack
+        display="block"
+        float="none"
+        direction='row'
+        {...(!tags.length && { display: 'none' })}
+      >
+        {tags?.map(tag => 
+          <Badge
+            cursor="pointer"
+            onClick={() => handleTopic(tag.name)}
+            key={tag.name}
+            background={dracula.Pink}>{tag.name}
+          </Badge>
+        )}
+      </Stack>
+    </>
   );
 }

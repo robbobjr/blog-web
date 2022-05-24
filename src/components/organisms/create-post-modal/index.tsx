@@ -17,15 +17,15 @@ import {
 import { useRouter } from "next/router";
 import { useRef, cloneElement, useCallback, useEffect, useState, ReactElement } from "react"
 import { AiFillEye } from "react-icons/ai";
-import { CreatePostModalContent } from "../../contents/create-post-modal-content";
-import { defaultFormattedValue, formatMarkdown, revertMKFormatation } from "../../../utils/format-markdown";
-import { Textarea } from "../../../atoms/textarea";
-import { useAuth } from "../../../../states/hooks/use-auth";
-import { logger } from "../../../../services/logger";
-import { createPostErrorToast } from "../../../../utils/toast";
-import { PostDto, PostsService } from "../../../../services/api/openapi";
-import { useDraft } from "../../../../states/hooks/use-draft";
-import { ModalIcon } from "../../../atoms/icons/modal-icon";
+import { CreatePostModalContent } from "../../molecules/contents/create-post-modal-content";
+import { defaultFormattedValue, formatMarkdown, revertMKFormatation } from "../../utils/format-markdown";
+import { Textarea } from "../../atoms/textarea";
+import { useAuth } from "../../../states/hooks/use-auth";
+import { logger } from "../../../services/logger";
+import { createPostErrorToast } from "../../../utils/toast";
+import { PostDto, PostsService } from "../../../services/api/openapi";
+import { useDraft } from "../../../states/hooks/use-draft";
+import { ModalIcon } from "../../atoms/icons/modal-icon";
 
 interface CreatePostModalProps {
   children: ReactElement;
@@ -146,5 +146,5 @@ export function CreatePostModal({ children, post }: CreatePostModalProps) {
         </ModalContent>
       </Modal>
     </>
-  )
+  );
 }

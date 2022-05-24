@@ -7,7 +7,6 @@ export function Textarea(props: TextareaProps) {
       as={ResizeTextarea}
       overflow="hidden"
       minRows={1}
-      placeholder='Aplicativo de delivery para...' 
       variant="filled" 
       bg="gray.800"
       minH="50vh"

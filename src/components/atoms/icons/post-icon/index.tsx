@@ -1,5 +1,4 @@
 import { Box, BoxProps, Icon, Text } from "@chakra-ui/react";
-import { ReactElement } from "react";
 
 interface PostIconProps extends BoxProps {
   icon: any; 

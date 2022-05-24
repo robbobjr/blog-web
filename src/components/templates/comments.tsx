@@ -1,6 +1,6 @@
 import { Flex } from "@chakra-ui/react";
 import { useContent } from "../../states/hooks/use-content";
-import { PostComment } from "../organisms/post/post-comment";
+import { PostComment } from "../organisms/post-comment";
 
 export function Comments() {
   const { postComments } = useContent();

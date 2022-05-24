@@ -9,7 +9,7 @@ import { deletePostErrorToast } from "../../../../utils/toast";
 import { PostIcon } from "../../../atoms/icons/post-icon";
 import { Link } from "../../../atoms/link";
 import { Alert } from "../../../organisms/alert";
-import { CreatePostModal } from "../../modals/create-post-modal";
+import { CreatePostModal } from "../../../organisms/create-post-modal";
 
 interface PostHeaderProps {
   data: PostDto;

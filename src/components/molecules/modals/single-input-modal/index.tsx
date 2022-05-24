@@ -39,10 +39,7 @@ export function SingleInputModal({
   }, [isOpen, handleGetDraft, modalName]);
 
   const handleOpenModal = useCallback(async () => {
-    if (!data) {
-      return router.push('/login')
-    } 
-
+    if (!data) return router.push('/login')
     onOpen()
   }, [data, router, onOpen]);
 

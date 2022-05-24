@@ -1,15 +1,15 @@
 import { Avatar, Box, Flex, Text, useToast } from "@chakra-ui/react";
 import { useCallback, useMemo } from "react";
 import { GrMoreVertical } from "react-icons/gr";
-import { CommentsService, RatesService, UserDto } from "../../../../services/api/openapi";
-import { logger } from "../../../../services/logger";
-import { useAuth } from "../../../../states/hooks/use-auth";
-import { useContent } from "../../../../states/hooks/use-content";
-import { commentDeleted, deleteCommentErrorToast } from "../../../../utils/toast";
-import { PostIcon } from "../../../atoms/icons/post-icon";
-import { PostContainer } from "../../../molecules/containers/post-container";
-import { PostRateControls } from "../../../molecules/controls/post-rate-controls";
-import { Alert } from "../../alert";
+import { CommentsService, RatesService, UserDto } from "../../../services/api/openapi";
+import { logger } from "../../../services/logger";
+import { useAuth } from "../../../states/hooks/use-auth";
+import { useContent } from "../../../states/hooks/use-content";
+import { commentDeleted, deleteCommentErrorToast } from "../../../utils/toast";
+import { PostIcon } from "../../atoms/icons/post-icon";
+import { PostContainer } from "../../atoms/containers/post-container";
+import { PostRateControls } from "../../molecules/controls/post-rate-controls";
+import { Alert } from "../alert";
 import { PostCommentProps } from "./post-comment.type";
 
 export function PostComment({ 

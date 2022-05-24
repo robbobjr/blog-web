@@ -1,6 +1,6 @@
 import { Flex, FlexProps, Icon } from "@chakra-ui/react";
 import { IconType } from "react-icons/lib";
-import { simpleHover } from "../../../styles/theme";
+import { simpleHover } from "../../../../styles/theme";
 
 interface CircularIconProps extends FlexProps {
   icon: IconType;
