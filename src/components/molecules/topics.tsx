@@ -13,6 +13,7 @@ export function Topics({ ...props }: TopicsProps) {
     await handleSearchPosts({ tag })
   }, [handleSearchPosts]);
 
+  // TODO: find a category to topics
   return (
     <Box display="block" float="none" textAlign="center" {...props}>
        {tags.map(tag => 

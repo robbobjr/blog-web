@@ -15,6 +15,7 @@
     color: #f8f8f2;
   }
 }
+
 .postContent {
   margin-top: 1rem;
   line-height: 2rem;
@@ -56,6 +57,13 @@
     font-size: 4rem;
     line-height: 1;
     margin-right: 9px;
+  }
+
+  a {
+    color: #8be9fd;
+    &:hover {
+      text-decoration: underline;
+    }
   }
 
   ul {

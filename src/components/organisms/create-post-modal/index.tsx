@@ -32,6 +32,7 @@ interface CreatePostModalProps {
   post?: PostDto; 
 }
 
+// TODO: refactor into small pieces
 /**
  * @summary 
  * Component to create or edit post 

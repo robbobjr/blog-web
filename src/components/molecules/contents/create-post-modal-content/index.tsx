@@ -16,6 +16,7 @@ export function CreatePostModalContent({
     })
   }, [createdAt]);
 
+  // TODO: Refactor to use chakra-ui
   return (
     <>
       <article className={styles.post}>

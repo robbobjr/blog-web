@@ -62,6 +62,7 @@ export function PostComment({
     : <></>
   ,[handleDeleteComment, loggedUser?.id, loggedUser?.role, user?.id]);
 
+  // TODO: Refactor into small pieces
   return (
     <PostContainer
       rightSide={RightSide}

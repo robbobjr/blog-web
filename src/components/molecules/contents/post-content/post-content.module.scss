@@ -55,6 +55,13 @@
     line-height: 32px;
   }
 
+  a {
+    color: #8be9fd;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
   p:first-of-type:first-letter {
     float: left;
     font-size: 4rem;

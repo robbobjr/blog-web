@@ -1,5 +1,5 @@
-import { Image, Text } from "@chakra-ui/react";
-import { dracula, textGradiant } from "../../../../styles/theme";
+import { Text } from "@chakra-ui/react";
+import { dracula } from "../../../../styles/theme";
 import { LinkPreview } from '@dhaiwat10/react-link-preview';
 import styles from './post-preview-content.module.scss'; 
 import { useMemo } from "react";

@@ -5,6 +5,7 @@ import { CircularIcon } from "../../../atoms/icons/circular-icon";
 import { SiLinkedin } from 'react-icons/si';
 import { FaMedium, FaTwitter } from "react-icons/fa";
 
+// TODO: Move from controls domain
 export function SocialControls(props: StackProps) {
   return (
     <HStack
