@@ -62,7 +62,12 @@ export class AxiosAPI {
     name,
     github,
   }) {
-    const { data: user } = await this.client.post('/users', { email, image, name, github });
+    const { data: user } = await this.client.post('/users', { 
+      email, 
+      image, 
+      name, 
+      github 
+    });
 
     return user;
   }
