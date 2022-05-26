@@ -7,11 +7,11 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title></title>
-        <meta name="description" content="Hey there! My name is Roberto Junior and I am a software developer." />
+        <title>Not Found</title>
+        <meta name="description" content="Page not found" />
       </Head>
       <main className={styles.contentContainer}>
-        <Image width="25%" src="/static/me.gif" alt="girl coding" />
+        <Image width="25%" src="/static/me.gif" alt="404" />
         <section className={styles.hero}>
           <h1>
             40<span>4</span>
