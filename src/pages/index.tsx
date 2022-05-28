@@ -29,7 +29,6 @@ export default function Feed({
           <Aside />
           <Posts />
         </MainContainer> 
-        <Footer />
       </Flex>
     </>
   );
