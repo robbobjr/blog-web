@@ -2,20 +2,21 @@ import { Icon, Stack, Text, useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { AiOutlineCaretDown, AiOutlineCaretUp } from 'react-icons/ai';
-import { useAuth } from "../../../../states/hooks/use-auth";
-import { simpleHover } from "../../../../styles/theme";
-import { createPostRateErrorToast } from "../../../../utils/toast";
-import { RateValue } from "./post-rate-controls.enum";
-import { PostRateControlsProps } from "./post-rate-controls.type";
+import { useAuth } from "../../../states/hooks/use-auth";
+import { simpleHover } from "../../../styles/theme";
+import { createPostRateErrorToast } from "../../../utils/toast";
+import { PostRateControlContainer } from "../../atoms/post-rate-control-container";
+import { RateValue } from "./post-rate-control.enum";
+import { PostRateControlProps } from "./post-rate-control.type";
 
-export function PostRateControls({ 
+export function PostRateControl({ 
   handleRate,
   data: { rates },
   hideRateControl,
   isDislikeEnabled,
   controllSide = "left",
   size, 
-}: PostRateControlsProps) {
+}: PostRateControlProps) {
   const { data } = useAuth();
   const router = useRouter();
   const toast = useToast();
@@ -82,19 +83,11 @@ export function PostRateControls({
   }, [size]);
 
   return (
-    <Stack 
-      display={{ base: "none", sm: 'none', md: hideRateControl ? 'none': 'inherit' }}
-      spacing={counterSize.iconsSpacing}
-      borderRightWidth={controllSide === "right" ? 0 : 1} 
-      borderRightColor="gray.700" 
-      minW="14"
-      maxW="14" 
-      align="center" 
-      justify="center"
-      pr={controllSide === "right" ? 0 : "4"}
-      pl={controllSide === "right" ? "4" : 0}
-      ml={controllSide === "right" ? "auto" : 0}
-      onMouseLeave={() => setDislikePosition({})}
+    <PostRateControlContainer
+      controllSide={controllSide}
+      handleOnMouseLeave={() => setDislikePosition({})} 
+      hideRateControl={hideRateControl}
+      iconsSpacing={counterSize.iconsSpacing}
     >
       <Icon 
         transition="0.2s"
@@ -121,6 +114,6 @@ export function PostRateControls({
         color={userVote === RateValue.DOWN ? "pink.400" : "gray.600"} 
         onClick={() => handlePostRate(RateValue.DOWN)}
       />
-    </Stack>
+    </PostRateControlContainer>
   );
 }

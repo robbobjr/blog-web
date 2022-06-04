@@ -1,13 +1,15 @@
 import { useCallback, useMemo } from "react";
 import { RatesService } from "../../../services/api/openapi";
 import { useAuth } from "../../../states/hooks/use-auth";
-import { PostContainer } from "../../atoms/containers/post-container";
-import { PostContent } from "../../molecules/contents/post-content";
+import { PostContainer } from "../../atoms/post-container";
+import { PostContent } from "../../molecules/post-content";
 import { PostContentPreview } from "../../molecules/post-content-preview";
-import { PostRateControls } from "../../molecules/controls/post-rate-controls";
-import { PostFooter } from "../../molecules/footers/post-footer";
-import { PostHeader } from "../../molecules/headers/post-header";
+import { PostRateControl } from "../../molecules/post-rate-control";
+import { PostFooter } from "../../molecules/post-footer";
+import { PostCreator } from "../../molecules/post-creator";
 import { PostProps } from "./post.type";
+import { Flex } from "@chakra-ui/react";
+import { PostOptions } from "../../molecules/post-options";
 
 export function Post({ 
   containerProps,
@@ -30,7 +32,7 @@ export function Post({
   }, [id, session]);
 
   const Aside = useMemo(() => 
-    <PostRateControls 
+    <PostRateControl 
       data={{ rates: post.rates }} 
       handleRate={handlePostRate} 
       hideRateControl={!isPostPreview}
@@ -47,7 +49,10 @@ export function Post({
 
   return (
     <PostContainer size="md" {...containerProps} rightSide={Aside}>
-      <PostHeader isPostPreview={isPostPreview} data={post}/>
+      <Flex align="center">
+        <PostCreator data={post.user}/>
+        <PostOptions data={post}/>
+      </Flex>
       <PostContentByContext data={post} />
       <PostFooter data={{ id: post.id, commentsLength: post.comments.length, tags }}/>
     </PostContainer>

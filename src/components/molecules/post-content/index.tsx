@@ -1,7 +1,7 @@
 import { PostContentProps } from "./post-content.type";
 import styles from './post-content.module.scss'; 
 import { useMemo } from "react";
-import { markdown } from "../../../../services/markdown";
+import { markdown } from "../../../services/markdown";
 
 export function PostContent({ 
   data: { title, content, createdAt }
