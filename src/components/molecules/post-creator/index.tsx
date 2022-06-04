@@ -1,4 +1,4 @@
-import { Avatar, Box, Text } from "@chakra-ui/react";
+import { Avatar, Flex, Text } from "@chakra-ui/react";
 import { UserDto } from "../../../services/api/openapi";
 
 type PostCreatorProps = {
@@ -7,7 +7,7 @@ type PostCreatorProps = {
 
 export function PostCreator({ data: user }: PostCreatorProps) {
   return (
-    <Box>
+    <Flex align="center" justify="center">
       <Avatar size="xs" name={user?.name} src={user?.image}/>
       <Text 
         fontSize="smaller" 
@@ -17,6 +17,6 @@ export function PostCreator({ data: user }: PostCreatorProps) {
       >
         Escrito por {user?.name}
       </Text>
-    </Box>
+    </Flex>
   );
 }
