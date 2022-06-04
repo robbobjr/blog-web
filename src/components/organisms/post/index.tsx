@@ -3,7 +3,7 @@ import { RatesService } from "../../../services/api/openapi";
 import { useAuth } from "../../../states/hooks/use-auth";
 import { PostContainer } from "../../atoms/containers/post-container";
 import { PostContent } from "../../molecules/contents/post-content";
-import { PostPreviewContent } from "../../molecules/contents/post-preview-content";
+import { PostContentPreview } from "../../molecules/post-content-preview";
 import { PostRateControls } from "../../molecules/controls/post-rate-controls";
 import { PostFooter } from "../../molecules/footers/post-footer";
 import { PostHeader } from "../../molecules/headers/post-header";
@@ -40,7 +40,7 @@ export function Post({
 
   const PostContentByContext = useMemo(() => 
     isPostPreview 
-      ? PostPreviewContent 
+      ? PostContentPreview 
       : PostContent,
     [isPostPreview],
   );
