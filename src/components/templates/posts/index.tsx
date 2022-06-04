@@ -1,7 +1,7 @@
 import { Stack } from "@chakra-ui/react";
-import { useContent } from "../../states/hooks/use-content"
-import { dracula } from "../../styles/theme";
-import { Post } from "../organisms/post";
+import { useContent } from "../../../states/hooks/use-content"
+import { dracula } from "../../../styles/theme";
+import { Post } from "../../organisms/post";
 
 const containerProps = {
   border: "2px solid transparent",
