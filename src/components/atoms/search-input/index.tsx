@@ -1,11 +1,11 @@
 import { Flex, Input, useToast } from "@chakra-ui/react";
-import { Icon } from "../../icons";
+import { Icon } from "../icons";
 import { RiSearch2Line } from 'react-icons/ri';
 import { ChangeEvent, useCallback } from "react";
-import { debounce } from "../../../../utils/debounce";
-import { useContent } from "../../../../states/hooks/use-content";
-import { logger } from "../../../../services/logger";
-import { searchPostErrorToast } from "../../../../utils/toast";
+import { debounce } from "../../../utils/debounce";
+import { useContent } from "../../../states/hooks/use-content";
+import { logger } from "../../../services/logger";
+import { searchPostErrorToast } from "../../../utils/toast";
 import { useRouter } from "next/router";
 
 export function SearchInput() {

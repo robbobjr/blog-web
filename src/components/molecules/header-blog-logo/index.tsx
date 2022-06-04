@@ -2,7 +2,8 @@ import { Box } from "@chakra-ui/react";
 import Image from "next/image";
 import { Link } from "../../atoms/link";
 
-export function BlogLogo() {
+
+export function HeaderBlogLogo() {
   return (
     <Box display={{ base: "none", sm: 'none', md: 'inherit' }} mr="4">
       <Link href="/">

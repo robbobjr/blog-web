@@ -1,9 +1,9 @@
 import { Flex } from "@chakra-ui/react";
-import { ProfileMenu } from "../../molecules/menus/profile-menu";
-import { HeaderControls } from "../../molecules/controls/header-controls";
-import { SearchInput } from "../../atoms/inputs/search-input";
-import { SocialControls } from "../../molecules/controls/social-controls";
-import { BlogLogo } from "../../molecules/logos/blog-logo";
+import { ProfileMenu } from "../../molecules/profile-menu";
+import { HeaderOptions } from "../../molecules/header-options";
+import { SearchInput } from "../../atoms/search-input";
+import { HeaderBlogLogo } from "../../molecules/header-blog-logo";
+import { SocialLinks } from "../../molecules/social-links";
 
 export function Header() {
   return (
@@ -20,10 +20,10 @@ export function Header() {
       align="center" 
       px="10"
     >
-      <BlogLogo/>
-      <SocialControls />
+      <HeaderBlogLogo />
+      <SocialLinks />
       <SearchInput />
-      <HeaderControls/>
+      <HeaderOptions/>
       <ProfileMenu/>
     </Flex>
   )

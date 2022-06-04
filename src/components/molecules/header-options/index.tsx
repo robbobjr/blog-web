@@ -1,18 +1,15 @@
 import { HStack } from "@chakra-ui/react";
 import { AiOutlineCaretUp } from "react-icons/ai";
 import { GoPlus } from "react-icons/go";
-import { UserDto } from "../../../../services/api/openapi";
-import { useAuth } from "../../../../states/hooks/use-auth";
-import { CircularIcon } from "../../../atoms/icons/circular-icon";
-import { CreatePostModal } from "../../../organisms/create-post-modal";
+import { UserDto } from "../../../services/api/openapi";
+import { useAuth } from "../../../states/hooks/use-auth";
+import { CircularIcon } from "../../atoms/icons/circular-icon";
+import { CreatePostModal } from "../../organisms/create-post-modal";
 import { useCallback, useState } from "react";
-import { useContent } from "../../../../states/hooks/use-content";
+import { useContent } from "../../../states/hooks/use-content";
 import { useRouter } from "next/router";
-/**
- * @summary
- * Buttons inside the header to control pub creation and notifications 
- */
-export function HeaderControls() {
+
+export function HeaderOptions() {
   const [isPressed, setIsPressed] = useState(false);
   const { data } = useAuth(); 
   const { handleSearchPosts } = useContent();

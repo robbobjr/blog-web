@@ -4,9 +4,9 @@ import { useRouter } from "next/router";
 import { useMemo, useCallback } from "react";
 import { GoSignOut } from 'react-icons/go';
 import { MdCopyAll, MdLogout } from "react-icons/md";
-import { simpleHover } from "../../../../styles/theme";
-import { useAuth } from "../../../../states/hooks/use-auth";
-import { jwtCopiedToast } from "../../../../utils/toast";
+import { simpleHover } from "../../../styles/theme";
+import { useAuth } from "../../../states/hooks/use-auth";
+import { jwtCopiedToast } from "../../../utils/toast";
 
 export function ProfileMenu() {
   const { data } = useAuth();

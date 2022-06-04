@@ -1,12 +1,11 @@
 import { HStack, StackProps } from "@chakra-ui/react";
 import { GoMarkGithub } from "react-icons/go";
-import { personalConfig } from "../../../../configs/personal-config";
-import { CircularIcon } from "../../../atoms/icons/circular-icon";
+import { personalConfig } from "../../../configs/personal-config";
+import { CircularIcon } from "../../atoms/icons/circular-icon";
 import { SiLinkedin } from 'react-icons/si';
 import { FaMedium, FaTwitter } from "react-icons/fa";
 
-// TODO: Move from controls domain
-export function SocialControls(props: StackProps) {
+export function SocialLinks(props: StackProps) {
   return (
     <HStack
       spacing="4"
