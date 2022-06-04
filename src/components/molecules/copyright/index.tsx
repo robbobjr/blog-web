@@ -1,7 +1,7 @@
 import { Text } from "@chakra-ui/react";
-import { Link } from "../../../atoms/link";
+import { Link } from "../../atoms/link";
 
-export function CopyrightFooter() {
+export function Copyright() {
   return (
     <Link href="/portfolio">
       <Text fontSize="12" fontWeight="thin" opacity="0.5" color="gray.50" textAlign="center">

@@ -15,8 +15,8 @@ import {
 import { useRouter } from "next/router"
 import { useRef, cloneElement, useCallback, useEffect, useState } from "react"
 import ResizeTextarea from "react-textarea-autosize";
-import { useAuth } from "../../../../states/hooks/use-auth";
-import { useDraft } from "../../../../states/hooks/use-draft";
+import { useAuth } from "../../../states/hooks/use-auth";
+import { useDraft } from "../../../states/hooks/use-draft";
 
 export function SingleInputModal({ 
   children, 

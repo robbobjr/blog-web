@@ -1,7 +1,7 @@
 import { CreatePostModalContentProps } from "./create-post-modal-content.type";
 import styles from './create-post-modal-content.module.scss'; 
 import { useMemo } from "react";
-import { markdown } from "../../../../services/markdown";
+import { markdown } from "../../../services/markdown";
 
 export function CreatePostModalContent({ 
   data: { title, content, createdAt }

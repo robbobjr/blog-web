@@ -17,7 +17,7 @@ import {
 import { useRouter } from "next/router";
 import { useRef, cloneElement, useCallback, useEffect, useState, ReactElement } from "react"
 import { AiFillEye } from "react-icons/ai";
-import { CreatePostModalContent } from "../../molecules/contents/create-post-modal-content";
+import { CreatePostModalContent } from "../../molecules/create-post-modal-content";
 import { defaultFormattedValue, formatMarkdown, revertMKFormatation } from "../../utils/format-markdown";
 import { Textarea } from "../../atoms/textarea";
 import { useAuth } from "../../../states/hooks/use-auth";
