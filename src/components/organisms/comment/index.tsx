@@ -10,12 +10,12 @@ import { PostIcon } from "../../atoms/icons/post-icon";
 import { PostContainer } from "../../atoms/post-container";
 import { PostRateControl } from "../../molecules/post-rate-control";
 import { Alert } from "../alert";
-import { PostCommentProps } from "./post-comment.type";
+import { CommentProps } from "./comment.type";
 
-export function PostComment({ 
+export function Comment({ 
   containerProps,
   data: { user, content, id, rates }
-}: PostCommentProps) {
+}: CommentProps) {
   const session = useAuth();
   const toast = useToast();
   const loggedUser = useMemo(() => session?.data?.user, [session]);

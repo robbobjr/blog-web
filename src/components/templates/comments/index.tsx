@@ -1,6 +1,6 @@
 import { Flex } from "@chakra-ui/react";
-import { useContent } from "../../states/hooks/use-content";
-import { PostComment } from "../organisms/post-comment";
+import { useContent } from "../../../states/hooks/use-content";
+import { Comment } from "../../organisms/comment";
 
 export function Comments() {
   const { postComments } = useContent();
@@ -8,7 +8,7 @@ export function Comments() {
   return (
     <Flex direction="column" align="center" w="100%">
       {postComments.map((comment, i, a) => (
-        <PostComment 
+        <Comment 
           key={i} 
           data={comment} 
           containerProps={{ 

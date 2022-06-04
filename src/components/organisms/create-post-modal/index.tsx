@@ -113,7 +113,7 @@ export function CreatePostModal({ children, post }: CreatePostModalProps) {
             <ModalCloseButton  />
           </ModalHeader>
           <CreatePostModalBody 
-            data={{...formattedValue, user: post.user }} 
+            data={{...formattedValue, user: post?.user }} 
             handleInputData={handleInputData} 
             inputData={inputData} 
             isVisible={isVisible}
