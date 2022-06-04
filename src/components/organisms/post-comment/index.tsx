@@ -7,8 +7,8 @@ import { useAuth } from "../../../states/hooks/use-auth";
 import { useContent } from "../../../states/hooks/use-content";
 import { commentDeleted, deleteCommentErrorToast } from "../../../utils/toast";
 import { PostIcon } from "../../atoms/icons/post-icon";
-import { PostContainer } from "../../atoms/containers/post-container";
-import { PostRateControls } from "../../molecules/controls/post-rate-controls";
+import { PostContainer } from "../../atoms/post-container";
+import { PostRateControl } from "../../molecules/post-rate-control";
 import { Alert } from "../alert";
 import { PostCommentProps } from "./post-comment.type";
 
@@ -41,7 +41,7 @@ export function PostComment({
   }, [id, session]);
 
   const LeftSide = useMemo(() => 
-    <PostRateControls 
+    <PostRateControl 
       data={{ rates }} 
       handleRate={handleCommentRate} 
       isDislikeEnabled
@@ -62,7 +62,6 @@ export function PostComment({
     : <></>
   ,[handleDeleteComment, loggedUser?.id, loggedUser?.role, user?.id]);
 
-  // TODO: Refactor into small pieces
   return (
     <PostContainer
       rightSide={RightSide}
@@ -71,9 +70,7 @@ export function PostComment({
       leftSide={LeftSide}
     >
       <Flex>
-        <Box>
-          <Avatar name={user?.name} src={user?.image} size="sm"/>
-        </Box>
+        <Avatar name={user?.name} src={user?.image} size="sm"/>
         <Box ml="4">
           <Text color="gray.600" mt="1" fontSize="sm">{user?.name}</Text>
           <Text fontSize="sm" mt="1" opacity={0.7}>{content}</Text>
