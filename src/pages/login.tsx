@@ -3,8 +3,8 @@ import { useCallback, useEffect } from "react";
 import { AiFillGithub, AiFillGoogleCircle, AiFillLinkedin, AiFillTwitterCircle } from "react-icons/ai";
 import { signIn } from 'next-auth/react';
 import { useRouter } from "next/router";
-import { SocialButton } from "../components/atoms/buttons/social-button";
-import { CentralizedContainer } from "../components/atoms/containers/centralized-container";
+import { SocialButton } from "../components/atoms/social-button";
+import { CentralizedContainer } from "../components/atoms/centralized-container";
 import { useAuth } from "../states/hooks/use-auth";
 import Head from "next/head";
 

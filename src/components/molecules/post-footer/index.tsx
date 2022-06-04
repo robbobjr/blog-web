@@ -4,7 +4,7 @@ import { SingleInputModal } from "../single-input-modal";
 import { RiMessage3Fill } from 'react-icons/ri';
 import { FormEvent, useCallback, useMemo } from "react";
 import { PostFooterProps } from "./post-footer.types";
-import { formatCommentText } from "../../utils/format-text";
+import { formatCommentText } from "../../../utils/format-text";
 import { useAuth } from "../../../states/hooks/use-auth";
 import { useContent } from "../../../states/hooks/use-content";
 import { CommentsService } from "../../../services/api/openapi";

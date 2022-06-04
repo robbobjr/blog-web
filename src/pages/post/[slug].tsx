@@ -1,7 +1,7 @@
 import { GetStaticPaths, GetStaticProps } from "next"
 import { Flex, Stack } from "@chakra-ui/react";
 import { Post } from "../../components/organisms/post";
-import { MainContainer } from "../../components/atoms/containers/main-container";
+import { MainContainer } from "../../components/atoms/main-container";
 import { PostDto } from "../../services/api/openapi";
 import { Header } from "../../components/organisms/header";
 import { Footer } from "../../components/organisms/footer";
