@@ -5,7 +5,7 @@ import { CircularIcon } from "../../atoms/icons/circular-icon";
 import { SiLinkedin } from 'react-icons/si';
 import { FaMedium, FaTwitter } from "react-icons/fa";
 
-export function SocialLinks(props: StackProps) {
+export function HeaderSocialLinks(props: StackProps) {
   return (
     <HStack
       spacing="4"

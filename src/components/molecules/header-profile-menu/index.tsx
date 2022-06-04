@@ -8,7 +8,7 @@ import { simpleHover } from "../../../styles/theme";
 import { useAuth } from "../../../states/hooks/use-auth";
 import { jwtCopiedToast } from "../../../utils/toast";
 
-export function ProfileMenu() {
+export function HeaderProfileMenu() {
   const { data } = useAuth();
   const router = useRouter();
   const toast = useToast();
