@@ -1,38 +1,29 @@
 import { 
-  Button, 
-  FormControl, 
   Modal, 
-  ModalBody, 
   ModalCloseButton, 
   ModalContent, 
-  ModalFooter, 
   ModalHeader, 
   ModalOverlay, 
   useDisclosure,
-  Avatar,
   Box,
-  HStack,
   useToast,
 } from "@chakra-ui/react"
 import { useRouter } from "next/router";
 import { useRef, cloneElement, useCallback, useEffect, useState, ReactElement } from "react"
-import { AiFillEye } from "react-icons/ai";
-import { CreatePostModalContent } from "../../molecules/create-post-modal-content";
-import { defaultFormattedValue, formatMarkdown, revertMKFormatation } from "../../utils/format-markdown";
-import { Textarea } from "../../atoms/textarea";
+import { CreatePostModalBody } from "../../molecules/create-post-modal-body";
+import { defaultFormattedValue, formatMarkdown, revertMKFormatation } from "../../../utils/format-markdown";
 import { useAuth } from "../../../states/hooks/use-auth";
 import { logger } from "../../../services/logger";
 import { createPostErrorToast } from "../../../utils/toast";
 import { PostDto, PostsService } from "../../../services/api/openapi";
 import { useDraft } from "../../../states/hooks/use-draft";
-import { ModalIcon } from "../../atoms/icons/modal-icon";
+import { CreatePostModalFooter } from "../../molecules/create-post-modal-footer";
 
 interface CreatePostModalProps {
   children: ReactElement;
   post?: PostDto; 
 }
 
-// TODO: refactor into small pieces
 /**
  * @summary 
  * Component to create or edit post 
@@ -45,7 +36,7 @@ export function CreatePostModal({ children, post }: CreatePostModalProps) {
   const { data } = useAuth();
   const toast = useToast();
 
-  const [formattedValue, setFormattedValue] = useState(defaultFormattedValue)
+  const [formattedValue, setFormattedValue] = useState(defaultFormattedValue);
   const [isVisible, setIsVisible] = useState(false);
   const [inputData, setInputData] = useState(
     handleGetDraft('create-post-modal')
@@ -86,7 +77,6 @@ export function CreatePostModal({ children, post }: CreatePostModalProps) {
   const handleCreatePost = useCallback(async () => {
     const { createdAt, ...dto } = handleMarkdown();
     const basePostDto = { userId: data?.user?.id, ...dto };
-    
     try {
       if (post) {
         await PostsService.postsControllerUpdate(`${post.id}`, basePostDto);
@@ -122,28 +112,18 @@ export function CreatePostModal({ children, post }: CreatePostModalProps) {
           <ModalHeader color="gray.50">
             <ModalCloseButton  />
           </ModalHeader>
-          <ModalBody pb={6} mt="2">
-            <FormControl display="flex" flexDirection="row">
-              {!isVisible && <Avatar name={data?.user?.name} src={data?.user?.image} />}
-              {isVisible 
-                ? <CreatePostModalContent data={formattedValue} />
-                : <Textarea defaultValue={inputData} onChange={handleInputData} size="md"/>
-              }
-            </FormControl>
-          </ModalBody>
+          <CreatePostModalBody 
+            data={{...formattedValue, user: post.user }} 
+            handleInputData={handleInputData} 
+            inputData={inputData} 
+            isVisible={isVisible}
+          />
           <Box height="0.5px" bg="gray.700" mx="8"/>
-          <ModalFooter mx="3">
-            <HStack spacing="4" mr="auto">
-            <ModalIcon 
-              isPressed={isVisible} 
-              onClick={handleMKVisibility} 
-              icon={AiFillEye}
-            />
-            </HStack>
-            <Button bg="gray.600" onClick={handleCreatePost}>
-              Submeter
-            </Button>
-          </ModalFooter>
+          <CreatePostModalFooter 
+            handleCreatePost={handleCreatePost} 
+            handleMKVisibility={handleMKVisibility} 
+            isVisible={isVisible} 
+          />
         </ModalContent>
       </Modal>
     </>
