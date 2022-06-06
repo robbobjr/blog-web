@@ -1,5 +1,4 @@
-import { Flex, Input, useToast } from "@chakra-ui/react";
-import { Icon } from "../icons";
+import { Flex, Input, useToast, Icon } from "@chakra-ui/react";
 import { RiSearch2Line } from 'react-icons/ri';
 import { ChangeEvent, useCallback } from "react";
 import { debounce } from "../../../utils/debounce";
@@ -8,7 +7,7 @@ import { logger } from "../../../services/logger";
 import { searchPostErrorToast } from "../../../utils/toast";
 import { useRouter } from "next/router";
 
-export function SearchInput() {
+export function HeaderSearchInput() {
   const { handleSearchPosts } = useContent();
   const toast = useToast();
   const history = useRouter();

@@ -1,13 +1,13 @@
 import { Flex, FlexProps, Icon } from "@chakra-ui/react";
 import { IconType } from "react-icons/lib";
-import { simpleHover } from "../../../../styles/theme";
+import { simpleHover } from "../../../styles/theme";
 
-interface CircularIconProps extends FlexProps {
+interface HeaderIconProps extends FlexProps {
   icon: IconType;
   isPressed?: boolean;
 }
 
-export function CircularIcon({ icon, isPressed, ...props }: CircularIconProps) {
+export function HeaderIcon({ icon, isPressed, ...props }: HeaderIconProps) {
   return (
     <Flex
       cursor="pointer"

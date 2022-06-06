@@ -1,5 +1,5 @@
 import { Badge, Flex, Stack, useToast } from "@chakra-ui/react";
-import { PostIcon } from "../../atoms/icons/post-icon";
+import { PostIcon } from "../../atoms/post-icon";
 import { SingleInputModal } from "../single-input-modal";
 import { RiMessage3Fill } from 'react-icons/ri';
 import { FormEvent, useCallback, useMemo } from "react";

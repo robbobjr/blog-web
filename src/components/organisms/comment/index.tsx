@@ -6,10 +6,10 @@ import { logger } from "../../../services/logger";
 import { useAuth } from "../../../states/hooks/use-auth";
 import { useContent } from "../../../states/hooks/use-content";
 import { commentDeleted, deleteCommentErrorToast } from "../../../utils/toast";
-import { PostIcon } from "../../atoms/icons/post-icon";
+import { PostIcon } from "../../atoms/post-icon";
 import { PostContainer } from "../../atoms/post-container";
 import { PostRateControl } from "../../molecules/post-rate-control";
-import { Alert } from "../alert";
+import { Alert } from "../../atoms/alert";
 import { CommentProps } from "./comment.type";
 
 export function Comment({ 

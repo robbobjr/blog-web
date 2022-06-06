@@ -1,30 +1,26 @@
 import { Flex } from "@chakra-ui/react";
 import { HeaderProfileMenu } from "../../molecules/header-profile-menu";
 import { HeaderOptions } from "../../molecules/header-options";
-import { SearchInput } from "../../atoms/search-input";
+import { HeaderSearchInput } from "../../atoms/header-search-input";
 import { HeaderBlogLogo } from "../../molecules/header-blog-logo";
-import { HeaderSocialLinks } from "../../molecules/Header-social-links";
+import { HeaderSocialLinks } from "../../molecules/header-social-links";
+import { HeaderProfileUserData } from "../../molecules/header-profile-user-data";
+import { useAuth } from "../../../states/hooks/use-auth";
+import { HeaderContainer } from "../../atoms/header-container";
 
 export function Header() {
+  const { data } = useAuth(); 
+
   return (
-    <Flex 
-      width="100%"
-      visibility={"initial"}
-      h="20" 
-      minH="20" 
-      as="header" 
-      maxW={1480} 
-      mx="auto" 
-      mt="4" 
-      justify="flex-end"
-      align="center" 
-      px="10"
-    >
+    <HeaderContainer>
       <HeaderBlogLogo />
       <HeaderSocialLinks />
-      <SearchInput />
+      <HeaderSearchInput />
       <HeaderOptions/>
-      <HeaderProfileMenu/>
-    </Flex>
-  )
+      <Flex align="center" ml={!data && "auto"}>
+        <HeaderProfileUserData data={data}/>
+        <HeaderProfileMenu data={data}/>
+      </Flex>
+    </HeaderContainer>
+  );
 }

@@ -53,5 +53,5 @@ export function Alert({ children, title, description, handler }) {
         </AlertDialogOverlay>
       </AlertDialog>
     </>
-  )
+  );
 }

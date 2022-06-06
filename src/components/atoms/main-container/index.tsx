@@ -8,6 +8,7 @@ interface MainContainerProps extends FlexProps {
 export function MainContainer({ children, ...props }: MainContainerProps) {
   return (
     <Flex
+      as="main" 
       my="6"
       w="100%"
       maxWidth={1480}

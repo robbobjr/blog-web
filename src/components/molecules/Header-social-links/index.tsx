@@ -1,7 +1,7 @@
 import { HStack, StackProps } from "@chakra-ui/react";
 import { GoMarkGithub } from "react-icons/go";
 import { personalConfig } from "../../../configs/personal-config";
-import { CircularIcon } from "../../atoms/icons/circular-icon";
+import { HeaderIcon } from "../../atoms/header-icon";
 import { SiLinkedin } from 'react-icons/si';
 import { FaMedium, FaTwitter } from "react-icons/fa";
 
@@ -16,16 +16,16 @@ export function HeaderSocialLinks(props: StackProps) {
       {...props}
     >
       <a target="_blank" rel="noopener noreferrer" href={personalConfig.github}>
-        <CircularIcon icon={GoMarkGithub} />
+        <HeaderIcon icon={GoMarkGithub} />
       </a>
       <a target="_blank" rel="noopener noreferrer" href={personalConfig.linkedin}>
-        <CircularIcon icon={SiLinkedin} />
+        <HeaderIcon icon={SiLinkedin} />
       </a>
       <a target="_blank" rel="noopener noreferrer" href={personalConfig.twitter}>
-        <CircularIcon icon={FaTwitter} />
+        <HeaderIcon icon={FaTwitter} />
       </a>
       <a target="_blank" rel="noopener noreferrer" href={personalConfig.medium}>
-        <CircularIcon icon={FaMedium} />
+        <HeaderIcon icon={FaMedium} />
       </a>
     </HStack> 
   );

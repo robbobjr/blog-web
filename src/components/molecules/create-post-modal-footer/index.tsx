@@ -1,6 +1,6 @@
 import { Button, ModalFooter, HStack } from "@chakra-ui/react"
 import { AiFillEye } from "react-icons/ai";
-import { ModalIcon } from "../../atoms/icons/modal-icon";
+import { ModalIcon } from "../../atoms/modal-icon";
 
 type CreatePostModalFooterProps = {
   isVisible: boolean;

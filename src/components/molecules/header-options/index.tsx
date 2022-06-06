@@ -3,7 +3,7 @@ import { AiOutlineCaretUp } from "react-icons/ai";
 import { GoPlus } from "react-icons/go";
 import { UserDto } from "../../../services/api/openapi";
 import { useAuth } from "../../../states/hooks/use-auth";
-import { CircularIcon } from "../../atoms/icons/circular-icon";
+import { HeaderIcon } from "../../atoms/header-icon";
 import { CreatePostModal } from "../../organisms/create-post-modal";
 import { useCallback, useState } from "react";
 import { useContent } from "../../../states/hooks/use-content";
@@ -38,7 +38,7 @@ export function HeaderOptions() {
       display={{ base: "none", sm: "inherit" }}
     >
       {data && (
-        <CircularIcon 
+        <HeaderIcon 
           isPressed={isPressed}
           icon={AiOutlineCaretUp} 
           onClick={handleUserLikedPosts}
@@ -46,7 +46,7 @@ export function HeaderOptions() {
       )}
       {data?.user?.role === UserDto.role.ADMIN && (
         <CreatePostModal>
-          <CircularIcon icon={GoPlus} />
+          <HeaderIcon icon={GoPlus} />
         </CreatePostModal>
       )}
     </HStack> 

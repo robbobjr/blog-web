@@ -5,9 +5,9 @@ import { FaHome, FaPen, FaTrashAlt } from "react-icons/fa";
 import { PostDto, PostsService } from "../../../services/api/openapi";
 import { logger } from "../../../services/logger";
 import { deletePostErrorToast } from "../../../utils/toast";
-import { PostIcon } from "../../atoms/icons/post-icon";
+import { PostIcon } from "../../atoms/post-icon";
 import { Link } from "../../atoms/link";
-import { Alert } from "../../organisms/alert";
+import { Alert } from "../../atoms/alert";
 import { CreatePostModal } from "../../organisms/create-post-modal";
 
 type PostOptionsProps = {
