@@ -5,15 +5,13 @@ import { useEffect } from "react";
 import { Header } from "../components/organisms/header";
 import { Footer } from "../components/organisms/footer";
 import { useContent } from "../states/hooks/use-content";
-import { FeedHead as Head } from "../components/organisms/head/feed-head";
+import { FeedHead as Head } from "../components/atoms/feed-head";
 import { PostDto } from "../services/api/openapi";
 import { Api } from "../services/api";
 import { Aside } from "../components/organisms/aside";
 import { Posts } from "../components/templates/posts";
 
-export default function Feed({ 
-  posts, 
-}: { posts: PostDto[] }) {
+export default function Feed({ posts }: { posts: PostDto[] }) {
   const { setPostsToList } = useContent();
   
   useEffect(() => {
@@ -23,7 +21,7 @@ export default function Feed({
   return (
     <>
       <Head />
-      <Flex direction="column" h="100vh"> 
+      <Flex direction="column" h="100vh" w="100vw"> 
         <Header />
         <MainContainer>
           <Aside />

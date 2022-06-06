@@ -5,7 +5,7 @@ import { MainContainer } from "../../components/atoms/main-container";
 import { PostDto } from "../../services/api/openapi";
 import { Header } from "../../components/organisms/header";
 import { Footer } from "../../components/organisms/footer";
-import { PostHead as Head } from "../../components/organisms/head/post-head";
+import { PostHead as Head } from "../../components/atoms/post-head";
 import { Api } from "../../services/api";
 import { Comments } from "../../components/templates/comments";
 import { useEffect, useMemo } from "react";
