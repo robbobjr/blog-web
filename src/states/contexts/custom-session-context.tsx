@@ -3,11 +3,13 @@ import { createContext, useEffect, useState } from "react";
 import { Api } from "../../services/api";
 import { OpenAPI, UserDto } from "../../services/api/openapi";
 
+export type CustomSession = {
+  user: UserDto;
+  jwt?: string;
+};
+
 export interface CustomSessionContextProps {
-  data?: {
-    user: UserDto;
-    jwt?: string;
-  }
+  data: CustomSession;
   setSession(data: { user: UserDto }): void;
 }
 
