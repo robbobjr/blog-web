@@ -9,7 +9,7 @@ export function MainContainer({ children, ...props }: MainContainerProps) {
   return (
     <Flex
       as="main" 
-      my="6"
+      my="2"
       w="100%"
       maxWidth={1480}
       mx="auto"
