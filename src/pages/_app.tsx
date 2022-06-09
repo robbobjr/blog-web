@@ -11,9 +11,9 @@ import { CustomSessionProvider } from "../states/contexts/custom-session-context
 import { easterEggLog } from "../utils/easter-egg-log";
 
 OpenAPI.BASE = apiConfig.baseURL; 
-console.info(easterEggLog.content, easterEggLog.style);
+console.info(easterEggLog.content);
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps }) {
   return (
     <SessionProvider session={pageProps.session}>
       <ChakraProvider theme={theme}>
