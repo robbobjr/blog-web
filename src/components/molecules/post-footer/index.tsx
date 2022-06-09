@@ -13,7 +13,7 @@ import { createCommentErrorToast, createCommentToast } from "../../../utils/toas
 import { dracula } from "../../../styles/theme";
 
 export function PostFooter({
-  data: { commentsLength, tags }
+  data: { commentsLength, tags, id }
 }: PostFooterProps) {
   const toast = useToast();
   const { data } = useAuth();
@@ -23,15 +23,17 @@ export function PostFooter({
   const handlePostComment = useCallback(
     async (event: FormEvent<HTMLElement>) => {
       const content = event.target['content'].value;
+      const commentDto = { content, postId: id, userId: user?.id };
+
       try {
-        const comment = await CommentsService.postCommentsControllerCreate(content);
+        const comment = await CommentsService.postCommentsControllerCreate(commentDto);
         handleUpdatePostComments({ ...comment, user, rates: [] });
         toast(createCommentToast)
       } catch (error) {
         logger.error({ error, context: "PostFooter::commentHandler" });
         toast(createCommentErrorToast);
       }
-    }, [handleUpdatePostComments, toast, user],
+    }, [handleUpdatePostComments, id, toast, user],
   );
 
   const handleTopic = useCallback((tag: string) => {

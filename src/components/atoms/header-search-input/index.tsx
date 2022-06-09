@@ -35,7 +35,7 @@ export function HeaderSearchInput() {
     <Flex
       as="label"
       flex="1"
-      py="4"
+      py="3"
       px="8"
       maxWidth={400}
       alignSelf="center"

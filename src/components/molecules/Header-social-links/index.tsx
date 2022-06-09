@@ -10,9 +10,8 @@ export function HeaderSocialLinks(props: StackProps) {
     <HStack
       spacing="4"
       py="1"
-      mr={{ base: "auto", sm: 0, md: "8" }}
+      mr="auto"
       color="gray.600"
-      ml={{ sm: 0, md: "auto"}}
       {...props}
     >
       <a target="_blank" rel="noopener noreferrer" href={personalConfig.github}>

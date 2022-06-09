@@ -1,14 +1,15 @@
 import { Flex, useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { FaHome, FaPen, FaTrashAlt } from "react-icons/fa";
-import { PostDto, PostsService } from "../../../services/api/openapi";
+import { PostDto, PostsService, UserDto } from "../../../services/api/openapi";
 import { logger } from "../../../services/logger";
 import { deletePostErrorToast } from "../../../utils/toast";
 import { PostIcon } from "../../atoms/post-icon";
 import { Link } from "../../atoms/link";
 import { Alert } from "../../atoms/alert";
 import { CreatePostModal } from "../../organisms/create-post-modal";
+import { useAuth } from "../../../states/hooks/use-auth";
 
 type PostOptionsProps = {
   data: PostDto;
@@ -20,6 +21,8 @@ export function PostOptions ({
   const history = useRouter();
   const toast = useToast();
   const { pathname } = useRouter();
+  const session = useAuth();
+  const userRole = useMemo(() => session?.data?.user?.role, [session]);
 
   const handleDeletePost = useCallback(async () => {
     try {
@@ -33,7 +36,7 @@ export function PostOptions ({
 
   return (
     <Flex ml="auto">
-      {data?.user?.role === 'ADMIN' && (
+      {userRole === UserDto.role.ADMIN && (
         <>
           <Alert 
             title="Deletar post" 
