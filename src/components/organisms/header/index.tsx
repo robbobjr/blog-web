@@ -1,7 +1,7 @@
 import { Flex } from "@chakra-ui/react";
 import { HeaderProfileMenu } from "../../molecules/header-profile-menu";
 import { HeaderOptions } from "../../molecules/header-options";
-import { HeaderSocialLinks } from "../../molecules/header-social-links";
+import { HeaderSocial } from "../../molecules/header-social";
 import { HeaderProfileUserData } from "../../molecules/header-profile-user-data";
 import { useAuth } from "../../../states/hooks/use-auth";
 import { HeaderContainer } from "../../atoms/header-container";
@@ -12,7 +12,7 @@ export function Header() {
 
   return (
     <HeaderContainer>
-      <HeaderSocialLinks />
+      <HeaderSocial />
       <HeaderSearchInput/>
       <HeaderOptions/>
       <Flex align="center" ml={!data && "auto"}>

@@ -5,7 +5,7 @@ import { HeaderIcon } from "../../atoms/header-icon";
 import { SiLinkedin } from 'react-icons/si';
 import { FaMedium, FaTwitter } from "react-icons/fa";
 
-export function HeaderSocialLinks(props: StackProps) {
+export function HeaderSocial(props: StackProps) {
   return (
     <HStack
       spacing="4"
