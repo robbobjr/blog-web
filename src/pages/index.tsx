@@ -10,12 +10,15 @@ import { PostDto } from "../services/api/openapi";
 import { Api } from "../services/api";
 import { Aside } from "../components/organisms/aside";
 import { Posts } from "../components/templates/posts";
+import { easterEggLog } from "../utils/easter-egg-log";
+import { CreatePostButton } from "../components/molecules/create-post-button";
 
 export default function Feed({ posts }: { posts: PostDto[] }) {
   const { setPostsToList } = useContent();
   
   useEffect(() => {
     setPostsToList(posts);
+    console.info(easterEggLog.content);
   }, [setPostsToList, posts]);
 
   return (
@@ -28,6 +31,7 @@ export default function Feed({ posts }: { posts: PostDto[] }) {
           <Posts />
         </MainContainer> 
         <Footer />
+        <CreatePostButton/>
       </Flex>
     </>
   );

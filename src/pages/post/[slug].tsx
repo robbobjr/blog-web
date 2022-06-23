@@ -10,6 +10,7 @@ import { Api } from "../../services/api";
 import { Comments } from "../../components/templates/comments";
 import { useEffect, useMemo } from "react";
 import { useContent } from "../../states/hooks/use-content";
+import { PageUpButton } from "../../components/molecules/page-up-button";
 
 interface PostDetailProps {
   post: PostDto;
@@ -26,7 +27,8 @@ export default function FeedPost({ post }: PostDetailProps) {
     return { 
       borderBottomRadius: post.comments.length ? 0 : "lg", 
       maxWidth: "772px",
-      paddingTop: "2rem" 
+      paddingTop: "2rem",
+      backgroundColor: "gray.900"
     }
   }, [post]);
 
@@ -38,10 +40,11 @@ export default function FeedPost({ post }: PostDetailProps) {
         <MainContainer>
           <Stack spacing="0" flex="1" minW="320px" alignItems="center" mb="6">
             <Post data={post} containerProps={containerProps}/>
-            <Comments />
+            <Comments commentContainerProps={{ bg: "gray.900" }}/>
           </Stack>
         </MainContainer> 
         <Footer/>
+        <PageUpButton direction="up"/>
       </Flex>
     </>
   )
