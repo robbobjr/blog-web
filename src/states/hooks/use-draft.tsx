@@ -22,6 +22,7 @@ export function useDraft() {
 
       if (!content) {
         ls.removeItem(field);
+        return;
       }
 
       ls.setItem(field, content);
