@@ -9,7 +9,7 @@ export function PostContent({
   const formatted = useMemo(() => markdown.render(content),[content]);
 
   const date = useMemo(() => {
-    return new Date(createdAt).toLocaleDateString('pt-BR', {
+    return new Date(createdAt).toLocaleDateString('en-US', {
       day: '2-digit',
       month: 'long',
       year: 'numeric',

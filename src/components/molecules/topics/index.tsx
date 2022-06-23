@@ -1,7 +1,9 @@
 import { Badge, Box, BoxProps } from "@chakra-ui/react"
 import { useCallback } from "react"
 import { useContent } from "../../../states/hooks/use-content"
+import { containerUp } from "../../../styles/animations";
 import { randomDraculaBackground } from "../../../styles/theme"
+import { ChakraDiv } from "../../atoms/chakra-div";
 
 interface TopicsProps extends BoxProps {}
 
@@ -14,8 +16,11 @@ export function Topics({ ...props }: TopicsProps) {
   }, [handleSearchPosts]);
 
   return (
-    <Box display="block" float="none" textAlign="center" {...props}>
-       {tags.map(tag => 
+    <Box display="block" float="none" textAlign="center" {...props} 
+      as={ChakraDiv}
+      {...containerUp}
+    >
+      {tags.map(tag => 
         <Badge 
           margin="0.5" 
           fontSize="md" 

@@ -5,8 +5,10 @@ import { useCallback } from "react";
 import { GoSignOut } from 'react-icons/go';
 import { MdCopyAll, MdLogout } from "react-icons/md";
 import { CustomSession } from "../../../states/contexts/custom-session-context";
+import { containerRightToLeft } from "../../../styles/animations";
 import { simpleHover } from "../../../styles/theme";
 import { jwtCopiedToast } from "../../../utils/toast";
+import { ChakraDiv } from "../../atoms/chakra-div";
 
 type HeaderProfileMenu = {
   data?: CustomSession;
@@ -31,13 +33,15 @@ export function HeaderProfileMenu({
   return (
     <Menu>
       <MenuButton as="button">
-        <Avatar 
-          size="md"
-          name={data?.user?.name}
-          src={data?.user?.image} 
-          cursor="pointer" 
-          _hover={data ? simpleHover : {}}
-        />
+        <ChakraDiv {...containerRightToLeft}>
+          <Avatar 
+            size="sm"
+            name={data?.user?.name}
+            src={data?.user?.image} 
+            cursor="pointer" 
+            _hover={data ? simpleHover : {}}
+          />
+        </ChakraDiv>
       </MenuButton>
       <MenuList>
         {data ? (

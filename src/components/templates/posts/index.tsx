@@ -18,8 +18,8 @@ export function Posts() {
   return (
     <Stack spacing="4" flex="1" minW="320px" alignItems="center" mb="6">
       {postsToList.map((post, i) => (
-        <Post 
-          key={i} 
+        <Post
+         key={i} 
           data={post} 
           isPostPreview
           containerProps={containerProps}

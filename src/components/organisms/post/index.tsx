@@ -50,7 +50,7 @@ export function Post({
   return (
     <PostContainer size="md" {...containerProps} rightSide={Aside}>
       <Flex align="center">
-        <PostCreator data={post.user}/>
+        {isPostPreview && <PostCreator data={post.user}/>}
         <PostOptions data={post}/>
       </Flex>
       <PostContentByContext data={post} />

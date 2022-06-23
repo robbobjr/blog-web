@@ -1,8 +1,12 @@
-import { Flex } from "@chakra-ui/react";
+import { Flex, FlexProps } from "@chakra-ui/react";
 import { useContent } from "../../../states/hooks/use-content";
 import { Comment } from "../../organisms/comment";
 
-export function Comments() {
+interface CommentsProps {
+  commentContainerProps?: FlexProps;
+}
+
+export function Comments({ commentContainerProps }: CommentsProps) {
   const { postComments } = useContent();
 
   return (
@@ -15,6 +19,7 @@ export function Comments() {
             borderBottomRadius: i === a.length - 1 ? 8 : 0, 
             borderTopRadius: 0,
             maxWidth: "772px",
+            ...(commentContainerProps || {}),
           }} 
         />
       ))}

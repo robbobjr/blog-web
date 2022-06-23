@@ -1,5 +1,7 @@
 import {  Flex, Stack } from "@chakra-ui/react";
 import { useMemo } from "react";
+import { containerUp } from "../../../styles/animations";
+import { ChakraDiv } from "../chakra-div";
 import { PostContainerProps } from "./post-container.type";
 
 export function PostContainer({ 
@@ -16,6 +18,7 @@ export function PostContainer({
 
   return (
     <Flex
+      as={ChakraDiv}
       p="4"
       bg="gray.800"
       borderRadius="lg"
@@ -23,6 +26,8 @@ export function PostContainer({
       w="100%"
       maxW={656}
       {...props}
+      transition="initial"
+      {...containerUp}
     >
       {rightSide && rightSide}
       <Stack width="100%" spacing="4" ml={["0", "4"]} overflow="hidden" px="4">
