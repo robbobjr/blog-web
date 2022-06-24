@@ -3,7 +3,6 @@ import { Flex, Stack } from "@chakra-ui/react";
 import { Post } from "../../components/organisms/post";
 import { MainContainer } from "../../components/atoms/main-container";
 import { PostDto } from "../../services/api/openapi";
-import { Header } from "../../components/organisms/header";
 import { Footer } from "../../components/organisms/footer";
 import { PostHead as Head } from "../../components/atoms/post-head";
 import { Api } from "../../services/api";
@@ -36,7 +35,6 @@ export default function FeedPost({ post }: PostDetailProps) {
     <>
       <Head data={post}/>
       <Flex direction="column" h="100vh">
-        <Header />
         <MainContainer>
           <Stack spacing="0" flex="1" minW="320px" alignItems="center" mb="6">
             <Post data={post} containerProps={containerProps}/>

@@ -2,7 +2,6 @@ import { Flex } from "@chakra-ui/react";
 import { MainContainer } from "../components/atoms/main-container";
 import { GetStaticProps } from "next";
 import { useEffect } from "react";
-import { Header } from "../components/organisms/header";
 import { Footer } from "../components/organisms/footer";
 import { useContent } from "../states/hooks/use-content";
 import { FeedHead as Head } from "../components/atoms/feed-head";
@@ -12,6 +11,7 @@ import { Aside } from "../components/organisms/aside";
 import { Posts } from "../components/templates/posts";
 import { easterEggLog } from "../utils/easter-egg-log";
 import { CreatePostButton } from "../components/molecules/create-post-button";
+import { ProfileMenu } from "../components/organisms/profile-menu";
 
 export default function Feed({ posts }: { posts: PostDto[] }) {
   const { setPostsToList } = useContent();
@@ -25,10 +25,10 @@ export default function Feed({ posts }: { posts: PostDto[] }) {
     <>
       <Head />
       <Flex direction="column" h="100vh" w="100vw"> 
-        <Header />
         <MainContainer>
           <Aside />
           <Posts />
+          <ProfileMenu/>
         </MainContainer> 
         <Footer />
         <CreatePostButton/>
