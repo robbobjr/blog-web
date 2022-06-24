@@ -16,7 +16,7 @@ export function Posts() {
   const { postsToList } = useContent();
 
   return (
-    <Stack spacing="4" flex="1" minW="320px" alignItems="center" mb="6">
+    <Stack spacing="4" flex="1" minW="320px" alignItems="center">
       {postsToList.map((post, i) => (
         <Post
          key={i} 

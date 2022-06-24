@@ -9,6 +9,10 @@ export function HeaderContainer({ children}) {
       align="center" 
       px="10"
       py="4"
+      bg="gray.800"
+      position="sticky"
+      zIndex="10"	
+      top="0"
     >
       {children}
     </Flex>
