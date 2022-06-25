@@ -14,6 +14,9 @@ export function MainContainer({ children, ...props }: MainContainerProps) {
       maxWidth={1480}
       mx="auto"
       px={["4", "10", "10"]}
+      overflow="hidden"
+      position="relative"
+      flexDir={{ base: 'column', md: 'row' }}  
       {...props}
     >
       {children}

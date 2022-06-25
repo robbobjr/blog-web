@@ -1,7 +1,7 @@
 import { Avatar, Menu, MenuButton, MenuList, MenuItem, MenuDivider, useToast, Flex } from "@chakra-ui/react";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/router";
-import { useCallback } from "react";
+import { useCallback, useRef } from "react";
 import { GoSignOut } from 'react-icons/go';
 import { MdCopyAll, MdLogout } from "react-icons/md";
 import { useAuth } from "../../../states/hooks/use-auth";
@@ -14,6 +14,7 @@ export function ProfileMenu() {
   const router = useRouter();
   const toast = useToast();
   const { data } = useAuth();
+  const flexRef = useRef() as any;
 
   const handleSession = useCallback(async () => {
     if (!data) await router.push('/login');
@@ -24,9 +25,13 @@ export function ProfileMenu() {
     navigator.clipboard.writeText(data.jwt);
     toast({...jwtCopiedToast });
   }, [data, toast]);
-
+  console.log(flexRef?.current?.offsetWidth)
   return (
-    <Flex position="absolute" right="2.5%">
+    <Flex 
+      position={{ sm: 'initial', md: 'absolute' }} 
+      right="40px"
+      mb={{ base: '4', md: '0' }}
+    >
       <Menu>
         <MenuButton as="button">
           <ChakraDiv {...containerRightToLeft}>
@@ -35,6 +40,7 @@ export function ProfileMenu() {
               name={data?.user?.name}
               src={data?.user?.image} 
               cursor="pointer" 
+              ref={flexRef}
               _hover={data ? simpleHover : {}}
             />
           </ChakraDiv>
