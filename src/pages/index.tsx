@@ -24,11 +24,11 @@ export default function Feed({ posts }: { posts: PostDto[] }) {
   return (
     <>
       <Head />
-      <Flex direction="column" h="100vh" w="100vw"> 
+      <Flex direction="column"  w="100vw"> 
         <MainContainer>
+          <ProfileMenu/>
           <Aside />
           <Posts />
-          <ProfileMenu/>
         </MainContainer> 
         <Footer />
         <CreatePostButton/>
