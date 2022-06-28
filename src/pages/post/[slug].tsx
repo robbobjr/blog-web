@@ -2,25 +2,30 @@ import { GetStaticPaths, GetStaticProps } from "next"
 import { Flex, Stack } from "@chakra-ui/react";
 import { Post } from "../../components/organisms/post";
 import { MainContainer } from "../../components/atoms/main-container";
-import { PostDto } from "../../services/api/openapi";
+import { AdDto, PostDto } from "../../services/api/openapi";
 import { Footer } from "../../components/organisms/footer";
 import { PostHead as Head } from "../../components/atoms/post-head";
 import { Api } from "../../services/api";
 import { Comments } from "../../components/templates/comments";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useContent } from "../../states/hooks/use-content";
 import { PageUpButton } from "../../components/molecules/page-up-button";
+import { Advertisement } from "../../components/organisms/advertisement";
 
 interface PostDetailProps {
   post: PostDto;
 }
 
 export default function FeedPost({ post }: PostDetailProps) {
+  const [ads, setAds] = useState<AdDto[]>([]);
   const { setPostComments } = useContent();
 
   useEffect(() => {
     setPostComments(post.comments);
+    const apiClient = new Api("FeedPost:useEffect");
+    apiClient.getPostAds(post.id).then(setAds);
   }, [post, setPostComments]);
+
 
   const containerProps = useMemo(() => {
     return { 
@@ -37,6 +42,9 @@ export default function FeedPost({ post }: PostDetailProps) {
         <MainContainer>
           <Stack spacing="0" flex="1" minW="320px" alignItems="center" mb="6">
             <Post data={post} containerProps={containerProps}/>
+            {ads.map(ad => (
+              <Advertisement key={ad.id} data={ad}/>
+            ))}
             <Comments commentContainerProps={{ bg: "gray.900" }}/>
           </Stack>
         </MainContainer> 

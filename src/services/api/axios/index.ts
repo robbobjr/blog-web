@@ -1,7 +1,7 @@
 import axios from "axios";
 import { apiConfig } from "../../../configs/api-config";
 import { logger } from "../../logger";
-import { PostDto } from "../openapi";
+import { AdDto, PostDto } from "../openapi";
 
 export class AxiosAPI {
   static token?: string;
@@ -70,5 +70,14 @@ export class AxiosAPI {
     });
 
     return user;
+  }
+
+  public async getPostAds(postId: number): Promise<AdDto[]> {
+    const { data: ads } = await this.client.get('/ads', {
+      params: {
+        postId,
+      }
+    });
+    return ads;
   }
 }
