@@ -11,6 +11,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useContent } from "../../states/hooks/use-content";
 import { PageUpButton } from "../../components/molecules/page-up-button";
 import { Advertisement } from "../../components/organisms/advertisement";
+import { Cookie } from "../../components/molecules/cookie";
 
 interface PostDetailProps {
   post: PostDto;
@@ -46,6 +47,7 @@ export default function FeedPost({ post }: PostDetailProps) {
               <Advertisement key={ad.id} data={ad}/>
             ))}
             <Comments commentContainerProps={{ bg: "gray.900" }}/>
+            <Cookie/>
           </Stack>
         </MainContainer> 
         <Footer/>

@@ -4,11 +4,12 @@ import { ReactElement } from "react";
 export function Link({ 
   href, 
   children, 
+  target,
   ...props 
-}: LinkProps & { children: ReactElement[] | ReactElement }) {
+}: LinkProps & { children: ReactElement[] | ReactElement, target?: string }) {
   return (
     <NextLink passHref={true} href={href} {...props}>
-      <a>
+      <a target={target}>
         {children}
       </a>
     </NextLink>
