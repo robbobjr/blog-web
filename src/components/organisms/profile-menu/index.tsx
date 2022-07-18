@@ -25,7 +25,7 @@ export function ProfileMenu() {
     navigator.clipboard.writeText(data.jwt);
     toast({...jwtCopiedToast });
   }, [data, toast]);
-  console.log(flexRef?.current?.offsetWidth)
+  
   return (
     <Flex 
       position={{ sm: 'initial', md: 'absolute' }} 

@@ -1,4 +1,5 @@
 import { Stack } from "@chakra-ui/react";
+import { PostDto } from "../../../services/api/openapi";
 import { useContent } from "../../../states/hooks/use-content"
 import { dracula } from "../../../styles/theme";
 import { Post } from "../../organisms/post";
@@ -12,14 +13,12 @@ const containerProps = {
   }
 }
 
-export function Posts() {
-  const { postsToList } = useContent();
-
+export function Posts({ data: posts }: { data: PostDto[] }) {
   return (
     <Stack spacing="4" flex="1" minW="320px" alignItems="center">
-      {postsToList.map((post, i) => (
+      {posts.map((post, i) => (
         <Post
-         key={i} 
+          key={i} 
           data={post} 
           isPostPreview
           containerProps={containerProps}

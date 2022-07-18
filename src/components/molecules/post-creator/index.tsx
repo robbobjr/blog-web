@@ -15,7 +15,7 @@ export function PostCreator({ data: user }: PostCreatorProps) {
         ml="2" 
         display={{ base: 'none' ,sm: 'none', md: 'inherit' }}
       >
-        Escrito por {user?.name}
+        {user?.name}
       </Text>
     </Flex>
   );

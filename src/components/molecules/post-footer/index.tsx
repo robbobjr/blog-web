@@ -11,6 +11,7 @@ import { CommentsService } from "../../../services/api/openapi";
 import { logger } from "../../../services/logger";
 import { createCommentErrorToast, createCommentToast } from "../../../utils/toast";
 import { dracula } from "../../../styles/theme";
+import { Link } from "../../atoms/link";
 
 export function PostFooter({
   data: { commentsLength, tags, id }
@@ -18,7 +19,7 @@ export function PostFooter({
   const toast = useToast();
   const { data } = useAuth();
   const user = useMemo(() => data?.user, [data]);
-  const { handleUpdatePostComments, handleSearchPosts } = useContent();
+  const { handleUpdatePostComments } = useContent();
 
   const handlePostComment = useCallback(
     async (event: FormEvent<HTMLElement>) => {
@@ -35,10 +36,6 @@ export function PostFooter({
       }
     }, [handleUpdatePostComments, id, toast, user],
   );
-
-  const handleTopic = useCallback((tag: string) => {
-    handleSearchPosts({ tag });
-  }, [handleSearchPosts]);
 
   return (
     <>
@@ -61,12 +58,12 @@ export function PostFooter({
         {...(!tags.length && { display: 'none' })}
       >
         {tags?.map(tag => 
-          <Badge
-            cursor="pointer"
-            onClick={() => handleTopic(tag.name)}
-            key={tag.name}
-            background={dracula.Pink}>{tag.name}
-          </Badge>
+          <Link href={"/" + tag.name} key={tag.name}>
+            <Badge
+              cursor="pointer"
+              background={dracula.Pink}>{tag.name}
+            </Badge>
+          </Link>
         )}
       </Stack>
     </>
