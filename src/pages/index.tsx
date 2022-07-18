@@ -1,36 +1,31 @@
 import { Flex } from "@chakra-ui/react";
 import { MainContainer } from "../components/atoms/main-container";
 import { GetStaticProps } from "next";
-import { useEffect } from "react";
 import { Footer } from "../components/organisms/footer";
-import { useContent } from "../states/hooks/use-content";
 import { FeedHead as Head } from "../components/atoms/feed-head";
-import { PostDto } from "../services/api/openapi";
+import { PostDto, PostTagDto } from "../services/api/openapi";
 import { Api } from "../services/api";
 import { Aside } from "../components/organisms/aside";
 import { Posts } from "../components/templates/posts";
-import { easterEggLog } from "../utils/easter-egg-log";
 import { CreatePostButton } from "../components/molecules/create-post-button";
 import { ProfileMenu } from "../components/organisms/profile-menu";
 
-export default function Feed({ posts }: { posts: PostDto[] }) {
-  const { setPostsToList } = useContent();
-  
-  useEffect(() => {
-    setPostsToList(posts);
-    console.info(easterEggLog.content);
-  }, [setPostsToList, posts]);
+type FeedProps = {
+  posts: PostDto[];
+  tags: PostTagDto[];
+}
 
+export default function Feed({ posts, tags }: FeedProps) {
   return (
     <>
       <Head />
       <Flex direction="column"  w="100vw"> 
         <MainContainer>
           <ProfileMenu/>
-          <Aside />
-          <Posts />
+          <Aside data={tags}/>
+          <Posts data={posts} />
         </MainContainer> 
-        <Footer />
+        <Footer data={tags}/>
         <CreatePostButton/>
       </Flex>
     </>
@@ -39,6 +34,6 @@ export default function Feed({ posts }: { posts: PostDto[] }) {
 
 export const getStaticProps: GetStaticProps = async () => {
   const apiClient = new Api("Feed::getServerSideProps");
-  const posts = await apiClient.getPosts({});
-  return { revalidate: 30 * 60, props: { posts } };
+  const { posts, tags } = await apiClient.getPostsAndTags({});
+  return { revalidate: 30 * 60, props: { posts, tags } };
 };

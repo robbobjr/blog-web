@@ -2,7 +2,7 @@ import { GetStaticPaths, GetStaticProps } from "next"
 import { Flex, Stack } from "@chakra-ui/react";
 import { Post } from "../../components/organisms/post";
 import { MainContainer } from "../../components/atoms/main-container";
-import { AdDto, PostDto } from "../../services/api/openapi";
+import { AdDto, PostDto, PostTagDto } from "../../services/api/openapi";
 import { Footer } from "../../components/organisms/footer";
 import { PostHead as Head } from "../../components/atoms/post-head";
 import { Api } from "../../services/api";
@@ -10,14 +10,15 @@ import { Comments } from "../../components/templates/comments";
 import { useEffect, useMemo, useState } from "react";
 import { useContent } from "../../states/hooks/use-content";
 import { PageUpButton } from "../../components/molecules/page-up-button";
-import { Advertisement } from "../../components/organisms/advertisement";
 import { Cookie } from "../../components/molecules/cookie";
+import { Advertisements } from "../../components/templates/advertisements";
 
 interface PostDetailProps {
   post: PostDto;
+  tags: PostTagDto[];
 }
 
-export default function FeedPost({ post }: PostDetailProps) {
+export default function FeedPost({ post, tags }: PostDetailProps) {
   const [ads, setAds] = useState<AdDto[]>([]);
   const { setPostComments } = useContent();
 
@@ -43,14 +44,12 @@ export default function FeedPost({ post }: PostDetailProps) {
         <MainContainer>
           <Stack spacing="0" flex="1" minW="320px" alignItems="center" mb="6">
             <Post data={post} containerProps={containerProps}/>
-            {ads.map(ad => (
-              <Advertisement key={ad.id} data={ad}/>
-            ))}
+            <Advertisements data={ads} />
             <Comments commentContainerProps={{ bg: "gray.900" }}/>
             <Cookie/>
           </Stack>
         </MainContainer> 
-        <Footer/>
+        <Footer data={tags}/>
         <PageUpButton direction="up"/>
       </Flex>
     </>
@@ -62,8 +61,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const apiClient = new Api("FeedPost:getServerSideProps");
+  const apiClient = new Api("FeedPost::getServerSideProps");
   const { slug } = params as Record<string, string>;
-  const post = await apiClient.getPostsBySlug(slug); 
-  return { revalidate: 30 * 60, props: { post } }
+  const { post, tags } = await apiClient.getPostsAndTagsBySlug(slug); 
+  return { revalidate: 30 * 60, props: { post, tags } }
 }
