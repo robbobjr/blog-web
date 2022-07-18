@@ -34,6 +34,15 @@ export class AxiosAPI {
     return { posts, tags };
   } 
 
+  public async getPostsAndTagsBySlug(slug: string) {
+    const [{ data: post }, { data: tags }] = await Promise.all([
+      this.client.get('/posts/byslug/' + slug).catch(this.failReturningNull),
+      this.client.get('posts/tags').catch(this.failReturningArray),
+    ]);
+
+    return { post, tags };
+  } 
+
   public async getPosts(
     params?: Record<string, string | string[]>
   ): Promise<PostDto[]> {
