@@ -104,7 +104,7 @@ export function SingleInputModal({
                 type="submit" 
                 _hover={{ bgColor: "purple.400" }}
               >
-                Submeter
+                Submit
               </Button>
             </ModalFooter>
           </form>

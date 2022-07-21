@@ -17,13 +17,13 @@ export function LoginOptions() {
           Github
         </SocialButton>
         <SocialButton disabled icon={AiFillTwitterCircle} colorScheme="twitter">
-          Twitter (Em breve)
+          Twitter (Coming Soon)
         </SocialButton>
         <SocialButton disabled icon={AiFillLinkedin} colorScheme="linkedin">
-          Linkedin (Em breve)
+          Linkedin (Coming Soon)
         </SocialButton>
         <SocialButton disabled icon={AiFillGoogleCircle} colorScheme="red">
-          Google (Em breve)
+          Google (Coming Soon)
         </SocialButton>
       </Stack>
     </LoginOptionsContainer>

@@ -23,7 +23,7 @@ export function CreatePostModalFooter({
       />
       </HStack>
       <Button bg="gray.600" onClick={handleCreatePost}>
-        Submeter
+        Submit
       </Button>
     </ModalFooter>
   );

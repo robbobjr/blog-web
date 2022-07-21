@@ -43,7 +43,7 @@ export function PostFooter({
         <SingleInputModal
           handler={handlePostComment} 
           modalName="comment-modal" 
-          textAreaProps={{ placeHolder: "Digite seu comentário."}}
+          textAreaProps={{ placeHolder: "Your comment here"}}
         >
           <PostIcon 
             icon={RiMessage3Fill} 

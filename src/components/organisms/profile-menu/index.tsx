@@ -49,11 +49,11 @@ export function ProfileMenu() {
           {data ? (
             <>
               <MenuItem icon={<MdLogout size={15}/>} onClick={handleSession}>
-                Sair
+                Log out
               </MenuItem>
               <MenuDivider />
               <MenuItem onClick={handleCopyJWT} icon={<MdCopyAll size={15}/>}>
-                api key - {data.jwt.slice(0, 5)}...
+                Copy api key - {data.jwt.slice(0, 5)}...
               </MenuItem>
             </>
           ): (
