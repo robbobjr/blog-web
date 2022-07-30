@@ -1,8 +1,8 @@
-import { AdDto } from "../../../services/api/openapi";
+import { PostAdDto } from "../../../services/api/openapi";
 import { Advertisement } from "../../organisms/advertisement";
 
 type AdvertisementsProps = {
-  data: AdDto[];
+  data: PostAdDto[];
 };
 
 export function Advertisements({ data: ads }: AdvertisementsProps) {

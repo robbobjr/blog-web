@@ -1,9 +1,9 @@
 import { Image, Text } from "@chakra-ui/react";
-import { AdDto } from "../../../services/api/openapi";
+import { PostAdDto } from "../../../services/api/openapi";
 import { PostContainer } from "../../atoms/post-container";
 
 type AdvertisementProps = {
-  data: AdDto;
+  data: PostAdDto;
 };
 
 export function Advertisement({
@@ -20,8 +20,8 @@ export function Advertisement({
           ml="8"
           h="20" 
           my="auto" 
-          alt={data.title}
-          src={data.image}
+          alt={data.adContent.title}
+          src={data.adContent.image}
           borderRadius="lg" 
           objectFit='cover' 
           width="20"
@@ -30,14 +30,14 @@ export function Advertisement({
     >
       <a 
         target="_blank" 
-        href={data.link} 
+        href={data.adContent.link} 
         rel="noreferrer"
       >
         <Text size="lg" fontFamily="Roboto Serif"> 
-          {data.title}
+          {data.adContent.title}
         </Text>
         <Text fontSize="sm" mt="1" opacity={0.7}>
-          {data.description}
+          {data.adContent.description}
         </Text>
       </a>
     </PostContainer>

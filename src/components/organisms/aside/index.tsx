@@ -1,5 +1,6 @@
 import { Box } from "@chakra-ui/react";
 import { Topics } from "../../molecules/topics";
+import { Bio } from "../bio";
 
 export function Aside({ data: tags }) {
   return (
