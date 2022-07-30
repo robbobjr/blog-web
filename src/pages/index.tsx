@@ -9,6 +9,7 @@ import { Aside } from "../components/organisms/aside";
 import { Posts } from "../components/templates/posts";
 import { CreatePostButton } from "../components/molecules/create-post-button";
 import { ProfileMenu } from "../components/organisms/profile-menu";
+import { Bio } from "../components/organisms/bio";
 
 type FeedProps = {
   posts: PostDto[];

@@ -2,7 +2,7 @@ import { GetStaticPaths, GetStaticProps } from "next"
 import { Flex, Stack } from "@chakra-ui/react";
 import { Post } from "../../components/organisms/post";
 import { MainContainer } from "../../components/atoms/main-container";
-import { AdDto, PostDto, PostTagDto } from "../../services/api/openapi";
+import { PostAdDto, PostDto, PostTagDto } from "../../services/api/openapi";
 import { Footer } from "../../components/organisms/footer";
 import { PostHead as Head } from "../../components/atoms/post-head";
 import { Api } from "../../services/api";
@@ -19,7 +19,7 @@ interface PostDetailProps {
 }
 
 export default function FeedPost({ post, tags }: PostDetailProps) {
-  const [ads, setAds] = useState<AdDto[]>([]);
+  const [ads, setAds] = useState<PostAdDto[]>([]);
   const { setPostComments } = useContent();
 
   useEffect(() => {
@@ -31,7 +31,7 @@ export default function FeedPost({ post, tags }: PostDetailProps) {
 
   const containerProps = useMemo(() => {
     return { 
-      borderBottomRadius: post.comments.length ? 0 : "lg", 
+      borderBottomRadius: post?.comments.length ? 0 : "lg", 
       maxWidth: "772px",
       backgroundColor: "gray.900"
     }
@@ -64,5 +64,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const apiClient = new Api("FeedPost::getServerSideProps");
   const { slug } = params as Record<string, string>;
   const { post, tags } = await apiClient.getPostsAndTagsBySlug(slug); 
+  console.log(post.title)
   return { revalidate: 30 * 60, props: { post, tags } }
 }
