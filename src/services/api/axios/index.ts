@@ -1,7 +1,7 @@
 import axios from "axios";
 import { apiConfig } from "../../../configs/api-config";
 import { logger } from "../../logger";
-import { AdDto, PostDto } from "../openapi";
+import { PostAdDto, PostDto } from "../openapi";
 
 export class AxiosAPI {
   static token?: string;
@@ -36,7 +36,7 @@ export class AxiosAPI {
 
   public async getPostsAndTagsBySlug(slug: string) {
     const [{ data: post }, { data: tags }] = await Promise.all([
-      this.client.get('/posts/byslug/' + slug).catch(this.failReturningNull),
+      this.client.get('/posts/' + slug).catch(this.failReturningNull),
       this.client.get('posts/tags').catch(this.failReturningArray),
     ]);
 
@@ -55,7 +55,7 @@ export class AxiosAPI {
 
   public async getPostsBySlug(slug: string) {
     const { data: post } = await this.client.get(
-      '/posts/byslug/' + slug,
+      '/posts/' + slug,
     ).catch(this.failReturningNull);
     return post;
   }
@@ -81,12 +81,8 @@ export class AxiosAPI {
     return user;
   }
 
-  public async getPostAds(postId: number): Promise<AdDto[]> {
-    const { data: ads } = await this.client.get('/ads', {
-      params: {
-        postId,
-      }
-    });
+  public async getPostAds(postId: number): Promise<PostAdDto[]> {
+    const { data: ads } = await this.client.get('/ads/post-types/' + postId);
     return ads;
   }
 }

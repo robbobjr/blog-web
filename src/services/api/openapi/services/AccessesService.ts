@@ -1,20 +1,28 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { PostAcessDto } from '../models/PostAcessDto';
+
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 
-export class DefaultService {
+export class AccessesService {
 
     /**
-     * @returns any 
+     * @param slug 
+     * @returns PostAcessDto 
      * @throws ApiError
      */
-    public static appControllerPing(): CancelablePromise<any> {
+    public static postsControllerFindAllPostAccess(
+slug: string,
+): CancelablePromise<Array<PostAcessDto>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/',
+            url: '/posts/{slug}/accesses',
+            path: {
+                'slug': slug,
+            },
         });
     }
 

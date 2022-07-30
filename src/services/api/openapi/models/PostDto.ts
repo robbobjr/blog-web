@@ -15,11 +15,9 @@ export type PostDto = {
     slug: string;
     image?: string;
     link?: string;
-    participation?: number;
     title: string;
     content: string;
     description?: string;
-    availlablePositions?: number;
     userId: number;
     user: UserDto;
     comments: Array<CommentDto>;
