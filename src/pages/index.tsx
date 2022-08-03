@@ -5,10 +5,8 @@ import { Footer } from "../components/organisms/footer";
 import { FeedHead as Head } from "../components/atoms/feed-head";
 import { PostDto, PostTagDto } from "../services/api/openapi";
 import { Api } from "../services/api";
-import { Aside } from "../components/organisms/aside";
 import { Posts } from "../components/templates/posts";
 import { CreatePostButton } from "../components/molecules/create-post-button";
-import { ProfileMenu } from "../components/organisms/profile-menu";
 import { Bio } from "../components/organisms/bio";
 
 type FeedProps = {
@@ -21,9 +19,8 @@ export default function Feed({ posts, tags }: FeedProps) {
     <>
       <Head />
       <Flex direction="column"  w="100vw"> 
+        <Bio pt="6"/>
         <MainContainer>
-          <ProfileMenu/>
-          <Aside data={tags}/>
           <Posts data={posts} />
         </MainContainer> 
         <Footer data={tags}/>

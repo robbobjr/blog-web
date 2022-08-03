@@ -1,21 +1,32 @@
-import { Avatar, Flex, Text } from "@chakra-ui/react";
+import { Avatar, Flex, FlexProps, HStack, Text } from "@chakra-ui/react";
+import { Link } from "../../atoms/link";
 
-type BioProps = {
-};
+type BioProps = FlexProps;
 
-export function Bio({}: BioProps) {
+const linkStyle = { borderBottom: '2px #6272a4 dashed', color: '#6272a4' };
+
+export function Bio(data: BioProps) {
   return (
-    <Flex align="center" justify="center" direction="column">
+    <Flex align="center" justify="center" direction="column" {...data}>
       <Avatar 
         size="xl" 
         name="Roberto Junior" 
         src="https://avatars.githubusercontent.com/u/60328400?v=4"
-        border="2px solid #fff"
+        border="2px solid #6272a4"
         mb="2"
       />
-      <Text>
-        Roberto Junior
-      </Text>
+      
+      <HStack spacing="4" mt="4">
+        <Link href="https://github.com/robertokbr" target="_blank" aProps={linkStyle}>
+          Github
+        </Link>
+        <Link href="https://www.linkedin.com/in/robertojrcdc/" target="_blank" aProps={linkStyle}>
+          Linkedin
+        </Link>
+        <Link href="https://twitter.com/robertojrdev" target="_blank" aProps={linkStyle}>
+          Twitter
+        </Link>
+      </HStack>
     </Flex>
   );
 }
