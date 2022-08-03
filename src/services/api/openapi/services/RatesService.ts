@@ -22,7 +22,7 @@ requestBody: CreatePostRateDto,
 ): CancelablePromise<PostRateDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/posts/rates/rate',
+            url: '/posts/rates',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -38,7 +38,7 @@ postId: string,
 ): CancelablePromise<Array<PostRateDto>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/posts/rates/rate',
+            url: '/posts/rates',
             query: {
                 'postId': postId,
             },
@@ -55,7 +55,7 @@ requestBody: CreateCommentRateDto,
 ): CancelablePromise<CommentRateDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/posts/rates/comments/rate',
+            url: '/posts/comments/rates',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -71,7 +71,7 @@ commentId: string,
 ): CancelablePromise<Array<CommentRateDto>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/posts/rates/comments/rate',
+            url: '/posts/comments/rates',
             query: {
                 'commentId': commentId,
             },

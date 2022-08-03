@@ -1,15 +1,18 @@
 import { Box } from "@chakra-ui/react";
 import { Topics } from "../../molecules/topics";
+import { Bio } from "../bio";
 
-export function Aside() {
+export function Aside({ data: tags }) {
   return (
     <Box
+      as="aside"
       position="absolute"
-      display={{base:"none",sm:"none",md:"block"}}
+      display={{ base:"none", sm:"none", md:"block" }}
     >
       <Topics
         textAlign="left"
         maxW="200px"
+        data={tags}
         display={{ sm: "none", lg: "block"}} 
       />
     </Box>

@@ -1,35 +1,30 @@
 import { Flex } from "@chakra-ui/react";
-import { MainContainer } from "../components/molecules/containers/main-container";
+import { MainContainer } from "../components/atoms/main-container";
 import { GetStaticProps } from "next";
-import { useEffect } from "react";
-import { Header } from "../components/organisms/header";
 import { Footer } from "../components/organisms/footer";
-import { useContent } from "../states/hooks/use-content";
-import { FeedHead as Head } from "../components/organisms/head/feed-head";
-import { PostDto } from "../services/api/openapi";
+import { FeedHead as Head } from "../components/atoms/feed-head";
+import { PostDto, PostTagDto } from "../services/api/openapi";
 import { Api } from "../services/api";
-import { Aside } from "../components/organisms/aside";
 import { Posts } from "../components/templates/posts";
+import { CreatePostButton } from "../components/molecules/create-post-button";
+import { Bio } from "../components/organisms/bio";
 
-export default function Feed({ 
-  posts, 
-}: { posts: PostDto[] }) {
-  const { setPostsToList } = useContent();
-  
-  useEffect(() => {
-    setPostsToList(posts);
-  }, [setPostsToList, posts]);
+type FeedProps = {
+  posts: PostDto[];
+  tags: PostTagDto[];
+}
 
+export default function Feed({ posts, tags }: FeedProps) {
   return (
     <>
       <Head />
-      <Flex direction="column" h="100vh"> 
-        <Header />
+      <Flex direction="column"  w="100vw"> 
+        <Bio pt="6"/>
         <MainContainer>
-          <Aside />
-          <Posts />
+          <Posts data={posts} />
         </MainContainer> 
-        <Footer />
+        <Footer data={tags}/>
+        <CreatePostButton/>
       </Flex>
     </>
   );
@@ -37,6 +32,6 @@ export default function Feed({
 
 export const getStaticProps: GetStaticProps = async () => {
   const apiClient = new Api("Feed::getServerSideProps");
-  const posts = await apiClient.getPosts({});
-  return { revalidate: 30 * 60, props: { posts } };
+  const { posts, tags } = await apiClient.getPostsAndTags({});
+  return { revalidate: 30 * 60, props: { posts, tags } };
 };

@@ -21,7 +21,7 @@ postId: string,
 ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/posts/comments/comments',
+            url: '/posts/comments',
             query: {
                 'postId': postId,
             },
@@ -38,7 +38,7 @@ requestBody: CreateCommentDto,
 ): CancelablePromise<CommentDto> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/posts/comments/comments',
+            url: '/posts/comments',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -54,7 +54,7 @@ id: string,
 ): CancelablePromise<CommentDto> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/posts/comments/comments/{id}',
+            url: '/posts/comments/{id}',
             path: {
                 'id': id,
             },
@@ -73,7 +73,7 @@ requestBody: UpdateCommentDto,
 ): CancelablePromise<CommentDto> {
         return __request(OpenAPI, {
             method: 'PATCH',
-            url: '/posts/comments/comments/{id}',
+            url: '/posts/comments/{id}',
             path: {
                 'id': id,
             },

@@ -1,5 +1,5 @@
 import { FlexProps } from "@chakra-ui/react";
-import { CreateCommentDto, PostDto } from "../../../services/api/openapi";
+import { PostDto } from "../../../services/api/openapi";
 
 export interface PostProps {
   isPostPreview?: boolean;

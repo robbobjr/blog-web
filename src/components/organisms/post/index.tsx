@@ -1,14 +1,15 @@
 import { useCallback, useMemo } from "react";
 import { RatesService } from "../../../services/api/openapi";
 import { useAuth } from "../../../states/hooks/use-auth";
-import { PostContainer } from "../../molecules/containers/post-container";
-import { PostContent } from "../../molecules/contents/post-content";
-import { PostPreviewContent } from "../../molecules/contents/post-preview-content";
-import { PostRateControls } from "../../molecules/controls/post-rate-controls";
-import { PostFooter } from "../../molecules/footers/post-footer";
-import { PostTagsFooter } from "../../molecules/footers/post-tags-footer";
-import { PostHeader } from "../../molecules/headers/post-header";
+import { PostContainer } from "../../atoms/post-container";
+import { PostContent } from "../../molecules/post-content";
+import { PostContentPreview } from "../../molecules/post-content-preview";
+import { PostRateControl } from "../../molecules/post-rate-control";
+import { PostFooter } from "../../molecules/post-footer";
+import { PostCreator } from "../../molecules/post-creator";
 import { PostProps } from "./post.type";
+import { Flex } from "@chakra-ui/react";
+import { PostOptions } from "../../molecules/post-options";
 
 export function Post({ 
   containerProps,
@@ -31,7 +32,7 @@ export function Post({
   }, [id, session]);
 
   const Aside = useMemo(() => 
-    <PostRateControls 
+    <PostRateControl 
       data={{ rates: post.rates }} 
       handleRate={handlePostRate} 
       hideRateControl={!isPostPreview}
@@ -41,17 +42,19 @@ export function Post({
 
   const PostContentByContext = useMemo(() => 
     isPostPreview 
-      ? PostPreviewContent 
+      ? PostContentPreview 
       : PostContent,
     [isPostPreview],
   );
 
   return (
     <PostContainer size="md" {...containerProps} rightSide={Aside}>
-      <PostHeader isPostPreview={isPostPreview} data={post}/>
+      <Flex align="center">
+        {isPostPreview && <PostCreator data={post.user}/>}
+        <PostOptions data={post}/>
+      </Flex>
       <PostContentByContext data={post} />
-      <PostFooter data={{ id: post.id, commentsLength: post.comments.length }}/>
-      <PostTagsFooter data={{ tags }} />
+      <PostFooter data={{ id: post.id, commentsLength: post.comments.length, tags }}/>
     </PostContainer>
   );
 }

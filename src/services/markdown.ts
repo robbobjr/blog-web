@@ -12,5 +12,7 @@ export const markdown = new MK({
     }
 
     return '<pre class="hljs"><code>' + markdown.utils.escapeHtml(str) + '</code></pre>';
-  }
+  },
+  linkify: true,
+  html: true,
 }); 

@@ -1,5 +1,4 @@
 import { ChakraProvider } from "@chakra-ui/react"
-import { AppProps } from "next/dist/shared/lib/router/router"
 import { theme } from "../styles/theme"
 import { SessionProvider } from 'next-auth/react';
 import '../styles/global.scss';
@@ -11,8 +10,7 @@ import { CustomSessionProvider } from "../states/contexts/custom-session-context
 
 OpenAPI.BASE = apiConfig.baseURL; 
 
-console.info("Do you really think you are a developer?")
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps }) {
   return (
     <SessionProvider session={pageProps.session}>
       <ChakraProvider theme={theme}>
@@ -23,7 +21,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         </CustomSessionProvider>
       </ChakraProvider>
     </SessionProvider>
-  )
+  );
 }
 
-export default MyApp
+export default MyApp;

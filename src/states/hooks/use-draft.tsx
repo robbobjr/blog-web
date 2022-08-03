@@ -11,24 +11,29 @@ export interface UserDraftProps {
   handleRemoveDraft(field: string): void;
 }
 
+let ls;
+
+if (typeof localStorage !== 'undefined') ls = localStorage;
+
 export function useDraft() {
   const handleAddDraft = useCallback(
     ({ content, field }: AddDraftProps) => {
-      if (!localStorage) return;
+      if (!ls) return;
 
       if (!content) {
-        localStorage.removeItem(field);
+        ls.removeItem(field);
+        return;
       }
 
-      localStorage.setItem(field, content);
+      ls.setItem(field, content);
     }, []
   );
 
   const handleGetDraft = useCallback(
     (field: string) => {
-      if (!localStorage) return;
+      if (!ls) return;
 
-      const data = localStorage.getItem(field);
+      const data = ls.getItem(field);
 
       return data;
     }, []
@@ -36,9 +41,9 @@ export function useDraft() {
 
   const handleRemoveDraft = useCallback(
     (field: string) => {
-      if (!localStorage) return;
+      if (!ls) return;
 
-      const data = localStorage.removeItem(field);
+      const data = ls.removeItem(field);
 
       return data;
     }, []

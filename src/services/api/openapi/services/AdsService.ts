@@ -1,9 +1,10 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { AdDto } from '../models/AdDto';
-import type { CreateAdDto } from '../models/CreateAdDto';
-import type { UpdateAdDto } from '../models/UpdateAdDto';
+import type { AdContentDto } from '../models/AdContentDto';
+import type { CreateAdContentDto } from '../models/CreateAdContentDto';
+import type { CreatePostAdDto } from '../models/CreatePostAdDto';
+import type { PostAdDto } from '../models/PostAdDto';
 
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -13,12 +14,12 @@ export class AdsService {
 
     /**
      * @param requestBody 
-     * @returns AdDto 
+     * @returns AdContentDto 
      * @throws ApiError
      */
     public static adsControllerCreate(
-requestBody: CreateAdDto,
-): CancelablePromise<AdDto> {
+requestBody: CreateAdContentDto,
+): CancelablePromise<AdContentDto> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/ads',
@@ -28,78 +29,74 @@ requestBody: CreateAdDto,
     }
 
     /**
-     * @param id 
-     * @param createdAt 
-     * @param updatedAt 
-     * @param title 
-     * @param description 
-     * @param image 
-     * @param link 
-     * @param type 
-     * @returns AdDto 
+     * @returns AdContentDto 
      * @throws ApiError
      */
-    public static adsControllerFindAll(
-id?: number,
-createdAt?: string,
-updatedAt?: string,
-title?: string,
-description?: string,
-image?: string,
-link?: string,
-type?: 'POST' | 'COMMENT' | 'ASIDE',
-): CancelablePromise<Array<AdDto>> {
+    public static adsControllerFindAll(): CancelablePromise<Array<AdContentDto>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/ads',
-            query: {
-                'id': id,
-                'createdAt': createdAt,
-                'updatedAt': updatedAt,
-                'title': title,
-                'description': description,
-                'image': image,
-                'link': link,
-                'type': type,
-            },
         });
     }
 
     /**
      * @param id 
-     * @returns AdDto 
-     * @throws ApiError
-     */
-    public static adsControllerFindOne(
-id: string,
-): CancelablePromise<AdDto> {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/ads/{id}',
-            path: {
-                'id': id,
-            },
-        });
-    }
-
-    /**
-     * @param id 
-     * @param requestBody 
-     * @returns AdDto 
+     * @returns any 
      * @throws ApiError
      */
     public static adsControllerUpdate(
 id: string,
-requestBody: UpdateAdDto,
-): CancelablePromise<AdDto> {
+): CancelablePromise<any> {
         return __request(OpenAPI, {
-            method: 'PATCH',
+            method: 'DELETE',
             url: '/ads/{id}',
             path: {
                 'id': id,
             },
+        });
+    }
+
+    /**
+     * @param requestBody 
+     * @returns PostAdDto 
+     * @throws ApiError
+     */
+    public static postAdsControllerCreate(
+requestBody: CreatePostAdDto,
+): CancelablePromise<PostAdDto> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/ads/post-types',
             body: requestBody,
             mediaType: 'application/json',
+        });
+    }
+
+    /**
+     * @returns PostAdDto 
+     * @throws ApiError
+     */
+    public static postAdsControllerFindAllPostAds(): CancelablePromise<Array<PostAdDto>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/ads/post-types/{id}',
+        });
+    }
+
+    /**
+     * @param id 
+     * @returns any 
+     * @throws ApiError
+     */
+    public static postAdsControllerUpdate(
+id: string,
+): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/ads/post-types/{id}',
+            path: {
+                'id': id,
+            },
         });
     }
 
