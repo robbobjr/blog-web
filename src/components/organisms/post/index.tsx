@@ -6,7 +6,7 @@ import { PostContent } from "../../molecules/post-content";
 import { PostContentPreview } from "../../molecules/post-content-preview";
 import { PostRateControl } from "../../molecules/post-rate-control";
 import { PostFooter } from "../../molecules/post-footer";
-import { PostCreator } from "../../molecules/post-creator";
+import { PostDate } from "../../molecules/post-date";
 import { PostProps } from "./post.type";
 import { Flex } from "@chakra-ui/react";
 import { PostOptions } from "../../molecules/post-options";
@@ -50,7 +50,7 @@ export function Post({
   return (
     <PostContainer size="md" {...containerProps} rightSide={Aside}>
       <Flex align="center">
-        {isPostPreview && <PostCreator data={post.user}/>}
+        {isPostPreview && <PostDate data={{ createdAt: post.createdAt }}/>}
         <PostOptions data={post}/>
       </Flex>
       <PostContentByContext data={post} />
